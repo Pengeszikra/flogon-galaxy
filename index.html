@@ -8,7 +8,39 @@
   <link href="src/marker.css" rel="stylesheet" />
   <script type="module" src="src/concept.js"></script>
 </head>
-<body class="bg-black bg-zinc-900 p-[2rem]">
-  <markdown-view class="p-[1rem]" source="../docs/hackhaton.md"></markdown-view>
-</body>
+
+<main class="min-h-screen bg-zinc-950 text-zinc-400">
+  <section class="max-w-screen-2x m-auto grid grid-cols-1 gap-2 lg:grid-cols-2">
+    <textarea class="
+      sticky
+      opacity-90
+      resize
+      lg:relative
+      top-0
+      left-0
+      z-10
+      min-h-[1rem]
+      min-w-[100%]
+      bg-zinc-800
+      text-zinc-400
+      focus:outline-none
+      p-8
+      placeholder-zinc-600"
+      placeholder=" - - - markdown editor - - - " spellcheck="false"></textarea>
+    <article class="
+      bg-zinc-900
+      whitespace-pre-wrap
+      px-8
+      min-w-full
+      min-h-screen
+      relative
+    ">
+      <span id="debug-ms" class="hidden absolute top-4 left-4 p-2 rounded-lg bg-neutral-950"></span>
+      <markdown-view class="p-[1rem]" source="../docs/hackhaton.md"></markdown-view>
+    </article>
+  </section>
+</main>
+
 </html>
+
+

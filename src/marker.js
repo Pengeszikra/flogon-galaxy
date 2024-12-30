@@ -143,7 +143,7 @@
   }
 
 export const setupMarkerViews = () => {
-  customElements.define('markdown-view', class extends HTMLElement {
+  const marker = customElements.define('markdown-view', class extends HTMLElement {
     constructor() {
       super();
       const source = this.getAttribute('source');
@@ -163,4 +163,6 @@ export const setupMarkerViews = () => {
       this.innerHTML = markdownParser(source);
     }
   });
+
+  return marker;
 };
