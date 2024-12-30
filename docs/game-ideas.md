@@ -1,10 +1,5 @@
 # `<\>` M A R K - E D I T O R `<\>`
-```
-"Due date is Dec 18 :: left --> " +
-Math.ceil((new Date((new Date()).getFullYear()+(((new Date())>new Date((new Date()).getFullYear(),11,18))?1:0),11,18)-new Date())/(1000*60*60*24))
-```...
-
-_`vim-bledon` edition_
+_`game-engine` edition_
 ![](https://cdn.midjourney.com/88569a60-7e4a-4931-9904-d8da2e44dc15/0_0.png)
 [current development state](..)
 ## Reddit Hackhathon are closing
@@ -14,6 +9,11 @@ _`vim-bledon` edition_
 Let's moving forward to `board editor` which is a online 3D tabletop game editor, capable to handle a different `spritesheets` setup the whole environmet, handle cards, syntax highlight the generated code. Store asset valuse in JS object.
 
 {% .. %}
+
+```
+"Due date is Jan 15 :: left --> " +
+Math.ceil((new Date((new Date()).getFullYear()+(((new Date())>new Date((new Date()).getFullYear(),1,15))?1:0),11,18)-new Date())/(1000*60*60*24))
+```...
 
 > when the card solve the puzzle then hero go upper, but when fail he will drop down.
 ![](https://cdn.midjourney.com/7b71dc4f-6256-44c3-8903-c9494ad3a19a/0_2.png)

@@ -21,6 +21,8 @@ body {
 }
 
 markdown-view {
+  white-space: pre-wrap;
+
   --h1: #A6F;
   --h2: #893;
   --code-sm: #88E;

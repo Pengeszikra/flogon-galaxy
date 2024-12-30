@@ -1,4 +1,4 @@
-import { fragment, signal } from './old-bird-soft';
+import { fragment, signal } from './utils/old-bird-soft';
 import {assetList} from './shoot';
 import {assets} from './asset';
 import {scifiUI} from './ui-elements';

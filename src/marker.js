@@ -130,7 +130,7 @@
           case /\{\%\s*([^%]+)\s*\%\}/.test(line):
             return line.replaceAll(
               /(\{\%\s+)([^%]+)(\s+\%\})/g,
-              `globalThis.finalScore`
+              `<iframe width="100%" class="h-[45rem] bg-black" src="$2" frameborder="0" scrolling="no"></iframe>`
             )
           default:
             return inlineMarkdown(line);

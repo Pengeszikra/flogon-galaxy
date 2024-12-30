@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flogon on the Board</title>
+  <link href="src/style.css" rel="stylesheet" />
+  <link href="src/marker.css" rel="stylesheet" />
+  <script type="module" src="src/throw-to-match.js"></script>
+</head>
+
+<!-- T E M P L A T E S -->
+
+<template id="ui-blend">
+  <section class="
+    top-2 left-2
+    --bg-blend-hard-light
+    absolute w-[5rem] h-[5rem]
+    opacity-20
+    --pointer-events-none
+    --mix-blend-color-dodge
+  "></section>
+</template>
+<template id="mob-o">
+  <section class="
+    top-2 left-2
+    absolute w-[5rem] h-[5rem]
+    outline-1 outline-sky-300 outline-dashed
+    pointer-events-none
+    bg-[url(../sheets/sprite-7000.png)]
+  "></section>
+</template>
+<template id="mob">
+  <section class="
+    top-2 left-2
+    absolute w-[5rem] h-[5rem]
+    pointer-events-none
+    bg-[url(../sheets/sprite-7000.png)]
+  "></section>
+</template>
+<template id="card">
+  <section class="
+    w-[11rem] rounded-xl aspect-[4/7]
+    outline outline-1 outline-zinc-900
+    --px-1 
+    --py-3
+    absolute top-0 left-0
+    transition-all duration-500
+    bg-no-repeat
+    transform-style:preserve-3d 
+    pointer-events-none
+    delay-500
+  ">
+    <div class="
+      text-neutral-700
+      text-[1rem]
+      absolute
+      top-2
+      left-2
+      bg-white/40
+      rounded-full
+      w-[1.5rem]
+      text-center
+      select-none
+      ">9</div>
+  </section>
+</template>
+
+<!-- B O D Y -->
+
+<body class="
+bg-black
+text-zinc-200
+max-w-screen-md
+m-auto
+overflow-hidden
+">
+
+  <!-- G A M E -->
+
+  <main class="
+    grid
+    place-items-center
+    m-auto
+    overflow-clip
+    
+    min-h-[100vh]
+    relative
+    --pointer-events-none
+    ">
+    <section id="gallery" class=" 
+      absolute top-0 left-0
+      max-w-full
+      flex gap-2 flex-wrap
+    "></section>
+    <figure id="visual-1" class="
+      --bg-contain
+      absolute top-0 left-0
+      min-w-full min-h-[100vh]
+      pointer-events-none select-none
+      bg-transparent
+      bg-cover
+      --bg-contain
+      bg-no-repeat
+      --bg-center
+      bg-top
+    "></figure>
+    <figure id="visual-2" class="
+      --bg-contain
+      absolute top-0 left-0
+      min-w-full min-h-[100vh]
+      pointer-events-none select-none
+      bg-transparent
+      bg-cover
+      bg-no-repeat
+      bg-center
+    "></figure>
+    <section class="
+      absolute top-0 left-0
+      min-w-[100vw] min-h-[100vh]
+      select-none
+      grid grid-cols-3 gap-0
+    ">
+      <div id="left-side" class="bg-gradient-to-b from-transparent to-black w-full h-full relative select-none"></div>
+      <div id="center-area" class="bg-gradient-to-b from-transparent to-black w-full h-full select-none"></div>
+      <div id="right-side" class="bg-gradient-to-b from-transparent to-black w-full h-full select-none"></div>
+    </section>
+    <div></div>
+    <button class="
+      hidden
+      bg-sky-700 text-white text-2xl
+      rounded-xl py-2 px-4 select-none
+      z-10
+    ">next mission</button>
+    <figure id="desk" class="
+      absolute top-0 left-0
+      w-[100vw] 
+      h-[100vh]
+    
+    "></figure>
+    <figure id="sprite-sheet" class="
+      hidden
+      absolute w-[20rem] h-[20rem] 
+      top-[50%-5rem]
+      left-[50%-5rem]
+      --top-0 --right-0
+      bg-[url(../sheets/sprite-7014.png)]
+      bg-cover
+      bg-no-repeat
+      pointer-events-auto
+      outline-1 outline-sky-300 outline-dashed
+      --pointer-events-none
+    ">
+      <figure id="selector" class="
+      hidden
+      absolute w-[5rem] h-[5rem]
+      outline outline-1 outline-orange-300
+      bg-orange-950/10
+      bg-blend-multiply
+      pointer-events-none
+    "></figure>
+    </figure>
+    <pre id="monitor" class="
+      --hidden
+      absolute bottom-0 left-0
+      text-emerald-300
+      text-sm
+      w-full h-[2.5rem]
+      p-2
+      bg-black/70
+      select-none pointer-events-none
+    "></pre>
+    <article class="
+      absolute 
+      --top-[50%-3rem]
+      top-[0rem]
+      left-[100vw]
+      whitespace-nowrap
+      min-w-[100vw] text-center
+      text-[3rem] 
+      bg-black/30
+      text-red-600
+      shadow-black
+      select-none
+      pointer-events-none
+      transition-all
+      duration-500
+      font-bold
+    ">Flogons on the Bridge!</article>
+    <div id="score" class="
+      hidden
+      absolute
+      top-[50%-3rem]
+      left-[50%-3rem]
+      text-[6rem]
+      text-red-600
+      font-black
+      select-none
+      pointer-events-none
+    ">0</div>
+    <section id="headup-display" class="
+      absolute top-0 left-[50% - 20rem]
+      w-[40rem]
+      h-[5rem]
+      bg-[url(../score-board.png)]
+      bg-cover
+      bg-no-repeat
+      bg-center
+    ">
+      <div id="high-score" class="
+      w-[10rem]
+      absolute
+      top-[0rem]
+      left-[39%]
+      text-[2.5rem]
+      bg-size[]
+      text-emerald-300
+      font-extralight
+      text-right
+      select-none
+      pointer-events-none
+      ">0</div>
+      <!-- <video class="absolute top-0 left-0 w-[20rem] h-[20rem]" autoplay loop src="../media/flogons-news-8001.mp4"></video> -->
+      <div id="center-number" class="absolute top-2 left-[6.5rem] text-[2rem] text-emerald-300 select-none"></div>
+      <div id="top-number" class="absolute top-2 right-[6rem] text-[2rem] text-emerald-300 select-none"></div>
+    </section>
+  </main>
+
+  <!-- P A G E S  -->
+
+  <article id="game-rule" class="
+    bg-zinc-900
+    absolute top-0 left-0
+    min-w-[100vw] min-h-[100vh]
+    text-xl whitespace-pre-wrap
+    ">
+    <section class="absolute top-0 left-0 grid grid-cols-2 gap-4">
+      <markdown-view class="p-[1rem]" source="./sage/side.md"></markdown-view>
+      <markdown-view class="p-[1rem]" source="./sage/rule.md"></markdown-view>
+    </section>
+    <button class="
+      absolute
+      top-4
+      left-8
+      m-auto
+      py-4 
+      min-w-[42vw]
+      bg-sky-950
+      text-sky-500
+      text-2xl
+      rounded-xl
+    ">Flogons on the Board! [<span class="text-sky-200">PLAY</span>]</button>
+  </article>
+
+  <article id="end-screen" class="
+    hidden
+    bg-zinc-900
+    absolute top-0 left-0
+    min-w-[100vw] min-h-[100vh]
+    text-xl whitespace-pre-wrap
+    ">
+    <section class="absolute top-0 left-0 grid grid-cols-1 gap-4">
+      <markdown-view class="p-[1rem] w-[70%] m-auto" source="./sage/conclusion.md"></markdown-view>
+      <section id="score-board" class="grid place-items-center text-[4rem] text-emerald-400"></section>
+    </section>
+  </article>
+</body>
+</html>
