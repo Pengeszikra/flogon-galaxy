@@ -24,3 +24,6 @@ Because Marker are great tool to put together the multimedia stuff with a small 
 ## Multiple Marker under Option
 Maybe I can test a multiple marker under options or in some grid or even with switchable editor.
 Such a crazy idea, but I think that solution will be pushing forward this game developmnet concept.
+
+## GIT hell of .env
+I forget add .env to a gitignore which is steal 3 dev hours. Shame!!
