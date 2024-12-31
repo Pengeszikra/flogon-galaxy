@@ -1,0 +1,23 @@
+{
+  "private": false,
+  "name": "flogon-galaxy",
+  "author": "Peter Vivo <pengeszikra@gmail.com>",
+  "version": "0.0.0",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "start": "vite"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.0.0",
+    "@aws-sdk/lib-dynamodb": "^3.0.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.16",
+    "typescript": "5.7.2",
+    "vite": "^6.0.3"
+  }
+}

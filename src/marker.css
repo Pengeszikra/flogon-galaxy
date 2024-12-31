@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  /* font-size: 2.5vmin; */
+  /* Disables gestures like pinch-to-zoom */
+  touch-action: manipulation;
+}
+body {
+  /* Prevents scrolling beyond the viewport limits */
+  overscroll-behavior: none; 
+  /* overflow: clip; */
+}
+
+
+body {
+  color-scheme: dark;
+  background: #333;
+  color: #999;
+}
+
+markdown-view {
+  white-space: pre-wrap;
+
+  --h1: #A6F;
+  --h2: #893;
+  --code-sm: #88E;
+  --code: #ABC;
+  --info-bg: #222;
+  --info-text: #888;
+  --link: #56A;
+  --hover-link: #78F;
+  --scroll-bg: #131313;
+  --scroll-tumb: #222;
+  --scroll-hover: #89a15d;
+}
+
+::-webkit-scrollbar { width: 1rem;}
+::-webkit-scrollbar-track { background: var(--scroll-bg) }
+::-webkit-scrollbar-thumb { background: var(--scroll-tumb) }
+::-webkit-scrollbar-thumb:hover { background: var(--scroll-hover) }
+textarea::-webkit-resizer { background-color: #282828; }
+
+pre {
+  scrollbar-width: thin;
+  scrollbar-color: #111 #333 !important;
+}
+
+sw { color: #fb8600}
+rw { color: #acd641}
+bw { color: #ac84d7}
+ew { color: #ac84d7}
+uw { color: #8f665f}
+st { color: #2fd57f}
+rm { color: #768d76}
+jd { color: #9ea77d}
+wt { color: #618be3}

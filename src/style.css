@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#desk {
+  transform-style: preserve-3d;
+  transform:
+    perspective(60vh)
+    rotateX(40deg)
+    rotateY(0deg)
+    rotateZ(0deg)
+    scale(.64)
+    translateZ(0px);
+  pointer-events: none;
+  top: 17rem;
+}
+
+/* body, html { font-size: 10px; } */
