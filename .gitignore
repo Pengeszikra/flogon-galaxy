@@ -8,3 +8,4 @@ yarn-error.log*
 webroot
 image-sources
 art-of-aside
+.env
