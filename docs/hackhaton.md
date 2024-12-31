@@ -26,4 +26,36 @@ Maybe I can test a multiple marker under options or in some grid or even with sw
 Such a crazy idea, but I think that solution will be pushing forward this game developmnet concept.
 
 ## GIT hell of .env
-I forget add .env to a gitignore which is steal 3 dev hours. Shame!!
+> I forget add .env to a gitignore which is steal 3 dev hours. Shame!!
+
+## Q is working on Server code Again!
+...working... I hope this time make a much more cleaner code as before.
+Nope it is make some class based solution. Need to be refact!
+Q is not bad at all, maybe working maybe not.
+Actually don't
+So this is my experiment with a Q development. 
+I don't want to over estimated their capability.
+This document are fine for a finaly document on Hackhaton about `Amazon Q`
+I saw the Q need a lot of time to work this stuff, I hope that is don't 
+afraid about a lot of assets inlcluded to this project already. 
+
+I make a decision which lib to use for BE
+- express
+- fastify
+- koa
+- nestjs
+- hapi
+> I am stay on my working standard: express
+Meanwhile Q are created a new iteration.
+
+## I my Gosh! I am on same river as before 4 hours ago!
+```shell
+http://localhost:3000/health
+# answer
+
+{"status":"Kepp up good work!"}
+```
+
+![](mid/flogon4143.jpeg)
+
+

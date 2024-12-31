@@ -7,11 +7,13 @@
   "type": "module",
   "scripts": {
     "build": "vite build",
-    "start": "vite"
+    "start": "vite",
+    "server": "node src/services/dbServer.js"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.0.0",
-    "@aws-sdk/lib-dynamodb": "^3.0.0"
+    "@aws-sdk/lib-dynamodb": "^3.0.0",
+    "express": "^5.0.1"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.20",
