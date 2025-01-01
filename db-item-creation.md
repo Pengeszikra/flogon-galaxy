@@ -29,3 +29,11 @@ The `create()` method returns an object with the following properties:
 - `error`: error message if the operation failed
 
 Make sure your DynamoDB table has the appropriate schema to support items with `id` and `content` fields.
+
+```js
+await fetch('http://localhost:3000/add', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({id:44, content:"another stuff"}),
+    }).then(r=>r.text()).then(console.log);
+```

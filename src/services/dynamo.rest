@@ -1,27 +1,20 @@
-http://localhost:3000/api/health
+### FrontEnd
 
-### vite wersion
+http://localhost:5173
 
-http://localhost:5173/api/health
+
+### Health check
+
+http://localhost:3000/health
+
 
 ### items test
 
-http://localhost:5173/api/items
-
-
 ### post one item into db
-POST http://localhost:3000/create
-content-type: application/json
-
-{
-  id: "732673267"
-  content: "Some foo content to try thi is working or not?"
-}
-
-### just post
-POST http://localhost:3000/create HTTP/1.1
+POST http://localhost:3000/add HTTP/1.1
 Content-Type: application/json
 
 {
+  id: "732673267"
   content: "Some foo content to try thi is working or not?"
 }
