@@ -8,11 +8,14 @@
   "scripts": {
     "build": "vite build",
     "start": "vite",
-    "server": "node src/services/dbServer.js"
+    "server": "pnpm node src/services/dbServer.js",
+    "dev:server": "vite serve src/services/dbServer.js",
+    "dev": "pnpm run server & pnpm start"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.0.0",
     "@aws-sdk/lib-dynamodb": "^3.0.0",
+    "cors": "^2.8.5",
     "express": "^5.0.1"
   },
   "devDependencies": {

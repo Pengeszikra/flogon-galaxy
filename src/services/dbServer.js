@@ -1,12 +1,25 @@
 import express from 'express';
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocument } from "@aws-sdk/lib-dynamodb";
+import cors from 'cors';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// CORS middleware configuration
+app.use(cors({
+  origin: 'http://localhost:5173',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+}));
+
 // Middleware to parse JSON bodies
 app.use(express.json());
+
+// Health check endpoint
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'healthy', timestamp: new Date().toISOString() });
+});
 
 /**
  * @typedef {Object} DBResponse
@@ -100,13 +113,20 @@ class DBServer {
 }
 
 // Initialize DB server with table name
-const dbServer = new DBServer('flogon-store');
+
+// Start the Express server
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});
+const dbServer = new DBServer('flogon-storage');
 
 // Create item
-app.post('/items', async (req, res) => {
+app.post('/create', async (req, res) => {
   try {
-    const result = await dbServer.create(req.body);
-    res.json(result);
+    console.log(req.body)
+    // const result = await dbServer.create(req.body);
+    // res.json(result);
+    res.status(200).json({createItem: "something don't work fine"});
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }
@@ -126,15 +146,15 @@ app.get('/items/:id', async (req, res) => {
 });
 
 // Query items
-app.get('/items', async (req, res) => {
-  try {
-    const { keyCondition, values } = req.query;
-    const result = await dbServer.query(keyCondition, JSON.parse(values));
-    res.json(result);
-  } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
-  }
-});
+// app.get('/items', async (req, res) => {
+//   try {
+//     const { keyCondition, values } = req.query;
+//     const result = await dbServer.query(keyCondition, JSON.parse(values));
+//     res.json(result);
+//   } catch (error) {
+//     res.status(500).json({ success: false, error: error.message });
+//   }
+// });
 
 // Delete item
 app.delete('/items/:id', async (req, res) => {

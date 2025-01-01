@@ -1,0 +1,27 @@
+http://localhost:3000/health
+
+### vite wersion
+
+http://localhost:5174/health
+
+### items test
+
+http://localhost:3000/items/foo
+
+
+### post one item into db
+POST http://localhost:3000/create
+content-type: application/json
+
+{
+  id: "732673267"
+  content: "Some foo content to try thi is working or not?"
+}
+
+### just post
+POST http://localhost:3000/create HTTP/1.1
+Content-Type: application/json
+
+{
+  content: "Some foo content to try thi is working or not?"
+}
