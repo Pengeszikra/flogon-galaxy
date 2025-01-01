@@ -56,6 +56,91 @@ http://localhost:3000/health
 {"status":"Kepp up good work!"}
 ```
 
+## DynamoDB Query and More
+
+[dynamo db doc](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html);
+
+> scan
+
+```
+await fetch('http://localhost:3000/scan', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({Limit:10}),
+    }).then(r=>r.text()).then(console.log);
+```
+
+```
+{
+  "$metadata": {
+    "httpStatusCode": 200,
+    "requestId": "314RA09BAVBF4GKFRFOVS6BCSRVV4KQNSO5AEMVJF66Q9ASUAAJG",
+    "attempts": 1,
+    "totalRetryDelay": 0
+  },
+  "Count": 3,
+  "Items": [
+    {
+      "content": "It is seems working?",
+      "id": "77"
+    },
+    {
+      "content": "Muh more interesting",
+      "id": "732872"
+    },
+    {
+      "content": "Let's do something else",
+      "id": "42"
+    }
+  ],
+  "ScannedCount": 3
+}
+```
+
+## Top 25 Space Game
+
+````
+{% https://www.youtube.com/embed/UbI5byCVR5A?si=ZARBTorq8LemOZdf %}
+````
+
+```
+<iframe 
+  width="560" 
+  height="315" 
+  src="https://www.youtube.com/embed/UbI5byCVR5A?si=ZARBTorq8LemOZdf" 
+  title="YouTube video player" 
+  frameborder="0" 
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" 
+  allowfullscreen
+></iframe>
+```
+
+- 00:56 Starcom: Unknown Space
+- 01:35 Liberation
+- 02:35 Master of Orion (Remake)
+- 03:27 Reentry - A Space Flight Simulator
+- 04:04 Starfield
+- 05:02 Empyrion - Galactic Survival
+- 05:36 Space Engineers
+- 06:14 Elite Dangerous
+- 07:02 Mass Effect 2
+- 07:33 Avorion
+- 08:05 Everspace 2
+- 08:50 Star Traders: Frontiers
+- 09:19 EVE Online
+- 09:56 Starbase
+- 10:25 Starsector
+- 10:48 Space Trash Scavenger
+- 11:23 Faster Than Light
+- 11:57 Outer Wilds
+- 12:30 Endless Space 2
+- 13:03 No Man's Sky
+- 13:47 Kerbal Space Program
+- 14:55 Space Engine
+- 16:42 Stellaris 
+- 17:13 Star Citizen
+- 18:33 X4: Foundations
+
 ![](mid/flogon4143.jpeg)
 
 

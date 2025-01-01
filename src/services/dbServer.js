@@ -52,6 +52,16 @@ app.post('/get', (req, res) => {
     .catch(console.warn);
 });
 
+app.post('/scan', (req, res) => {
+  db.scan({
+    TableName,
+    Limit: 12,
+    ...req.body
+  })
+    .then(r => res.json(r))
+    .catch(console.warn);
+});
+
 app.post('/delete', (req, res) => {
   db.delete({
     TableName,
