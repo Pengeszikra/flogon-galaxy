@@ -7,10 +7,10 @@
   "type": "module",
   "scripts": {
     "build": "vite build",
-    "start": "vite",
+    "client": "vite",
     "server": "pnpm node src/services/dbServer.js",
     "dev:server": "vite serve src/services/dbServer.js",
-    "dev": "pnpm run server & pnpm start"
+    "start": "pnpm run server & pnpm run client"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.0.0",

@@ -1,12 +1,12 @@
-http://localhost:3000/health
+http://localhost:3000/api/health
 
 ### vite wersion
 
-http://localhost:5174/health
+http://localhost:5173/api/health
 
 ### items test
 
-http://localhost:3000/items/foo
+http://localhost:5173/api/items
 
 
 ### post one item into db
