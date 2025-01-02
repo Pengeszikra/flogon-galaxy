@@ -132,6 +132,11 @@
               /(\{\%\s*)([^%]+)(\s*\%\})/g,
               `<iframe width="100%" class="h-[45rem] bg-black" src="$2" frameborder="0" scrolling="no"></iframe>`
             )
+          case /\{\%\s*([^\%]+)\s*\%[^\}]+\}/.test(line):
+            return line.replaceAll(
+              /(\{\%\s*)([^\%]+)(\s*\%)([^\}]+)(\})/g,
+              `<iframe width="100%" height="$4" class="bg-black" src="$2" frameborder="0" scrolling="no"></iframe>`
+            )
           default:
             return inlineMarkdown(line);
         }

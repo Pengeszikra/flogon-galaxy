@@ -15,7 +15,7 @@
      + DynamoDB
 ```
 
-{% throw %}
+{%throw%700rem}
 
 ## One image can tell...
 much mure thing than 1000 word!
