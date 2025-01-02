@@ -100,8 +100,6 @@ const render = (state) => {;
 const state = signal(render)(initialState);
 const tool = signal(toolRender)(toolInitState);
 
-setupMarkerViews();
-
 // globalThis.state = state;
 
 const questImageList = Array(295).fill('../mid/flogon')
