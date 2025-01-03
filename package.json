@@ -20,6 +20,7 @@
     "express": "^5.0.1"
   },
   "devDependencies": {
+    "@vercel/static-build": "^2.5.40",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.16",
