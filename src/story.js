@@ -8,6 +8,11 @@ const playStory = (storyBoard, sceneNumber) => {
     const [, imgurl, descript] = /\((.*?)\)\s*(.*)\s*/gms.exec(storyBoard[sceneNumber]);
     scene.querySelector('p').innerText = descript;
     scene.style.backgroundImage = `url(${imgurl})`;
+    console.log(sceneNumber)
+    if (sceneNumber >= storyBoard.length -1) {
+      scene.querySelector('button').classList.add('hidden');
+      return;
+    }
     scene.querySelector('button').onclick = () => {sceneNumber ++ ; next()};
   }
   next()
