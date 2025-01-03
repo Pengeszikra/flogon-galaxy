@@ -8,6 +8,7 @@
   <link href="src/style.css" rel="stylesheet" />
   <link href="src/marker.css" rel="stylesheet" />
   <script type="module" src="src/concept.js"></script>
+  <script src="src/dragdrop.js"></script>
 </head>
 <main class="min-h-screen bg-zinc-950 text-zinc-400">
   <section class="max-w-screen-2x m-auto grid grid-cols-1 gap-2 lg:grid-cols-2">
@@ -28,7 +29,11 @@
         focus:outline-none
         p-8
         my-0
-        placeholder-zinc-600" placeholder=" - - - markdown editor - - - " spellcheck="false">
+        placeholder-zinc-600" 
+        placeholder=" - - - markdown editor - - - " 
+        spellcheck="false"
+        ondragover="event.preventDefault();"
+        ondrop="handleImageDrop(event)">
       </textarea>
       <input type="text" name="" id="" class="
         hidden

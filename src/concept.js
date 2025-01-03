@@ -54,7 +54,7 @@ const editMark = (line) => {
 const writeMark = (line) => {
   console.log(`write: ${line}`);
   fetch(`${API}/put`, {method, headers,
-    body: JSON.stringify({id:line, content: markdownEditor.value})
+    body: JSON.stringify({id:line, content: markdownEditor.value, upDated: Date.now()})
   })
     .then(textReader)
     .then(console.log)
@@ -98,3 +98,27 @@ cli.addEventListener("keydown",
     }
   }
 );
+
+
+/** @type {(event:DragEvent) => any} */
+const handleImageDrop = (event) => {
+  event.preventDefault();
+  const {items} = event.dataTransfer;
+  for (let i = 0; i < items.length; i++) {
+      const item = items[i];
+      if (item.kind === 'string' && item.type.match('^text/plain')) {
+          item.getAsString(function (url) {
+              // Check if the dropped text is an image URL
+              if (url.match(/\.(jpg|jpeg|png|gif|webp)$/i)) {
+                  const imageMarkdown = `![](${url})`;
+                  const start = cli.selectionStart;
+                  const end = cli.selectionEnd;
+                  const text = cli.value;
+                  cli.value = text.substring(0, start) + imageMarkdown + text.substring(end);                  
+                  // Trigger change event to update preview
+                  cli.dispatchEvent(new Event('input'));
+              }
+          });
+      }
+  }
+}
