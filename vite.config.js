@@ -9,6 +9,7 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, 'index.html'),
         throw: resolve(__dirname, 'throw.html'),
+        story: resolve(__dirname, 'story.html'),
       }
     }
   },

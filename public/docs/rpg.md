@@ -1,6 +1,7 @@
 # `RPG` or less?
 
-![](https://cdn.midjourney.com/4c1316fc-1022-4b3d-8a6b-ec6f3cd8cd9c/0_2.png)
+{%story.html%500rem}
+
 ## TODO list
 ```
 -[+] PWA
