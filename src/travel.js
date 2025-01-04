@@ -1,5 +1,7 @@
 import { fragment, signal } from './utils/old-bird-soft';
 import {assets} from './throw/asset';
+import { scifiUI } from './throw/ui-elements';
+
 
 const map = document.querySelector('main');
 const origo = document.querySelector('#origo');
@@ -27,10 +29,10 @@ document.addEventListener("keydown",
   (event) => {
     const {key} = event;
     switch (key) {
-      case "a": return ship.xSpeed -= .1;
+      case "a": return ship.xSpeed += .1;
       case "w": return ship.ySpeed -= .1;
       case "s": return ship.ySpeed += .1;
-      case "d": return ship.xSpeed += .1;
+      case "d": return ship.xSpeed -= .1;
       case "r": return ship.zSpeed += .1;
       case "e": return ship.zSpeed -= .1;
       case " ": {
@@ -79,7 +81,7 @@ const drawSprite = ({
   frg.style.transform = `
     translateX(${dice(200) - 100}rem)
     translateY(${dice(200) - 100}rem)
-    translateZ(${dice(200) - 100}rem)
+    translateZ(${dice(800) - 400}rem)
     scale(2)
     rotateX(-50deg)
   `;
