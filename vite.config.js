@@ -10,6 +10,7 @@ export default defineConfig({
         main: resolve(__dirname, 'index.html'),
         throw: resolve(__dirname, 'throw.html'),
         story: resolve(__dirname, 'story.html'),
+        travel: resolve(__dirname, 'travel.html'),
       }
     }
   },

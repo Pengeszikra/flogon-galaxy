@@ -7,7 +7,7 @@ let scroll = 0;
 const tableSpeed = 2;
 const HIDDEN = "hidden";
 
-/** 
+/**
  * @typedef {{
 *  id: string
 *  crd: HTMLElement
@@ -15,10 +15,10 @@ const HIDDEN = "hidden";
 *  score: number
 *  power: number
 *  isInHand: Boolean
-* }} Card 
+* }} Card
 */
 
-/** 
+/**
  * @typedef {{
  *  run: number | null
  *  score: number
@@ -28,7 +28,7 @@ const HIDDEN = "hidden";
  *  itIsOver: boolean
  *  scrollSpeed: number
  *  img: string
- * }} State 
+ * }} State
  */
 
 const initialState = {
@@ -41,12 +41,12 @@ const initialState = {
   img: "",
 }
 
-const toolInitState = { 
+const toolInitState = {
   x: 0,  y: 0,
   w: 5,  h: 5,
   sheetIndex: 0,
   shoot: [],
-  m: 10, // important number for sprite editor 
+  m: 10, // important number for sprite editor
          // which is depend on main font size, currently: 10px;
   n: 2,  // less importan the 2 is always seems good.
          // figure out by number tweak
@@ -57,9 +57,9 @@ const spriteBgImg = index => `url(${spriteSheetList[index]})`;
 const dice = (side = 6) => Math.random() * side + 1 | 0;
 
 const drawSprite = ({
-  x, y, w, h, 
-  m = toolInitState.m, 
-  n = toolInitState.n, 
+  x, y, w, h,
+  m = toolInitState.m,
+  n = toolInitState.n,
   sheetIndex = 0
 }) => (frg) => {
   frg.style.width = `${w}rem`;
@@ -79,7 +79,7 @@ const toolRender = (tState) => {
   sprite.style.backgroundImage = spriteBgImg(tool.sheetIndex);
   drawSprite(tState)(frg);
   log({m,n, sheetIndex})
-}; 
+};
 
 const storeSprite = () => {
   const {x,y,w,h,sheetIndex, shoot} = tool;
@@ -95,7 +95,7 @@ const render = (state) => {;
   highScore.innerText = state.scoreTo;
   const {score, run, img, scrollSpeed} = state;
   log({score, run, img, scrollSpeed})
-} 
+}
 
 const state = signal(render)(initialState);
 const tool = signal(toolRender)(toolInitState);
@@ -134,7 +134,7 @@ sprite.onmousemove = (e) => {
   if (!drag) return;
   e.preventDefault();
   const {offsetX, offsetY} = e;
-  // screenX, screenY, clientX, clientY, 
+  // screenX, screenY, clientX, clientY,
   tool.x = offsetX;
   tool.y = offsetY;
 }
@@ -160,12 +160,12 @@ const toggleUI = () => {
   desk.classList.toggle(HIDDEN);
 }
 
-document.addEventListener("keydown", 
-  /** @type {(event:KeyboardEvent) => void} */
+document.addEventListener("keydown",
+  /** @type {(event:KeyboardEvent) => any} */
   (event) => {
     const {key} = event;
     switch (key) {
-      case "c": return drag = !drag; 
+      case "c": return drag = !drag;
 
       case "n": return nextDay();
       case "z": return toggleUI();
@@ -198,17 +198,17 @@ document.addEventListener("keydown",
 );
 
 const interactionToLeft = () => {
-  state.scrollSpeed = ( state.scrollSpeed === 0 ) 
-  ? + tableSpeed 
+  state.scrollSpeed = ( state.scrollSpeed === 0 )
+  ? + tableSpeed
   : 0
   ;
 };
 
 const interactionToRight = () => {
   state.scrollSpeed = ( state.scrollSpeed === 0 )
-    ? - tableSpeed 
+    ? - tableSpeed
     : 0
-    ; 
+    ;
 };
 
 const interactionCallCard = () => {
@@ -227,7 +227,7 @@ const callCard = () => {
     state.deck[id].isInHand = false;
     const who = state.deck[id];
     return callCardToPlay(who);
-  } catch (error) { 
+  } catch (error) {
     state.itIsOver = true;
   }
 }
@@ -279,7 +279,7 @@ state.opponent = opponentSet.map((value, idx) => {
 });
 
 const flyOut = (order) => [
-  `translateX(${order}rem) translateY(-22rem) scale(3) translateZ(-2rem)  rotateX(-50deg)`, 
+  `translateX(${order}rem) translateY(-22rem) scale(3) translateZ(-2rem)  rotateX(-50deg)`,
   `translateX(${order}rem) translateY(-22rem) scale(3) translateZ(-4rem)  rotateX(-60deg)`,
   `translateX(${order}rem) translateY(-22rem) scale(3) translateZ(20rem)  rotateX(-80deg)`,
   `translateX(${order}rem) translateY(10rem)  scale(3) translateZ(20rem)  rotateX(-60deg)`,
@@ -287,12 +287,12 @@ const flyOut = (order) => [
   `translateX(${order}rem) translateY(9rem)  scale(3) translateZ(20rem)  rotateX(-55deg)`,
   `translateX(${order}rem) translateY(9rem)  scale(3) translateZ(20rem)  rotateX(-60deg)`,
   `translateX(${order}rem) translateY(10rem)  scale(3) translateZ(20rem)  rotateX(-60deg)`,
-  `translateX(${order}rem) translateY(11rem) scale(3) translateZ(0rem)  rotateX(0deg)`, 
-  `translateX(${order}rem) translateY(11rem) scale(3) translateZ(0rem)  rotateX(0deg)`, 
+  `translateX(${order}rem) translateY(11rem) scale(3) translateZ(0rem)  rotateX(0deg)`,
+  `translateX(${order}rem) translateY(11rem) scale(3) translateZ(0rem)  rotateX(0deg)`,
 ]
 
 const flyToMatch = (order) => [
-  `translateX(0rem)              translateY(-22rem) scale(3) translateZ(7rem)   rotateX(-50deg)   `, 
+  `translateX(0rem)              translateY(-22rem) scale(3) translateZ(7rem)   rotateX(-50deg)   `,
   `translateX(${order/1.3}rem)   translateY(0rem)   scale(3) translateZ(12rem)   rotateX(-60deg)`,
   `translateX(${order/1.1}rem)   translateY(35rem)  scale(3) translateZ(14rem)  rotateX(-60deg)`,
   `translateX(${order * 1.1}rem)   translateY(39rem)  scale(3) translateZ(15rem)  rotateX(-60deg)`,
@@ -318,8 +318,8 @@ const callCardToPlay = async(who) => {
     crd.style.transition = `transform ${cardSpeed}ms linear`;
     opp.style.transition = `transform ${cardSpeed}ms linear`;
     crd.style.transform = ani;
-    opp.style.transform = aoo; 
-    if (sequence.length === 4) { 
+    opp.style.transform = aoo;
+    if (sequence.length === 4) {
       state.score += calcScore(power, opw);
     }
     if (!sequence.length) { clearInterval(stop) }
@@ -385,7 +385,7 @@ const deskMotion = (x) => {
 
 setInterval(() => {
   if ( !state.scrollSpeed ) return;
-  if (scroll - state.scrollSpeed < - 1200 || 
+  if (scroll - state.scrollSpeed < - 1200 ||
     scroll - state.scrollSpeed > 1700
   ) {
     state.scrollSpeed = -state.scrollSpeed;
