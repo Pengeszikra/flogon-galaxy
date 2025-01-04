@@ -6,9 +6,38 @@
   <title>Flogon Galaxy</title>
   <link rel="manifest" href="manifest.json" />
   <link href="src/style.css" rel="stylesheet" />
+  <style>
+    body {
+      perspective-origin: center;
+      perspective: 100vw;
+    }
+    #origo {
+      transform-style: preserve-3d;
+      transform: rotateX(40deg) rotateY(0deg) rotateZ(0deg);
+      pointer-events: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 60vw;
+    }
+
+    #origo section {
+      transform-style: preserve-3d;
+    }
+  </style>
 </head>
 
-<body class="min-h-screen bg-zinc-950 text-zinc-400">
+<template id="mob">
+  <section class="
+    top-2 left-2
+    absolute w-[5rem] h-[5rem]
+    pointer-events-none
+  "></section>
+</template>
+
+<body class="min-h-screen bg-zinc-950 text-zinc-400 overflow-clip relative">
+
   <main class="
     bg-zinc-900
     min-w-full
@@ -16,6 +45,9 @@
     bg-[url(../sheets/texture-2002.png),url(../sheets/texture-2001.png)]
     p-8
   "></main>
+
+  <section id="origo"></section>
+
   <figure class="
     aspect-video
     min-w-full
@@ -23,6 +55,8 @@
     bg-[url(../sheets/bridge-4400.png)]
     bg-cover
   "></figure>
+
+
   <script type="module" src="src/travel.js"></script>
 </body>
 </html>
