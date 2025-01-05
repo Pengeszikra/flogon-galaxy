@@ -14,7 +14,7 @@ markdownEditor.addEventListener("input",
   markdownView.changeContent(markdownEditor.value);
 })
 
-// VIM ??
+// VIM ?? not now!
 
 markdownEditor.addEventListener("keydown",
   /** @type {(event:KeyboardEvent) => any} */
@@ -83,8 +83,8 @@ cli.addEventListener("keydown",
     // console.log(key);
     switch (key) {
       case "Enter": {
+        event.preventDefault();
         runEditorCommand(cli.value);
-        markdownView.changeContent(cli.value);
         cli.classList.add(HIDDEN);
         markdownEditor.focus();
         return 

@@ -34,10 +34,10 @@ document.addEventListener("keydown",
   (event) => {
     const {key} = event;
     switch (key) {
-      case "a": return ship.xSpeed += .1;
+      case "a": return ship.xSpeed -= .1;
+      case "d": return ship.xSpeed += .1;
       case "w": return ship.ySpeed -= .1;
       case "s": return ship.ySpeed += .1;
-      case "d": return ship.xSpeed -= .1;
       case "r": return ship.zSpeed += .1;
       case "e": return ship.zSpeed -= .1;
       case " ": {
