@@ -1,6 +1,7 @@
-# Rock & Roll with a bit of `Metal`
+# Wora Shard
+## Rock & Roll with a bit of `Metal`
 
-![](https://cdn.midjourney.com/a9bffbbd-d106-40a9-a74b-9e586df3c984/0_2.png)
+![](https://cdn.midjourney.com/6ba0b175-5808-44cf-8c92-4feb623b1339/0_0.png)
 How she meet them?
 
 ![](https://cdn.midjourney.com
@@ -22,20 +23,22 @@ hat can we done.
 
 > Need to be figure out how can stop the rerendering a unchanged part of my current markdown, this is also tricky question, but I don't have a time for solve that.
 
-{% https://www.youtube.com/embed/DpiOSJe_N30?si=0lLJWwlZNesgWea1 %}
+{% https://www.youtube.com/embed/DpiOSJe_N30?si=0lLJWwlZNesgWea1 %320rem}
 
-{% https://www.youtube.com/embed/FomfRl4V3Eo?si=VGS9Sy-pWVulgsue %}
+{% https://www.youtube.com/embed/FomfRl4V3Eo?si=VGS9Sy-pWVulgsue %320rem}
 
+{% https://www.youtube.com/embed/kjbByy670CE?si=7aJLXnn0OjnBMtXw %320rem}
 
+{%https://www.youtube.com/embed/KZAUobQD26g?si=BuYVs8vb_ekinGqq%320rem}
 
-{% https://www.youtube.com/embed/kjbByy670CE?si=7aJLXnn0OjnBMtXw %}
+{%https://www.youtube.com/embed/V0vkGFEGFRU?si=zIMea3QdlrZCOpny%320rem}
 
 ## Trailer
 What is the next stepp? Let's write a booring TODO list again?
 Why not?
 - test the program as PWA on vercel
 
-{% https://www.youtube.com/embed/rcauLdXxni8?si=4h0yxHT2WNHFPAea %}
+{% https://www.youtube.com/embed/rcauLdXxni8?si=4h0yxHT2WNHFPAea %320rem}
 
 > Best security and copyright if no one can know your work.
 
@@ -57,10 +60,13 @@ Maybe I need to be create a few really meaningfull code block.
 I think, I have enough amount media for a final post.
 
 Now let's get to `focus` a game.
+But this stuff is keep me alaive. She need a name!
+Her name is ...... `Wora Shard`
+
+![](https://cdn.midjourney.com/a9bffbbd-d106-40a9-a74b-9e586df3c984/0_2.png)
 
 
-                                                           
- _hacker of the universe!_            
+                                                            _hacker of the universe!_            
 
 
 
