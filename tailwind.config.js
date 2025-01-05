@@ -2,7 +2,7 @@
 export default {
   content: [
     './*.html',
-    './src/**/*.{html,js}',
+    './src/**/*.{html,js,jsx}',
     './public/**/*.{html,js}',
   ],
   theme: {
@@ -10,4 +10,3 @@ export default {
   },
   plugins: [],
 }
-

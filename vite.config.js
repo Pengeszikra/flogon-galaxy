@@ -11,6 +11,7 @@ export default defineConfig({
         throw: resolve(__dirname, 'throw.html'),
         story: resolve(__dirname, 'story.html'),
         travel: resolve(__dirname, 'travel.html'),
+        quest: resolve(__dirname, 'quest.html'),
       }
     }
   },
@@ -22,5 +23,9 @@ export default defineConfig({
         secure: false
       }
     }
-  }
+  },
+  esbuild: {
+    jsxFactory: 'fencer', // Use your custom `fencer` function as the JSX factory
+    jsxFragment: 'Fragment', // Optional if you use JSX fragments (e.g., `<>...</>`).
+  },
 });

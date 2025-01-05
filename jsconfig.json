@@ -1,6 +1,9 @@
 {
   "compilerOptions": {
-    "checkJs": true
+    "checkJs": true,
+    "jsx": "react",
+    "jsxFactory": "fencer",
+    "jsxFragmentFactory": "Fragment"
   },
   "exclude": ["node_modules", "**/node_modules/*"]
 }

@@ -38,3 +38,6 @@ export const fencer = (tag, attrs, ...children) => {
 };
 
 export const Fragment = (...children) => children.flat(); // Optional if you use fragments
+
+/** @type {(view: HTMLElement | DocumentFragment) => HTMLElement | DocumentFragment} */
+export const portal = view => document.body.appendChild(view);
