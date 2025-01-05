@@ -23,7 +23,19 @@ export const fencer = (tag, attrs, ...children) => {
 
     if (attrs) {
       Object.entries(attrs).forEach(([key, value]) => {
-        if (key === 'style' && typeof value === 'object') {
+        if (key === 'class' && value) {
+          // Handle dynamic class
+          if (typeof value === 'string') {
+            element.className = value; // Assign string directly
+          } else if (Array.isArray(value)) {
+            element.className = value.filter(Boolean).join(' '); // Join array into string
+          } else if (typeof value === 'object') {
+            element.className = Object.entries(value)
+              .filter(([_, isActive]) => isActive)
+              .map(([className]) => className)
+              .join(' '); // Convert object keys with truthy values to class list
+          }
+        } else if (key === 'style' && typeof value === 'object') {
           // Handle `style` object
           Object.entries(value).forEach(([styleKey, styleValue]) => {
             element.style[styleKey] = styleValue;
@@ -42,7 +54,35 @@ export const fencer = (tag, attrs, ...children) => {
   }
 };
 
-export const Fragment = (...children) => children.flat(); // Optional if you use fragments
+/** @type {(children: any) => DocumentFragment} */
+export const Fragment = (...children) => {
+  const fragment = document.createDocumentFragment();
 
-/** @type {(view: HTMLElement | DocumentFragment) => HTMLElement | DocumentFragment} */
-export const portal = view => document.body.appendChild(view);
+  // Normalize children to always be an array
+  const normalizedChildren = Array.isArray(children[0]) ? children[0] : children;
+
+  normalizedChildren.flat().forEach(child => {
+    if (child instanceof Node) {
+      fragment.appendChild(child);
+    } else if (typeof child === 'string') {
+      fragment.appendChild(document.createTextNode(child));
+    } else if (Array.isArray(child)) {
+      child.forEach(nestedChild => {
+        if (nestedChild instanceof Node) fragment.appendChild(nestedChild);
+      });
+    } else {
+      console.warn('Unhandled Fragment child type:', child);
+    }
+  });
+
+  return fragment;
+};
+
+
+/** @type {(view: HTMLElement | DocumentFragment) => Promise<HTMLElement | DocumentFragment>} */
+export const portal = view => {
+  return new Promise(resolve => {
+    document.body.appendChild(view);
+    resolve(view); // Resolve the promise with the appended element
+  });
+};

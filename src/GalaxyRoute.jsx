@@ -1,17 +1,18 @@
 import { fencer, portal } from "./utils/fencer";
 import { signal } from "./utils/old-bird-soft";
 
-export const GalaxyRoute = ({front, back}) => (
+/** @type {(props: { front: string, back: string, children?: any }) => HTMLElement} */
+export const GalaxyRoute = ({front, back, children}) => (
     <main class="
         bg-zinc-900
         min-w-full
         aspect-video
-        --bg-[url(${front}),url(${back})]
         grid
         place-items-center
       "
       style={{backgroundImage:`url(${front}),url(${back})`}}
     >
+      {children}
     </main>
   );
 
