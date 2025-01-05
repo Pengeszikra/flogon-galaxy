@@ -1,21 +1,20 @@
-/** @jsx fencer *//** @jsxFrag Fragment */
 import { fencer, portal } from "./utils/fencer";
+import { GalaxyRoute, routeController } from "./GalaxyRoute";
 
-const InnerOne = ({title}) => <div>{title}</div>;
-
-const App = () => (
-  <main class="
-    bg-zinc-900
-    min-w-full
-    aspect-video
-    bg-[url(../sheets/texture-2002.png),url(../sheets/texture-2001.png)]
-    p-8
-    text-emerald-200
-    grid
-    place-items-center
-    text-2xl
-    select-none
-  "> Q U E S T on G A L A X Y</main>
+portal(
+  <section class="relative min-w-full min-h-full">
+    <GalaxyRoute
+      front={"../sheets/texture-2002.png"}
+      back={"../sheets/texture-2001.png"}
+    />
+    <section class="grid place-items-center absolute top-0 left-0 min-w-[100vw] min-h-[100%] sele">
+      <section class="grid">
+      <h1 class="text-emerald-200 text-2xl select-none">F L O G O N - G A L A X Y</h1>
+      <p class="text-orange-300 text-sm text-right min-w-max">first contact</p>
+      </section>
+    </section>
+  </section>
 );
 
-portal(<App />);
+const [state] = routeController();
+state.ySpeed = .3;

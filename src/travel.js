@@ -1,7 +1,5 @@
 import { fragment, signal } from './utils/old-bird-soft';
 import {assets} from './throw/asset';
-import { scifiUI } from './throw/ui-elements';
-
 
 const map = document.querySelector('main');
 /** @type {HTMLDivElement} */
