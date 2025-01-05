@@ -12,9 +12,7 @@ export const fencer = (tag, attrs, ...children) => {
         fragments.appendChild(document.createTextNode(child));
       } else if (Array.isArray(child)) {
         child.forEach(nestedChild => {
-          if (nestedChild instanceof Node) {
-            fragments.appendChild(nestedChild);
-          }
+          if (nestedChild instanceof Node) fragments.appendChild(nestedChild);
         });
       } else {
         console.warn('Unhandled child type:', child);
@@ -25,9 +23,16 @@ export const fencer = (tag, attrs, ...children) => {
 
     if (attrs) {
       Object.entries(attrs).forEach(([key, value]) => {
-        if (key.startsWith('on') && typeof value === 'function') {
+        if (key === 'style' && typeof value === 'object') {
+          // Handle `style` object
+          Object.entries(value).forEach(([styleKey, styleValue]) => {
+            element.style[styleKey] = styleValue;
+          });
+        } else if (key.startsWith('on') && typeof value === 'function') {
+          // Add event listeners
           element.addEventListener(key.slice(2).toLowerCase(), value);
         } else {
+          // Set other attributes
           element.setAttribute(key, value);
         }
       });

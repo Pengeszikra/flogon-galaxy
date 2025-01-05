@@ -2,14 +2,16 @@ import { fencer, portal } from "./utils/fencer";
 import { signal } from "./utils/old-bird-soft";
 
 export const GalaxyRoute = ({front, back}) => (
-    <main class={`
-      bg-zinc-900
-      min-w-full
-      aspect-video
-      bg-[url(${front}),url(${back})]
-      grid
-      place-items-center
-    `}>
+    <main class="
+        bg-zinc-900
+        min-w-full
+        aspect-video
+        --bg-[url(${front}),url(${back})]
+        grid
+        place-items-center
+      "
+      style={{backgroundImage:`url(${front}),url(${back})`}}
+    >
     </main>
   );
 

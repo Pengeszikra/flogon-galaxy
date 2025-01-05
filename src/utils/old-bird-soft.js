@@ -40,7 +40,7 @@ export const delay = (ms) => {
  * I just think it is so easy,
  * but under the hood this is a bit complicated stuff,
  * need to be figurated how complex really is.
- * problem are started with a multi level reactive state 
+ * problem are started with a multi level reactive state
  * with a different level watcher :: globalWatcher, prop:watcher
  *
  * KIHAL : the problem of array are solved.
@@ -69,16 +69,16 @@ export const DIRECT = Symbol('direct');
 export const zignal = (watcher = () => { }) => (state) => {
   let root;
   /** @type {<U>(state?: U) => U} */
-  const innerSignal = (state) => { 
+  const innerSignal = (state) => {
     const proxy = new Proxy(
-      Array.isArray(state) ? [] : {}, 
+      Array.isArray(state) ? [] : {},
       {
         get: (target, prop) => target[prop],
         set: (target, prop, value) => {
           if (target?.[DIRECT]) {
             target[DIRECT](prop, target[prop], value);
           }
-          target[prop] = (value !== null && typeof value === 'object' && !value[STATIC] && !value[DIRECT]) 
+          target[prop] = (value !== null && typeof value === 'object' && !value[STATIC] && !value[DIRECT])
             ? innerSignal(value)
             : value
             ;
@@ -89,8 +89,8 @@ export const zignal = (watcher = () => { }) => (state) => {
     Object.entries(state).map(([key, val]) => proxy[key] = val);
     // @ts-ignore
     return proxy;
-  } 
-  const end = innerSignal(state); 
+  }
+  const end = innerSignal(state);
   root = end;
   watcher(end);
   return root;
@@ -109,3 +109,9 @@ export const fragment = (templateId, parent, id, query = 'section') => {
   document.querySelector(parent)?.appendChild(frag);
   return result;
 };
+
+/** @type {(level:number) => number} */
+export const rnd = level => Math.random() * level | 0;
+
+/** @type {() => number} */
+export const shuffle = () => Math.random() - 0.5;
