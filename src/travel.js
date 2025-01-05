@@ -4,12 +4,17 @@ import { scifiUI } from './throw/ui-elements';
 
 
 const map = document.querySelector('main');
+/** @type {HTMLDivElement} */
 const origo = document.querySelector('#origo');
+/** @type {HTMLDivElement} */
+const bLeft = document.querySelector('#btn-left');
+/** @type {HTMLDivElement} */
+const bRight = document.querySelector('#btn-right');
+
 map.style.backgroundBlendMode = "screen, normal";
 
 const initial = {x:0, y:0, z:0, xSpeed:0, ySpeed:0, zSpeed:0};
 const ship = signal(p=>p)(initial);
-console.log(ship)
 const loop = () => {
   ship.x += ship.xSpeed;
   ship.y += ship.ySpeed;
@@ -44,6 +49,9 @@ document.addEventListener("keydown",
     }
   }
 );
+
+bLeft.onclick  = () => ship.xSpeed -= .1;
+bRight.onclick = () => ship.xSpeed += .1;
 
 // extra items
 

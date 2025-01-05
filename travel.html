@@ -10,6 +10,9 @@
     body {
       perspective-origin: center;
       perspective: 100vw;
+      width: 100vw;
+      max-height: 60vw;
+      overflow: hidden;
     }
     #origo {
       transform-style: preserve-3d;
@@ -36,7 +39,7 @@
   "></section>
 </template>
 
-<body class="min-h-screen bg-zinc-950 text-zinc-400 overflow-clip relative">
+<body class=" bg-zinc-950 text-zinc-400 relative">
 
   <main class="
     bg-zinc-900
@@ -56,7 +59,10 @@
     bg-cover
   "></figure>
 
+  <button id="btn-left" class="absolute w-[5rem] h-[5rem] bg-orange-500/0 bottom-[7rem] left-[8rem] rounded-full"></button>
+  <button id="btn-right" class="absolute w-[5rem] h-[5rem] bg-orange-500/0 bottom-[7rem] left-[14rem] rounded-full"></button>
 
   <script type="module" src="src/travel.js"></script>
+
 </body>
 </html>
