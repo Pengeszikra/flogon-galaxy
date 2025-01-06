@@ -86,51 +86,6 @@ export const portal = view => {
   });
 };
 
-/** @type {(templateId: string, parent: string, id?: string, query?: string) => HTMLElement | null} */
-export const createSprite = (templateId, parent, id, query = 'section') => {
-  /** @type {HTMLTemplateElement | null} */
-  const templateElement = document.querySelector(templateId);
-  if (!templateElement) {
-    console.warn(`Template with ID "${templateId}" not found.`);
-    return null;
-  }
-
-  // Clone the template's content
-  const clonedContent = templateElement.content.cloneNode(true);
-  /** @type {HTMLElement | null} */
-  const spriteElement = clonedContent.querySelector(query);
-  if (!spriteElement) {
-    console.warn(`Query selector "${query}" not found in the template.`);
-    return null;
-  }
-
-  // Apply the optional ID
-  if (id) spriteElement.id = id;
-
-  // Append to the specified parent
-  const parentElement = document.querySelector(parent);
-  if (!parentElement) {
-    console.warn(`Parent element "${parent}" not found.`);
-    return null;
-  }
-  parentElement.appendChild(clonedContent);
-
-  return spriteElement;
-};
-
-/** @type {(attrs: object, styles?: object) => HTMLElement | DocumentFragment} */
-export const createSpriteDirect = (attrs, styles = {}) => {
-  return fencer('section', {
-    ...attrs,
-    style: styles,
-    class: `
-      top-2 left-2
-      absolute w-[5rem] h-[5rem]
-      pointer-events-none
-    `,
-  });
-};
-
 const spriteSheetList = Array(37).fill('../sheets/sprite-')
   .map((fn, idx) => fn + (7000 + idx) + '.png')
 
@@ -140,10 +95,16 @@ const spriteBgImg = index => `url(${spriteSheetList[index]})`;
 /** @typedef {{
   * x: number,
   * y: number,
-  * w: string,
-  * h: string,
+  * w: number,
+  * h: number,
   * sheetIndex?: number
   * }} SpriteProps
+  */
+
+/** @typedef {SpriteProps & {
+  * class?: string,
+  * style?: Record<string, string | number>
+  * }} ExtendedSpriteProps
   */
 
 /** @type
@@ -165,9 +126,12 @@ const drawSprite = ({
   frg.style.backgroundPosition = pos;
 };
 
-/** @type {(props: SpriteProps) => HTMLElement | DocumentFragment} */
-export const Sprite = ({ x, y, w, h, sheetIndex = 0 }) => {
-  const spriteElement = fencer('div', {class: `absolute pointer-events-none`});
+/** @type {(props: ExtendedSpriteProps) => HTMLElement | DocumentFragment} */
+export const Sprite = ({ x, y, w, h, sheetIndex=0, class:className = '', style = {} }) => {
+  const spriteElement = fencer('div', {
+    class: className,
+    style: {...style},
+  });
   drawSprite({ x, y, w, h, sheetIndex })(spriteElement);
   return spriteElement;
 };
