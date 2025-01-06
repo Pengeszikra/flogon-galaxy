@@ -12,6 +12,7 @@ export default defineConfig({
         story: resolve(__dirname, 'story.html'),
         travel: resolve(__dirname, 'travel.html'),
         quest: resolve(__dirname, 'quest.html'),
+        adventure: resolve(__dirname, 'adventure.html'),
       }
     }
   },
