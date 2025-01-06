@@ -78,11 +78,96 @@ export const Fragment = (...children) => {
   return fragment;
 };
 
-
 /** @type {(view: HTMLElement | DocumentFragment) => Promise<HTMLElement | DocumentFragment>} */
 export const portal = view => {
   return new Promise(resolve => {
     document.body.appendChild(view);
     resolve(view); // Resolve the promise with the appended element
   });
+};
+
+/** @type {(templateId: string, parent: string, id?: string, query?: string) => HTMLElement | null} */
+export const createSprite = (templateId, parent, id, query = 'section') => {
+  /** @type {HTMLTemplateElement | null} */
+  const templateElement = document.querySelector(templateId);
+  if (!templateElement) {
+    console.warn(`Template with ID "${templateId}" not found.`);
+    return null;
+  }
+
+  // Clone the template's content
+  const clonedContent = templateElement.content.cloneNode(true);
+  /** @type {HTMLElement | null} */
+  const spriteElement = clonedContent.querySelector(query);
+  if (!spriteElement) {
+    console.warn(`Query selector "${query}" not found in the template.`);
+    return null;
+  }
+
+  // Apply the optional ID
+  if (id) spriteElement.id = id;
+
+  // Append to the specified parent
+  const parentElement = document.querySelector(parent);
+  if (!parentElement) {
+    console.warn(`Parent element "${parent}" not found.`);
+    return null;
+  }
+  parentElement.appendChild(clonedContent);
+
+  return spriteElement;
+};
+
+/** @type {(attrs: object, styles?: object) => HTMLElement | DocumentFragment} */
+export const createSpriteDirect = (attrs, styles = {}) => {
+  return fencer('section', {
+    ...attrs,
+    style: styles,
+    class: `
+      top-2 left-2
+      absolute w-[5rem] h-[5rem]
+      pointer-events-none
+    `,
+  });
+};
+
+const spriteSheetList = Array(37).fill('../sheets/sprite-')
+  .map((fn, idx) => fn + (7000 + idx) + '.png')
+
+/** @type {(index:number) => string} */
+const spriteBgImg = index => `url(${spriteSheetList[index]})`;
+
+/** @typedef {{
+  * x: number,
+  * y: number,
+  * w: string,
+  * h: string,
+  * sheetIndex?: number
+  * }} SpriteProps
+  */
+
+/** @type
+  * {(props:SpriteProps, m?:number, n?:number) =>
+  * (frg: HTMLElement | DocumentFragment) => void}
+  */
+const drawSprite = ({
+  x, y, w, h,
+  sheetIndex = 0
+},
+  m = 10,
+  n = 2
+) => (frg) => {
+  frg.style.width = `${w}rem`;
+  frg.style.height = `${h}rem`;
+  frg.style.backgroundImage = spriteBgImg(sheetIndex);
+  frg.style.backgroundSize = `${w * 4 / (w / 5)}rem ${h * 4 / (h / 5)}rem`;
+  const pos = `${(x / -m) + (w / n)}rem ${(y / -m) + (h / n)}rem`;
+  frg.style.backgroundPosition = pos;
+};
+
+/** @type {(props: SpriteProps) => HTMLElement | DocumentFragment} */
+export const Sprite = ({ x, y, w, h, sheetIndex = 0 }) => {
+  const spriteElement = fencer('div', {class: `absolute pointer-events-none`});
+  drawSprite({ x, y, w, h, sheetIndex })(spriteElement);
+  return spriteElement;
 };

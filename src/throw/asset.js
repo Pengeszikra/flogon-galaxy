@@ -1,3 +1,4 @@
+/** @type {import('../utils/fencer').SpriteProps[]} */
 export const assets = [
   {
       "x": 41,
