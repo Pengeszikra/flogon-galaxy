@@ -40,7 +40,7 @@ export const routeController = (blend = "screen", afterLoop = () => { }) => {
     ship.x += ship.xSpeed;
     ship.y += ship.ySpeed;
     ship.z += ship.zSpeed;
-    map.style.backgroundPosition = `${ship.x}% ${ship.y}%,${ship.x / 1.4}% ${ship.y / 1.4}%`;
+    map.style.backgroundPosition = `${ship.x}% ${ship.y}%,${ship.x / 1.7}% ${ship.y / 1.7}%`;
     afterLoop(ship);
     window.requestAnimationFrame(loop);
   }
@@ -76,15 +76,15 @@ export const useKeyboardCurse = (state) => {
 /** @type {(state: MoveIn3D) => void} */
 export const useStarshipNavigation = (state) => {
   // Middle-bottom origin
-  const origin = { x: window.innerWidth / 2, y: window.innerHeight };
+  const origin = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
 
+  /** @type {(x:number, y:number) => void} */
   const updateSpeed = (clientX, clientY) => {
-    const dx = clientX - origin.x; // Horizontal distance from origin
-    const dy = origin.y - clientY; // Vertical distance from origin (invert y-axis)
+    const dx = clientX - origin.x;
+    const dy = clientY - origin.y;
 
-    // Normalize the speed
-    state.xSpeed = dx / origin.x; // Scaled between -1 and 1
-    state.ySpeed = dy / origin.y; // Scaled between 0 and 1
+    state.xSpeed = dx / origin.x * 7;
+    state.ySpeed = dy / origin.y * 7;
   };
 
   // Handle mouse movement

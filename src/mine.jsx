@@ -13,10 +13,11 @@ portal(
       ship
       rotate-[90deg]
       --hover:scale-[1.5]
-      transition-all
+      --transition-all
       duration-0
     "></Sprite>
     <pre class="
+      hidden
       text-sm
       p-2
       absolute top-0 left-0
@@ -35,16 +36,16 @@ portal(
     const rotation = calculateShipRotation(st.xSpeed, st.ySpeed);
 
     ship.style.rotate = `${rotation + 90}deg`;
-    debug.innerText = JSON.stringify({ x:+xSpeed.toFixed(2), y:+ySpeed.toFixed(2), r:+rotation.toFixed(2) });
+    debug.innerText = JSON.stringify({ xs:+xSpeed.toFixed(2), ys:+ySpeed.toFixed(2), r:+rotation.toFixed(2)});
   }
-  const [state] = routeController("screen", showState); // "hard-light"
+  const [state] = routeController("soft-light", showState); // "hard-light"
   state.ySpeed = Math.random() - .5;
   state.xSpeed = Math.random() - .5;
   useKeyboardCurse(state);
-  // useStarshipNavigation(state);
+  useStarshipNavigation(state);
 
   const instruments = new Audio('media/Ethernal Wood.mp3');
-  instruments.play();
+  // instruments.play();
 });
 
 
