@@ -1,4 +1,4 @@
-import { fencer, portal, Fragment } from "./utils/fencer";
+import { fencer, portal, Fragment, Sprite } from "./utils/fencer";
 import { GalaxyRoute, galaxyTextureList, routeController, useKeyboardCurse } from "./GalaxyRoute";
 
 const [gAlfa, gBeta] = galaxyTextureList();
@@ -14,14 +14,20 @@ portal(
     // back={`https://cdn.midjourney.com/cf0c1c6c-af2e-429d-9c0a-6ae74a856b82/0_2.png`}
     // back={`https://cdn.midjourney.com/06947e48-56a4-4a01-bc36-337a3e636096/0_2.png`}
   >
-    <section class="grid">
-      <h1 class="text-emerald-200 text-2xl select-none">F L O G O N - G A L A X Y</h1>
-      <p class="text-orange-300 text-sm text-right min-w-max">first contact</p>
-    </section>
+    <figure class="
+      fixed top-0 left-0 z-50
+      bg-[url(../VoraPlayOnPiano.png)]
+      bg-cover
+      min-w-[100vw]
+      aspect-video
+    "></figure>
   </GalaxyRoute>
 ).then(() => {
-  const [state] = routeController("screen");
+  const [state] = routeController("color-dodge");
   state.ySpeed = Math.random() - .5;
   state.xSpeed = Math.random() - .5;
   useKeyboardCurse(state);
+
+  const WoraShard = new Audio('media/Tomorrow.mp3');
+  WoraShard.play();
 });

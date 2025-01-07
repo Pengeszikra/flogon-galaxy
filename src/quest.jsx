@@ -20,4 +20,7 @@ portal(
   state.ySpeed = Math.random() - .5;
   state.xSpeed = Math.random() - .5;
   useKeyboardCurse(state);
+
+  // const WoraShard = new Audio('media/Tomorrow.mp3');
+  // WoraShard.play();
 });
