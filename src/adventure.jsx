@@ -16,7 +16,7 @@ portal(
   >
     <figure class="
       fixed top-0 left-0 z-50
-      bg-[url(../VoraPlayOnPiano.png)]
+      bg-[url(../WoraPlayOnPiano.png)]
       bg-cover
       min-w-[100vw]
       aspect-video
