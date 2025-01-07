@@ -1,5 +1,5 @@
 import { fencer, portal, Fragment } from "./utils/fencer";
-import { GalaxyRoute, galaxyTextureList, routeController } from "./GalaxyRoute";
+import { GalaxyRoute, galaxyTextureList, routeController, useKeyboardCurse } from "./GalaxyRoute";
 
 const [gAlfa, gBeta] = galaxyTextureList();
 
@@ -19,23 +19,5 @@ portal(
   const [state] = routeController("multiply");
   state.ySpeed = Math.random() - .5;
   state.xSpeed = Math.random() - .5;
-
-  document.addEventListener("keydown",
-    /** @type {(event:KeyboardEvent) => any} */
-    (event) => {
-      const { key } = event;
-      switch (key) {
-        case "a": return state.xSpeed -= .1;
-        case "d": return state.xSpeed += .1;
-        case "w": return state.ySpeed -= .1;
-        case "s": return state.ySpeed += .1;
-        case " ": {
-          state.xSpeed = 0;
-          state.ySpeed = 0;
-          state.zSpeed = 0;
-          return;
-        };
-      }
-    }
-  );
+  useKeyboardCurse(state);
 });
