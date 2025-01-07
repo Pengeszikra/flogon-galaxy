@@ -1,5 +1,5 @@
 import { fencer, portal, Fragment, Sprite } from "./utils/fencer";
-import { GalaxyRoute, galaxyTextureList, routeController, useKeyboardCurse, useStarshipNavigation } from "./GalaxyRoute";
+import { calculateShipRotation, GalaxyRoute, galaxyTextureList, routeController, useKeyboardCurse, useStarshipNavigation } from "./GalaxyRoute";
 import { desertShip } from "./desertShip";
 
 const [gAlfa, gBeta] = galaxyTextureList();
@@ -9,23 +9,42 @@ portal(
     front={`../sheets/texture-${gAlfa}.png`}
     back={`../sheets/texture-${gBeta}.png`}
   >
-    <Sprite {...desertShip[1]} class="
+    <Sprite {...desertShip[9]} class="
+      ship
       rotate-[90deg]
       --hover:scale-[1.5]
       transition-all
-      duration-500
+      duration-0
     "></Sprite>
+    <pre class="
+      text-sm
+      p-2
+      absolute top-0 left-0
+      text-emerald-400
+    ">{}</pre>
   </GalaxyRoute>
 ).then(() => {
-  const [state] = routeController("soft-light"); // "hard-light"
+  const debug = document.querySelector('pre');
+  /** @type{HTMLElement} */
+  const ship = document.querySelector('.ship')
+  setTimeout(() => ship.style.transitionDuration = "500ms", 300);
+  const showState = st => {
+    /** @type {{xSpeed:number, ySpeed:number}} */
+    const { xSpeed, ySpeed } = st;
+
+    const rotation = calculateShipRotation(st.xSpeed, st.ySpeed);
+
+    ship.style.rotate = `${rotation + 90}deg`;
+    debug.innerText = JSON.stringify({ x:+xSpeed.toFixed(2), y:+ySpeed.toFixed(2), r:+rotation.toFixed(2) });
+  }
+  const [state] = routeController("screen", showState); // "hard-light"
   state.ySpeed = Math.random() - .5;
   state.xSpeed = Math.random() - .5;
-  state.foo = "something";
   useKeyboardCurse(state);
-  useStarshipNavigation(state);
+  // useStarshipNavigation(state);
 
-  const WoraShard = new Audio('media/Ethernal Wood.mp3');
-  WoraShard.play();
+  const instruments = new Audio('media/Ethernal Wood.mp3');
+  instruments.play();
 });
 
 

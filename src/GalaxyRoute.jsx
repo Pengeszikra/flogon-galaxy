@@ -28,8 +28,8 @@ export const GalaxyRoute = ({front, back, children}) => (
 
 /** @typedef {{ x:number, y:number, z:number, xSpeed:number, ySpeed:number, zSpeed:number }} MoveIn3D */
 
-/** @type {(blend:BlendMode) => [object, ()=>void]} */
-export const routeController = (blend="screen") => {
+/** @type {(blend:BlendMode, afterLoop?:Function) => [object, ()=>void]} */
+export const routeController = (blend = "screen", afterLoop = () => { }) => {
   /** @type {HTMLElement} */
   const map = document.querySelector('main');
   map.style.backgroundBlendMode = `${blend}, normal`;
@@ -41,6 +41,7 @@ export const routeController = (blend="screen") => {
     ship.y += ship.ySpeed;
     ship.z += ship.zSpeed;
     map.style.backgroundPosition = `${ship.x}% ${ship.y}%,${ship.x / 1.4}% ${ship.y / 1.4}%`;
+    afterLoop(ship);
     window.requestAnimationFrame(loop);
   }
   window.requestAnimationFrame(loop);
@@ -72,13 +73,47 @@ export const useKeyboardCurse = (state) => {
   );
 }
 
-/** @type {(state:MoveIn3D) => any} */
+/** @type {(state: MoveIn3D) => void} */
 export const useStarshipNavigation = (state) => {
-  document.addEventListener("keydown",
-    /** @type {(event:MouseEvent) => any} */
-    (event) => {
+  // Middle-bottom origin
+  const origin = { x: window.innerWidth / 2, y: window.innerHeight };
 
+  const updateSpeed = (clientX, clientY) => {
+    const dx = clientX - origin.x; // Horizontal distance from origin
+    const dy = origin.y - clientY; // Vertical distance from origin (invert y-axis)
 
+    // Normalize the speed
+    state.xSpeed = dx / origin.x; // Scaled between -1 and 1
+    state.ySpeed = dy / origin.y; // Scaled between 0 and 1
+  };
+
+  // Handle mouse movement
+  const handleMouseMove = (event) => {
+    updateSpeed(event.clientX, event.clientY);
+  };
+
+  // Handle touch movement
+  const handleTouchMove = (event) => {
+    const touch = event.touches[0]; // Use the first touch point
+    if (touch) {
+      updateSpeed(touch.clientX, touch.clientY);
     }
-  );
-}
+  };
+
+  // Add event listeners
+  document.addEventListener('mousemove', handleMouseMove);
+  document.addEventListener('touchmove', handleTouchMove);
+
+  // Cleanup function
+  return () => {
+    document.removeEventListener('mousemove', handleMouseMove);
+    document.removeEventListener('touchmove', handleTouchMove);
+  };
+};
+
+/** @type {(xSpeed:number, ySpeed:number) => number} */
+export const calculateShipRotation = (xSpeed, ySpeed) => {
+  const angleRadians = Math.atan2(ySpeed, xSpeed);
+  const angleDegrees = (angleRadians * 180) / Math.PI - 90;
+  return (angleDegrees + 360) % 360;
+};
