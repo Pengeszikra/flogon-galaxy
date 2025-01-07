@@ -71,3 +71,14 @@ export const useKeyboardCurse = (state) => {
     }
   );
 }
+
+/** @type {(state:MoveIn3D) => any} */
+export const useStarshipNavigation = (state) => {
+  document.addEventListener("keydown",
+    /** @type {(event:MouseEvent) => any} */
+    (event) => {
+
+
+    }
+  );
+}
