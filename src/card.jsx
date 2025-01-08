@@ -5,14 +5,10 @@ import { flogons } from "./flogonsSprites";
 
 /** @type {(props: { id: number, value: number }) => HTMLElement} */
 const Card = ({id, value}) => (
-  <div class="relative">
-    <Sprite {...assetList[id]}
-      class="
-        rounded-xl outline outline-1 outline-zinc-900
-        hover:scale-[1.5]
-        transition-all
-        duration-500
-      ">
+  <div class="relative hover:scale-[1.5] transition-all duration-500">
+    <Sprite
+      {...assetList[id]}
+      class="rounded-xl outline outline-1 outline-zinc-900">
     </Sprite>
     <div class="
       text-neutral-700

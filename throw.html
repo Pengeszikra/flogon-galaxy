@@ -7,6 +7,18 @@
   <link href="src/style.css" rel="stylesheet" />
   <style>
     body, html { font-size: 10px; }
+    #desk {
+      transform-style: preserve-3d;
+      transform:
+        perspective(60vh)
+        rotateX(40deg)
+        rotateY(0deg)
+        rotateZ(0deg)
+        scale(.64)
+        translateZ(0px);
+      pointer-events: none;
+      top: 17rem;
+    }
   </style>
   <script type="module" src="src/throw/throw-to-match.js"></script>
 </head>
@@ -44,12 +56,12 @@
   <section class="
     w-[11rem] rounded-xl aspect-[4/7]
     outline outline-1 outline-zinc-900
-    --px-1 
+    --px-1
     --py-3
     absolute top-0 left-0
     transition-all duration-500
     bg-no-repeat
-    transform-style:preserve-3d 
+    transform-style:preserve-3d
     pointer-events-none
     delay-500
   ">
@@ -85,12 +97,12 @@ overflow-hidden
     place-items-center
     m-auto
     overflow-clip
-    
+
     min-h-[100vh]
     relative
     --pointer-events-none
     ">
-    <section id="gallery" class=" 
+    <section id="gallery" class="
       absolute top-0 left-0
       max-w-full
       flex gap-2 flex-wrap
@@ -136,13 +148,13 @@ overflow-hidden
     ">next mission</button>
     <figure id="desk" class="
       absolute top-0 left-0
-      w-[100vw] 
+      w-[100vw]
       h-[100vh]
-    
+
     "></figure>
     <figure id="sprite-sheet" class="
       hidden
-      absolute w-[20rem] h-[20rem] 
+      absolute w-[20rem] h-[20rem]
       top-[50%-5rem]
       left-[50%-5rem]
       --top-0 --right-0
@@ -173,13 +185,13 @@ overflow-hidden
       select-none pointer-events-none
     "></pre>
     <article class="
-      absolute 
+      absolute
       --top-[50%-3rem]
       top-[0rem]
       left-[100vw]
       whitespace-nowrap
       min-w-[100vw] text-center
-      text-[3rem] 
+      text-[3rem]
       bg-black/30
       text-red-600
       shadow-black

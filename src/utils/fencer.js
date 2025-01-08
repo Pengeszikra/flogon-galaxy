@@ -1,3 +1,7 @@
+    //   F E N C E R - T H E - F R A M E W O R K    \\
+   //                                                \\
+  // - - - - - - - - - - - - - - - [ pure web ] - - - \\
+
 /**
  * @type {(
  *   tag: string | function,
@@ -17,20 +21,23 @@ export const fencer = (tag, attrs, ...children) => {
     const element = document.createElement(tag);
 
     children.flat().forEach(child => {
-      if (child instanceof Node) {
-        fragments.appendChild(child);
-      } else if (typeof child === 'string' || typeof child === 'number') {
-        // Handle dynamic text or numeric content
-        fragments.appendChild(document.createTextNode(child.toString()));
-      } else if (Array.isArray(child)) {
-        child.forEach(nestedChild => {
-          if (nestedChild instanceof Node) fragments.appendChild(nestedChild);
-        });
-      } else if (child !== null && child !== undefined) {
-        // Convert any other non-null/undefined values to strings
-        fragments.appendChild(document.createTextNode(String(child)));
-      } else {
-        console.warn('Unhandled child type:', child);
+      switch (true) {
+        case (child instanceof Node)
+          : fragments.appendChild(child);
+          ; break ;
+        case (typeof child === 'string' || typeof child === 'number')
+          : fragments.appendChild(document.createTextNode(child.toString()));
+          ; break ;
+        case (Array.isArray(child))
+          : child.forEach(nestedChild => {
+              if (nestedChild instanceof Node) fragments.appendChild(nestedChild);
+            });
+          ; break ;
+        case (child !== null && child !== undefined)
+          : fragments.appendChild(document.createTextNode(String(child)));
+          ; break ;
+        default:
+          console.warn('Unhandled child type:', child);
       }
     });
 
@@ -38,20 +45,20 @@ export const fencer = (tag, attrs, ...children) => {
 
     if (attrs) {
       Object.entries(attrs).forEach(([key, value]) => {
-        if (key === 'class' && value) {
-          // Handle dynamic class
-          element.className = value; // Assign string directly
-        } else if (key === 'style' && typeof value === 'object') {
-          // Handle `style` object
-          Object.entries(value).forEach(([styleKey, styleValue]) => {
-            element.style[styleKey] = styleValue;
-          });
-        } else if (key.startsWith('on') && typeof value === 'function') {
-          // Add event listeners
-          element.addEventListener(key.slice(2).toLowerCase(), value);
-        } else {
-          // Set other attributes
-          element.setAttribute(key, value);
+        switch (true) {
+          case (key === 'class' && value)
+            : element.className = value ;
+            ; break ;
+          case (key === 'style' && typeof value === 'object')
+            : Object.entries(value).forEach(([styleKey, styleValue]) => {
+                element.style[styleKey] = styleValue;
+              });
+            ; break ;
+          case (key.startsWith('on') && typeof value === 'function')
+            : element.addEventListener(key.slice(2).toLowerCase(), value);
+            ; break ;
+          default
+            : element.setAttribute(key, value);
         }
       });
     }
@@ -68,16 +75,20 @@ export const Fragment = (...children) => {
   const normalizedChildren = Array.isArray(children[0]) ? children[0] : children;
 
   normalizedChildren.flat().forEach(child => {
-    if (child instanceof Node) {
-      fragment.appendChild(child);
-    } else if (typeof child === 'string') {
-      fragment.appendChild(document.createTextNode(child));
-    } else if (Array.isArray(child)) {
-      child.forEach(nestedChild => {
-        if (nestedChild instanceof Node) fragment.appendChild(nestedChild);
-      });
-    } else {
-      console.warn('Unhandled Fragment child type:', child);
+    switch (true) {
+      case (child instanceof Node)
+        : fragment.appendChild(child);
+        ; break ;
+      case (typeof child === 'string')
+        : fragment.appendChild(document.createTextNode(child));
+        ; break ;
+      case (Array.isArray(child))
+        : child.forEach(nestedChild => {
+            if (nestedChild instanceof Node) fragment.appendChild(nestedChild);
+          });
+        ; break ;
+      default
+        : console.warn('Unhandled Fragment child type:', child);
     }
   });
 
@@ -85,12 +96,11 @@ export const Fragment = (...children) => {
 };
 
 /** @type {(view: HTMLElement | DocumentFragment) => Promise<HTMLElement | DocumentFragment>} */
-export const portal = view => {
-  return new Promise(resolve => {
-    document.body.appendChild(view);
-    resolve(view); // Resolve the promise with the appended element
-  });
-};
+export const portal = view => new Promise(resolve => {
+  document.body.appendChild(view);
+  resolve(view); // Resolve the promise with the appended element
+});
+
 
 const spriteSheetList = Array(37).fill('../sheets/sprite-')
   .map((fn, idx) => fn + (7000 + idx) + '.png')
