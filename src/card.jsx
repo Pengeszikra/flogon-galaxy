@@ -37,9 +37,6 @@ const Flogon = ({id}) => <Sprite {...flogons[id]} class="
   "
 ></Sprite>;
 
-/** @type {(props: { id: number }) => HTMLElement} */
-const Test = ({ id }) => <div class="bg-rose-700 w-10 h-10 grid place-items-center text-white">{id}</div>;
-
 const [gAlfa, gBeta] = galaxyTextureList();
 
 /** @typedef {import('../src/utils/fencer').SpriteProps} SpriteProps */
@@ -51,8 +48,8 @@ portal(
     back={`../sheets/texture-${gBeta}.png`}
   >
     <section class="w-[100vw] grid grid-cols-6 gap-x-[1rem] gap-y-[1rem] p-[2rem] bg-zinc-700/70">
-      {assetList.map((_, idx) => <Card id={idx} value={idx} />)}
-      {flogons.map((_, idx) => <Test id={idx} />)}
+      {assetList.map((_, idx) => <Card id={idx} value={idx - 11} />)}
+      {flogons.map((_, idx) => <Flogon id={idx} />)}
     </section>
   </GalaxyRoute>
 ).then(() => {

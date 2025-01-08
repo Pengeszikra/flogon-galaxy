@@ -1,19 +1,34 @@
-/** @type {(tag: string | function, attrs?: object, ...children: any[]) => HTMLElement | DocumentFragment} */
+/**
+ * @type {(
+ *   tag: string | function,
+ *   attrs?: {
+ *     class?: string,
+ *     style?: object,
+ *     [key: string]: any
+ *   },
+ *   ...children: any[]
+ * ) => HTMLElement | DocumentFragment}
+ */
 export const fencer = (tag, attrs, ...children) => {
   if (typeof tag === 'function') return tag({ ...attrs, children });
+
   if (typeof tag === 'string') {
     const fragments = document.createDocumentFragment();
     const element = document.createElement(tag);
 
-    children.forEach(child => {
+    children.flat().forEach(child => {
       if (child instanceof Node) {
         fragments.appendChild(child);
-      } else if (typeof child === 'string') {
-        fragments.appendChild(document.createTextNode(child));
+      } else if (typeof child === 'string' || typeof child === 'number') {
+        // Handle dynamic text or numeric content
+        fragments.appendChild(document.createTextNode(child.toString()));
       } else if (Array.isArray(child)) {
         child.forEach(nestedChild => {
           if (nestedChild instanceof Node) fragments.appendChild(nestedChild);
         });
+      } else if (child !== null && child !== undefined) {
+        // Convert any other non-null/undefined values to strings
+        fragments.appendChild(document.createTextNode(String(child)));
       } else {
         console.warn('Unhandled child type:', child);
       }
@@ -25,16 +40,7 @@ export const fencer = (tag, attrs, ...children) => {
       Object.entries(attrs).forEach(([key, value]) => {
         if (key === 'class' && value) {
           // Handle dynamic class
-          if (typeof value === 'string') {
-            element.className = value; // Assign string directly
-          } else if (Array.isArray(value)) {
-            element.className = value.filter(Boolean).join(' '); // Join array into string
-          } else if (typeof value === 'object') {
-            element.className = Object.entries(value)
-              .filter(([_, isActive]) => isActive)
-              .map(([className]) => className)
-              .join(' '); // Convert object keys with truthy values to class list
-          }
+          element.className = value; // Assign string directly
         } else if (key === 'style' && typeof value === 'object') {
           // Handle `style` object
           Object.entries(value).forEach(([styleKey, styleValue]) => {
