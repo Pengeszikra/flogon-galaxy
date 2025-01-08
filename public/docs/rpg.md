@@ -2,6 +2,8 @@
 How to beat the indie game development theory: for a charming game need to be use some game engine even on short deadline?
 ## Wora Shard 0.0.1
 {%adventure%16/9}
+## Sprite Sheets
+{%card%1/3}
 ## Strory 0.0.1
 {%story.html%16/9}
 
@@ -28,8 +30,12 @@ How to beat the indie game development theory: for a charming game need to be us
 -[+] pereventDefault on marker save
 -[+] iframe aspect-ratio `{%<url>%<aspect-ratio>}`
 ```
-
+## Reddit Hackhaton result:
+Just won a :: A Reddit trophy for contest participation
 {%throw%8/7}
+
+At least I get a badge
+![]()
 
 ## One image can tell...
 much mure thing than 1000 word!

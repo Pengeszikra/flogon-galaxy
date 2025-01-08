@@ -95,8 +95,8 @@ const spriteBgImg = index => `url(${spriteSheetList[index]})`;
 /** @typedef {{
   * x: number,
   * y: number,
-  * w: number,
-  * h: number,
+  * w: number | string,
+  * h: number | string,
   * sheetIndex?: number
   * }} SpriteProps
   */
@@ -121,8 +121,8 @@ const drawSprite = ({
   frg.style.width = `${w}rem`;
   frg.style.height = `${h}rem`;
   frg.style.backgroundImage = spriteBgImg(sheetIndex);
-  frg.style.backgroundSize = `${w * 4 / (w / 5)}rem ${h * 4 / (h / 5)}rem`;
-  const pos = `${(x / -m) + (w / n)}rem ${(y / -m) + (h / n)}rem`;
+  frg.style.backgroundSize = `${+w * 4 / (+w / 5)}rem ${+h * 4 / (+h / 5)}rem`;
+  const pos = `${(x / -m) + (+w / n)}rem ${(y / -m) + (+h / n)}rem`;
   frg.style.backgroundPosition = pos;
 };
 
