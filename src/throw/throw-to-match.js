@@ -140,12 +140,14 @@ sprite.onmousemove = (e) => {
 }
 
 const nextDay = () => {
-  const img = questImageList[counter % questImageList.length];
+  const img = '../mid/flogon4127.jpeg' // questImageList[counter % questImageList.length];
   state.img = img;
   console.log(`current BG is: ${img}`);
   visual1.style.backgroundImage = `url(${img})`;
   counter ++ ;
 };
+
+nextDay();
 
 const toggleUI = () => {
   frg.classList.contains(HIDDEN)
@@ -340,9 +342,9 @@ const calcScore = (play, base) => {
 }
 
 [
-  ...assets,
-  ...assets,
-  ...assets,
+  // ...assets,
+  // ...assets,
+  // ...assets,
   // ...assets
 ].map((src, idx) => {
   const frg = fragment("#mob", "#desk", `frg-${5000 + idx}`);
