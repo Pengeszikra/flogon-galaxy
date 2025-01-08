@@ -1,32 +1,35 @@
 # `RPG` of Flogons
 How to beat the indie game development theory: for a charming game need to be use some game engine even on short deadline?
-## Travel 0.0.1
-{%travel%320rem}
+## Wora Shard 0.0.1
+{%adventure%16/9}
 ## Strory 0.0.1
-{%story.html%320rem}
+{%story.html%16/9}
 
 ## TODO list
 ```
 -[+] PWA
 -[+] Drag and Drop image from Midjourney
 -[+] First mission are wrote: e:recon-mission.md
--[ ] Test the "lit-html" https://lit.dev/docs/libraries/standalone-templates/
+-[-] Test the "lit-html" https://lit.dev/docs/libraries/standalone-templates/
+-[+] Ressurect my dead js framework: Fencer
 -[ ] Link between a different md files
 -[ ] List of .md files
 -[+] Image with Text story game
--[ ] Dynamo DB will work on PWA mode 
--[+] implement Throw the match game 
+-[+] galaxy travel
+-[ ] Dynamo DB will work on PWA mode
+-[+] implement Throw the match game
      into this CMS system
--[ ] Let's figure out the development next steps
+-[+] Let's figure out the development next steps
 -[+] build at least click to POC level of FG
--[ ] 3D scene builder 
-     + spritesheet editor 
+-[ ] 3D scene builder
+     + spritesheet editor
      + DynamoDB
 -[ ] implement CTRL+Enter to editor
 -[+] pereventDefault on marker save
+-[+] iframe aspect-ratio `{%<url>%<aspect-ratio>}`
 ```
 
-{%throw%500rem}
+{%throw%8/7}
 
 ## One image can tell...
 much mure thing than 1000 word!
@@ -43,10 +46,10 @@ much mure thing than 1000 word!
 Guru in a studio
 
 ## My legacy RPG
-{% https://rogmor.vercel.app/ %800rem}
+{% https://rogmor.vercel.app/ %2/3}
 
 ## Preset of this game
-{% https://pure-web-ccg.vercel.app/ %}
+{% https://pure-web-ccg.vercel.app/ %1/1}
 This is looks like a reqursive CMS system
 
 ![](https://cdn.midjourney.com/16bc28c0-cc9b-4ca9-8d5a-ad84e3a58b47/0_1.png)

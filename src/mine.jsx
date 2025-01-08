@@ -42,7 +42,7 @@ portal(
   state.ySpeed = Math.random() - .5;
   state.xSpeed = Math.random() - .5;
   useKeyboardCurse(state);
-  useStarshipNavigation(state);
+  // useStarshipNavigation(state);
 
   const instruments = new Audio('media/Ethernal Wood.mp3');
   // instruments.play();

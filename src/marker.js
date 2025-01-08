@@ -135,7 +135,7 @@
           case /\{\%\s*([^\%]+)\s*\%[^\}]+\}/.test(line):
             return line.replaceAll(
               /(\{\%\s*)([^\%]+)(\s*\%)([^\}]+)(\})/g,
-              `<iframe width="100%" height="$4" class="bg-black" src="$2" frameborder="0" scrolling="no"></iframe>`
+              `<iframe style="width:100%; aspect-ratio:$4;" class="bg-black" src="$2" frameborder="0" scrolling="no"></iframe>`
             )
           default:
             return inlineMarkdown(line);

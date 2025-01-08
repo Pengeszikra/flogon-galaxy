@@ -19,6 +19,7 @@ export const GalaxyRoute = ({front, back, children}) => (
         aspect-video
         grid
         place-items-center
+        bg-[length:150vw]
       "
       style={{backgroundImage:`url(${front}),url(${back})`}}
     >
