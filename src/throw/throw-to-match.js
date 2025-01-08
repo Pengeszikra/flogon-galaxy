@@ -341,23 +341,23 @@ const calcScore = (play, base) => {
   }
 }
 
-[
+// [
   // ...assets,
   // ...assets,
   // ...assets,
   // ...assets
-].map((src, idx) => {
-  const frg = fragment("#mob", "#desk", `frg-${5000 + idx}`);
-  drawSprite(src)(frg);
-  frg.style.outline = "none;"
-  frg.style.transform = `
-    translateX(${dice(400)-200}rem)
-    translateY(${dice(50)-10}rem)
-    translateZ(${dice(-7) - 3}rem)
-    scale(2)
-    rotateX(-50deg)
-  `;
-})
+// ].map((src, idx) => {
+//   const frg = fragment("#mob", "#desk", `frg-${5000 + idx}`);
+//   drawSprite(src)(frg);
+//   frg.style.outline = "none;"
+//   frg.style.transform = `
+//     translateX(${dice(400)-200}rem)
+//     translateY(${dice(50)-10}rem)
+//     translateZ(${dice(-7) - 3}rem)
+//     scale(2)
+//     rotateX(-50deg)
+//   `;
+// })
 
 scifiUI.map((src, idx) => {
   const ui = fragment("#ui-blend", "#desk", `ui-${5000 + idx}`);
@@ -415,17 +415,14 @@ const highScoreAnim = () => {
 requestAnimationFrame(highScoreAnim);
 
 const closeToCenter = (pos, center) => Math.abs(center - (pos.left + pos.width / 2));
-/** @type {() => Card} */
+/** @type {() => any} */
 const centerCard = () => {
   const center = window.innerWidth / 2;
   const inHand = Object
     .entries(state.deck)
     .filter(([,{isInHand}]) => isInHand)
   if (inHand.length < 1) {
-    const endScreen = document.querySelector('#end-screen');
-    endScreen.classList.remove(HIDDEN);
-    endScreen.querySelector('#score-board').innerHTML = `score: ${state.score}`;
-    return
+    globalThis.location.replace("quest.html");
   }
   return inHand
     .reduce((col, itm) => {
@@ -437,7 +434,7 @@ const centerCard = () => {
     });
 }
 
-const rulePage = document.querySelector('#game-rule');
-rulePage.querySelector('button').onclick = () => rulePage.classList.add(HIDDEN);
+// const rulePage = document.querySelector('#game-rule');
+// rulePage.querySelector('button').onclick = () => rulePage.classList.add(HIDDEN);
 
 nextDay();
