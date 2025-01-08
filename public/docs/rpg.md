@@ -3,7 +3,7 @@ How to beat the indie game development theory: for a charming game need to be us
 ## Wora Shard 0.0.1
 {%adventure%16/9}
 ## Sprite Sheets
-{%card%1/3}
+{%card%6/13}
 ## Strory 0.0.1
 {%story.html%16/9}
 
