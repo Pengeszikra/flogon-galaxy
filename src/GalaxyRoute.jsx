@@ -11,17 +11,16 @@ import { shuffle, signal } from "./utils/old-bird-soft";
  */
 
 
-/** @type {(props: { front:string, back:string, children?:any }) => HTMLElement} */
-export const GalaxyRoute = ({front, back, children}) => (
+/** @type {(props: { front:string, back:string, zoom?:number, children?:any }) => HTMLElement} */
+export const GalaxyRoute = ({front, back, children, zoom=150}) => (
     <main class="
         bg-zinc-900
         min-w-full
         aspect-video
         grid
         place-items-center
-        bg-[length:150vw]
       "
-      style={{backgroundImage:`url(${front}),url(${back})`}}
+      style={{backgroundImage:`url(${front}),url(${back})`, backgroundSize: `${zoom}vw`}}
     >
       {children}
     </main>

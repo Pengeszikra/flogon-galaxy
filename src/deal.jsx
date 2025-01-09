@@ -4,7 +4,7 @@ import { assetList } from "./throw/shoot";
 import { flogons } from "./flogonsSprites";
 import { rnd } from "./utils/old-bird-soft";
 
-/** 
+/**
  * @typedef {{
  *  x: number
  *  y: number
@@ -19,7 +19,7 @@ import { rnd } from "./utils/old-bird-soft";
 /** @type {Pos3D} */
 const origo = {x:0, y:0, z:0, rX: 0, rY:0, rZ: 0};
 
-/** 
+/**
   *  @typedef {{
   *   id: string
   *   value: number
@@ -32,7 +32,7 @@ const origo = {x:0, y:0, z:0, rX: 0, rY:0, rZ: 0};
 
 /** @typedef {CardInfo & Pos3D} SingleCard */
 
-/** 
+/**
   * @typedef {{
   *  whoyou: string
   *  description?: string
@@ -54,7 +54,7 @@ export const gameMechanism = async () => {
     drop: [],
     select: null,
     play: null,
-    target: null, 
+    target: null,
   };
 
   /** @type {Entity} */
@@ -66,29 +66,29 @@ export const gameMechanism = async () => {
     drop: [],
     select: null,
     play: null,
-    target: null, 
+    target: null,
   };
 
   player.deck = Array(20)
     .fill()
     .map((_,idx) => ({
-        id:idx.toString(), 
+        id:idx.toString(),
         value: rnd(41) - 21,
-        order:0, 
+        order:0,
         ...origo
     }));
 
   quest.deck = Array(20)
     .fill()
     .map((_,idx) => ({
-        id:idx.toString(), 
+        id:idx.toString(),
         value: rnd(41) - 21,
-        order:0, 
+        order:0,
         ...origo
     }));
 
-    
-  
+
+
   };
 
 /** @type {(props: { id: number, value: number }) => HTMLElement} */
@@ -132,7 +132,12 @@ portal(
     back={`../sheets/texture-${gBeta}.png`}
   >
     <section id="desk" class="
-      w-[100vw] h-[100vw] grid grid-cols-4 gap-x-[1rem] gap-y-[10rem] place-items-center">
+      w-[100vw] h-[100vw]
+      grid grid-cols-4 gap-x-[1rem] gap-y-[10rem]
+      place-items-center
+      bg-yellow-700
+    "
+    >
       {assetList.slice(0,8).map((_, idx) => <Card id={idx} value={idx - 11} />)}
     </section>
   </GalaxyRoute>
