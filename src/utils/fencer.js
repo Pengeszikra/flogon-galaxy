@@ -11,7 +11,7 @@
  *     [key: string]: any
  *   },
  *   ...children: any[]
- * ) => HTMLElement | DocumentFragment}
+ * ) => HTMLElement }
  */
 export const fencer = (tag, attrs, ...children) => {
   if (typeof tag === 'function') return tag({ ...attrs, children });
@@ -95,7 +95,7 @@ export const Fragment = (...children) => {
   return fragment;
 };
 
-/** @type {(view: HTMLElement | DocumentFragment) => Promise<HTMLElement | DocumentFragment>} */
+/** @type {(view: HTMLElement ) => Promise<HTMLElement >} */
 export const portal = view => new Promise(resolve => {
   document.body.appendChild(view);
   resolve(view); // Resolve the promise with the appended element
@@ -108,7 +108,8 @@ const spriteSheetList = Array(37).fill('../sheets/sprite-')
 /** @type {(index:number) => string} */
 const spriteBgImg = index => `url(${spriteSheetList[index]})`;
 
-/** @typedef {{
+/** 
+  * @typedef {{
   * x: number,
   * y: number,
   * w: number | string,
@@ -117,15 +118,16 @@ const spriteBgImg = index => `url(${spriteSheetList[index]})`;
   * }} SpriteProps
   */
 
-/** @typedef {SpriteProps & {
+/** 
+  * @typedef {SpriteProps & {
   * class?: string,
   * style?: Record<string, string | number>
   * }} ExtendedSpriteProps
   */
 
-/** @type
-  * {(props:SpriteProps, m?:number, n?:number) =>
-  * (frg: HTMLElement | DocumentFragment) => void}
+/** 
+  * @type {(props:SpriteProps, m?:number, n?:number) 
+  *   => (frg: HTMLElement ) => void}
   */
 const drawSprite = ({
   x, y, w, h,
@@ -142,7 +144,7 @@ const drawSprite = ({
   frg.style.backgroundPosition = pos;
 };
 
-/** @type {(props: ExtendedSpriteProps) => HTMLElement | DocumentFragment} */
+/** @type {(props: ExtendedSpriteProps) => HTMLElement } */
 export const Sprite = ({ x, y, w, h, sheetIndex=0, class:className = '', style = {} }) => {
   const spriteElement = fencer('div', {
     class: className,

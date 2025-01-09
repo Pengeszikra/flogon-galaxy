@@ -13,5 +13,5 @@
   "background_color": "#000000",
   "start_url": "/",
   "display": "fullscreen",
-  "orientation": "landscape"
+  "orientation": "landscape-primary"
 }
