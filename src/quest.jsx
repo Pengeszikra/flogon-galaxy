@@ -9,8 +9,8 @@ portal(
     back={`https://cdn.midjourney.com/7443e9b9-be5c-4f2e-b827-4e99df50c9c3/0_1.png`}
     zoom={250}
   >
-    <section class="grid">
-      <h1 class="text-emerald-200 text-[5vw] select-none">F L O G O N - G A L A X Y</h1>
+    <section class="grid select-none">
+      <h1 class="text-emerald-200 text-[5vw]">F L O G O N - G A L A X Y</h1>
       <p class="text-orange-300 text-[3vw] text-right min-w-max">first contact</p>
     </section>
   </GalaxyRoute>

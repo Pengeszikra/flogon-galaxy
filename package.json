@@ -17,8 +17,7 @@
     "@aws-sdk/lib-dynamodb": "^3.0.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.1",
-    "express": "^5.0.1",
-    "flogon-galaxy": "link:"
+    "express": "^5.0.1"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.20",

@@ -23,9 +23,6 @@ importers:
       express:
         specifier: ^5.0.1
         version: 5.0.1
-      flogon-galaxy:
-        specifier: 'link:'
-        version: 'link:'
     devDependencies:
       autoprefixer:
         specifier: ^10.4.20

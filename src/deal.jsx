@@ -2,7 +2,7 @@ import { fencer, portal, Fragment, Sprite } from "./utils/fencer";
 import { GalaxyRoute, galaxyTextureList, routeController, useKeyboardCurse } from "./GalaxyRoute";
 import { assetList } from "./throw/shoot";
 import { flogons } from "./flogonsSprites";
-import { rnd } from "./utils/old-bird-soft";
+import { rnd, shuffle } from "./utils/old-bird-soft";
 
 /**
  * @typedef {{
@@ -26,7 +26,6 @@ const origo = {x:0, y:0, z:0, rX: 0, rY:0, rZ: 0};
   *   name?: string
   *   description?: string
   *   skill?: string
-  *   order: number
   * }} CardInfo
   */
 
@@ -42,58 +41,173 @@ const origo = {x:0, y:0, z:0, rX: 0, rY:0, rZ: 0};
   *  select: SingleCard | null
   *  play: SingleCard | null
   *  target: SingleCard | null
+  *  score: number
   * }} Entity
   */
 
-export const gameMechanism = async () => {
-  /** @type {Entity} */
-  const player = {
-    whoyou: "player",
-    deck: [],
-    hand: [],
-    drop: [],
-    select: null,
-    play: null,
-    target: null,
-  };
 
-  /** @type {Entity} */
-  const quest = {
-    whoyou: "quest",
-    description: "save the word",
-    deck: [], // Array(20).fill().map((_,idx) => ({id:idx, value:rnd(41) - 21}, order:0, ...origo})),
-    hand: [],
-    drop: [],
-    select: null,
-    play: null,
-    target: null,
-  };
+/** @type {Entity} */
+const player = {
+  whoyou: "player",
+  score: 0,
+  deck: [],
+  hand: [],
+  drop: [],
+  select: null,
+  play: null,
+  target: null,
+};
 
-  player.deck = Array(20)
-    .fill()
-    .map((_,idx) => ({
-        id:idx.toString(),
-        value: rnd(41) - 21,
-        order:0,
-        ...origo
-    }));
+/** @type {Entity} */
+const quest = {
+  whoyou: "quest",
+  description: "save the word",
+  score: 0,
+  deck: [],
+  hand: [],
+  drop: [],
+  select: null,
+  play: null,
+  target: null,
+};
 
-  quest.deck = Array(20)
-    .fill()
-    .map((_,idx) => ({
-        id:idx.toString(),
-        value: rnd(41) - 21,
-        order:0,
-        ...origo
-    }));
+/** @type {(amount:number) => SingleCard[]} */
+export const randomDeck = (amount) => Array(amount)
+  .fill()
+  .map((_,idx) => ({
+      id:idx.toString(),
+      value: rnd(41) - 21,
+      ...origo
+  }));
 
+quest.deck = randomDeck(20);
+player.deck = randomDeck(20);
 
+/** @template {string} T @typedef {{ [K in T]: K }} Label */
 
-  };
+/**
+  * @typedef { Label<
+  * "SETUP" | "PLAYER_DRAW" | "QUEST_DRAW_WITH_END_CHECK" | "START_PLAY" |
+  * "PROBLEM_CHECK" | "REVENGE_BEGIN" | "ANTY_PAIR" |
+  * "ESCAPE_CHECK" | "SOLVE_QUEST" | "FAIL_QUEST" | "MATCH" | "SHODOWN"
+  * >} Phases
+  */
+
+/** @type {(phase:keyof Phases, pCard:number, aCard:number) => Promise<keyof Phases>} */
+export const gameLoop = async (phase, pCard, aCard) => {
+  switch (phase) {
+    case "SETUP": {
+      player.deck = randomDeck(20);
+      quest.deck = randomDeck(25);
+      return "PLAYER_DRAW";
+    }
+
+    case "PLAYER_DRAW": {
+      if (player.deck.length + player.hand.length < 4) {
+        player.deck = [...player.deck, ...player.drop].sort(shuffle);
+        player.drop = [];
+      }
+      while (player.hand.length < 4) {
+        player.hand.push(player.deck.pop());
+      }
+      return "QUEST_DRAW_WITH_END_CHECK"
+    }
+
+    case "QUEST_DRAW_WITH_END_CHECK": {
+      if (quest.deck.length < 1) {
+        return player.score > quest.score
+          ? "SOLVE_QUEST"
+          : "FAIL_QUEST"
+          ;
+      }
+
+      quest.hand.push(quest.deck.pop());
+      quest.hand.push(quest.deck.pop());
+
+      return quest.hand.length >= 4
+        ? "REVENGE_BEGIN"
+        : "START_PLAY"
+        ;
+    }
+
+    case "START_PLAY": {
+      const possibleMoves = allPossibleMoves(player, quest)
+        .filter(({kind}) => kind !== "FAIL");
+      if (possibleMoves.length < 1) {
+        return "PLAYER_DRAW";
+      }
+      // const { a:play, b:target } = await playerInteraction();
+      // const result = cardMatcher(play, target);
+      const result = await playerInteraction();
+      player.score += result.score;
+      return "PLAYER_DRAW";
+    }
+
+    // case "MATCH": { return phase }
+
+    case "SHODOWN": { return phase }
+
+    case "REVENGE_BEGIN": { return "REVENGE_BEGIN" }
+
+    case "ANTY_PAIR": { return "ESCAPE_CHECK" }
+
+    case "ESCAPE_CHECK": { return "PLAYER_DRAW" }
+
+    // case "SOLVE_QUEST": { return } // ending action
+    // case "FAIL_QUEST ": { return } // ending action
+  }
+};
+
+/** @type {() => Promise<MatchResult>} */
+export const playerInteraction = async () =>
+  allPossibleMoves(player, quest)
+    .sort((a,b) => a.score - b.score)
+    .pop()
+  ;
+
+/** @type {} */
+export const questInteraction = async () => {};
+
+/** @typedef {Label<"POSITIVE" | "NEGATIVE" | "ZERO" | "INVERZIT" | "FAIL">} MatchKind */
+
+/** @typedef {{score: number, kind:keyof MatchKind, a:number, b:number}} MatchResult */
+
+/** @type {(a:number, b:number) => MatchResult } */
+export const cardMatcher = (a, b) => {
+  switch (true) {
+    case a > 0 && b > 0 && a % 2 !== b % 2:
+      return { kind: "POSITIVE", score: a + b, a, b };
+    case a < 0 && b < 0 && a % 2 === b % 2:
+      return { kind: "NEGATIVE", score: Math.abs(a) + Math.abs(b), a, b };
+    case a === 0 || b === 0 && a + b !== 0:
+      return { kind: "ZERO", score: Math.abs(a + b) * 3, a, b };
+    case a === Math.abs(b):
+      return { kind: "INVERZIT", score: Math.abs(a) * 4, a, b };
+    default:
+      return { kind: "FAIL", score: 0, a, b, };
+  }
+};
+
+/** @type {(solver: Entity, problem: Entity) => MatchResult[]} */
+export const allPossibleMoves = (solver, problem) =>
+  solver
+    .hand
+    .map(play => problem
+      .hand
+      .map(target => cardMatcher(play.value, target.value))
+    ).flat();
+
+// ------------------------- 3D ----------------------------------
 
 /** @type {(props: { id: number, value: number }) => HTMLElement} */
 const Card = ({id, value}) => (
-  <div class="relative scale-[4] transition-all duration-500 pointer-events-auto hover:scale-[5]">
+  <div class="
+    relative
+    scale-[4]
+    transition-all duration-500
+    pointer-events-auto
+    hover:scale-[5]
+  ">
     <Sprite
       {...assetList[id]}
       class="rounded-xl outline outline-1 outline-zinc-900">
