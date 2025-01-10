@@ -19,6 +19,7 @@ export const GalaxyRoute = ({front, back, children, zoom=150}) => (
         aspect-video
         grid
         place-items-center
+        pointer-events-none
       "
       style={{backgroundImage:`url(${front}),url(${back})`, backgroundSize: `${zoom}vw`}}
     >

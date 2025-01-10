@@ -1,16 +1,9 @@
 import { fencer, portal, Fragment, Sprite } from "./utils/fencer";
 import { GalaxyRoute, galaxyTextureList, routeController, useKeyboardCurse, useStarshipNavigation } from "./GalaxyRoute";
 import { shuffle } from "./utils/old-bird-soft";
+import { trackList } from "./media-assets";
 
 const [gAlfa, gBeta] = galaxyTextureList();
-
-const trackList = [
-  ["WoraTravelers.png", "media/Travelers.mp3"],
-  ["WoraAndVocal.png", "media/Searching the Void.mp3"],
-  ["WoraPlayOnPiano.png", "media/Tomorrow.mp3"],
-  ["WoraScars.png", "media/Scars on My Stardust.mp3"],
-  ["WoraConstellations.png", "media/Constellation.mp3"],
-];
 
 export const WoraShard = ({pngImageUrl}) => (
   <figure class="

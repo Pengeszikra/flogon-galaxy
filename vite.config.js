@@ -1,22 +1,18 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
+import fs from 'fs';
 
 export default defineConfig({
   build: {
     outDir: 'dist',
     emptyOutDir: true,
     rollupOptions: {
-      input: {
-        main: resolve(__dirname, 'index.html'),
-        throw: resolve(__dirname, 'throw.html'),
-        story: resolve(__dirname, 'story.html'),
-        travel: resolve(__dirname, 'travel.html'),
-        quest: resolve(__dirname, 'quest.html'),
-        adventure: resolve(__dirname, 'adventure.html'),
-        work: resolve(__dirname, 'work.html'),
-      }
-    }
-  },
+      input: Object.fromEntries(
+        fs.readdirSync(__dirname)
+          .filter(file => file.endsWith('.html'))
+          .map(file => [file.replace('.html', ''), resolve(__dirname, file)])
+      )
+    }  },
   server: {
     proxy: {
       '/api': {
