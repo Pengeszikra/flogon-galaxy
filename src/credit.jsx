@@ -12,7 +12,7 @@ portal(
     // front={`https://cdn.midjourney.com/441bb587-4d56-4d73-a027-6d6eef418659/0_2.png`}
     // back={`https://cdn.midjourney.com/441bb587-4d56-4d73-a027-6d6eef418659/0_2.png`} // dual
     // front={`https://cdn.midjourney.com/2fdeae00-337a-41f4-b243-55f399e0a5b2/0_1.png`}
-    back={`https://cdn.midjourney.com/e52feeaf-3369-4136-80a4-baa03c272792/0_2.png`}
+    back={`../ui-elements/evidence-of-history.png`}
     zoom={250}
   >
     <section class="grid select-none">

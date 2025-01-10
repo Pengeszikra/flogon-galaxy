@@ -6,7 +6,7 @@ const [gAlfa, gBeta] = galaxyTextureList();
 portal(
   <GalaxyRoute
     front={`../sheets/texture-${gAlfa}.png`}
-    back={`https://cdn.midjourney.com/7443e9b9-be5c-4f2e-b827-4e99df50c9c3/0_1.png`}
+    back={`../public/ui-elements/fare-and-beyond-statue.png`}
     zoom={250}
   >
     <section class="grid select-none">
