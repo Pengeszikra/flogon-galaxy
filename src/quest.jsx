@@ -6,7 +6,7 @@ const [gAlfa, gBeta] = galaxyTextureList();
 portal(
   <GalaxyRoute
     front={`../sheets/texture-${gAlfa}.png`}
-    back={`../public/ui-elements/fare-and-beyond-statue.png`}
+    back={`public/ui-elements/fare-and-beyond-statue.png`}
     zoom={250}
   >
     <section class="grid select-none">
