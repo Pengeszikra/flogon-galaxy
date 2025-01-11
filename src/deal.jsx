@@ -62,18 +62,17 @@ portal(
     back={`../sheets/texture-${gBeta}.png`}
   >
     <section id="desk" class="
-      w-[100vw] h-[100vw]
+      w-[100vw] h-[56vw]
       grid grid-cols-4 gap-x-[1rem] gap-y-[10rem]
       place-items-center
-      bg-yellow-700
     "
     >
       {assetList.slice(0,8).map((_, idx) => <Card id={idx} value={idx - 11} />)}
     </section>
   </GalaxyRoute>
 ).then(() => {
-  const [state] = routeController("screen");
-  state.ySpeed = Math.random() - .5;
-  state.xSpeed = Math.random() - .5;
+  const [state] = routeController("multiply");
+  // state.ySpeed = Math.random() - .5;
+  // state.xSpeed = Math.random() - .5;
   useKeyboardCurse(state);
 });
