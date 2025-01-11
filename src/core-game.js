@@ -255,15 +255,14 @@ const summ = (who) => {
 }
 
 /** @type {(st:State) => any} */
-const logger = (st) => {
+export const logger = (st) => {
   try {
     console.log(`${st.phase} :: ${summ(st.player)} :: ${summ(st.quest)} (${st.player.score}/${st.quest.score})`);
   } catch (err) { console.warn(st) }
 }
 
-
-/** @type {() => State} */
-export const freshState = () => signal(logger)({phase, player, quest});
+/** @type {(render:(state:State)=>any) => State} */
+export const freshState = (render) => signal(render)({phase, player, quest});
 
 /** @type {(st:State, p: SingleCard[], q: SingleCard[]) => any} */
 export const gameSetup = (state, playerDeck, questDeck) => {
