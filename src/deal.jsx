@@ -3,13 +3,11 @@ import { GalaxyRoute, galaxyTextureList, routeController, useKeyboardCurse } fro
 import { assetList } from "./throw/shoot";
 import { flogons } from "./flogonsSprites";
 import { rnd, shuffle, signal, zignal } from "./utils/old-bird-soft";
-import { gameLoop, state } from "./core-game";
+import { gameLoop, gameSetup, randomDeck, state } from "./core-game";
 
+gameSetup(state, randomDeck(20), randomDeck(25));
 globalThis.st = state;
-globalThis.run = () => {
-  gameLoop(st);
-};
-st.phase = "SETUP";
+globalThis.run = () => gameLoop(state);
 
 // ------------------------- 3D ----------------------------------
 
@@ -71,5 +69,7 @@ portal(
   </GalaxyRoute>
 ).then(() => {
   const [state] = routeController("screen");
+  state.ySpeed = Math.random() - .5;
+  state.xSpeed = Math.random() - .5;
   useKeyboardCurse(state);
 });

@@ -45,6 +45,7 @@ const origo = {x:0, y:0, z:0, rX: 0, rY:0, rZ: 0};
   *  play: SingleCard | null
   *  target: SingleCard | null
   *  score: number
+  *  baseDeck: SingleCard[]
   * }} Entity
   */
 
@@ -60,6 +61,7 @@ const player = {
   select: null,
   play: null,
   target: null,
+  baseDeck: [],
 };
 
 /** @type {Entity} */
@@ -72,6 +74,7 @@ const quest = {
   select: null,
   play: null,
   target: null,
+  baseDeck: [],
 };
 
 /** @type {(amount:number) => SingleCard[]} */
@@ -115,8 +118,8 @@ export const gameLoop = async (st) => {
   // logger(st);
   switch (st.phase) {
     case "SETUP": {
-      st.player.deck = randomDeck(20);
-      st.quest.deck = randomDeck(25);
+      st.player.deck = [...st.player.baseDeck];
+      st.quest.deck = [...st.quest.baseDeck];
       return st.phase = "PLAYER_DRAW";
     }
 
@@ -247,6 +250,7 @@ const summ = (who) => {
     : "- - -";
 }
 
+/** @type {(st:State) => any} */
 const logger = (st) => {
   try {
     console.log(`${st.phase} :: ${summ(st.player)} :: ${summ(st.quest)} (${st.player.score}/${st.quest.score})`);
@@ -256,3 +260,10 @@ const logger = (st) => {
 
 /** @type {{phase:keyof Phases, player: Entity, quest: Entity}} */
 export const state = signal(logger)({phase, player, quest});
+
+/** @type {(st:State, p: SingleCard[], q: SingleCard[]) => any} */
+export const gameSetup = (state, playerDeck, questDeck) => {
+  state.player.baseDeck = playerDeck;
+  state.quest.baseDeck = questDeck;
+  state.phase = "SETUP"
+}
