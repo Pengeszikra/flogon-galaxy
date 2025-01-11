@@ -5,6 +5,7 @@ import { flogons } from "./flogonsSprites";
 import { rnd, shuffle, signal, zignal } from "./utils/old-bird-soft";
 import { gameLoop, gameSetup, randomDeck, freshState, logger } from "./core-game";
 import { FortyTwo } from "./utils/UniversalHarmonyNumber";
+import { transform } from "typescript";
 
 globalThis.gameTest =  (speed = FortyTwo, pAmunt = 20, qAmount = 25) => {
   const state = freshState(logger);
@@ -15,14 +16,16 @@ globalThis.gameTest =  (speed = FortyTwo, pAmunt = 20, qAmount = 25) => {
 
 // ------------------------- 3D ----------------------------------
 
-/** @type {(props: { id: number, value: number }) => HTMLElement} */
-const Card = ({id, value}) => (
-  <div class="
-    relative
-    scale-[4]
+/** @type {(props: { id: number, value: number, style:object }) => HTMLElement} */
+const Card = ({id, value, style}) => (
+  <div
+    style={style}
+    class="
+    absolute top-0 left-0
+    scale-[3.2]
     transition-all duration-500
     pointer-events-auto
-    hover:scale-[5]
+    --hover:scale-[5]
   ">
     <Sprite
       {...assetList[id]}
@@ -30,7 +33,7 @@ const Card = ({id, value}) => (
     </Sprite>
     <div class="
       text-neutral-700
-      text-[1rem]
+      text-[.7rem]
       absolute
       top-2
       left-2
@@ -61,38 +64,49 @@ portal(
     front={`../sheets/texture-${gAlfa}.png`}
     back={`../sheets/texture-${gBeta}.png`}
   >
+    <figure class="
+      --hidden
+      aspect-video
+      min-w-full
+      absolute top-0 left-0
+      bg-[url(../sheets/bridge-4400.png)]
+      bg-cover
+    "></figure>
+
     <section id="score-board" class="
+      absolute top-0 left-0
       min-w-full
       bg-black/45 text-orange-300
       flex gap-2 p-4
-      text-4xl
+      text-3xl
       justify-evenly
+      select-none
     ">
-      <figure class="
-        hidden
-        aspect-video
-        min-w-full
-        absolute top-0 left-0
-        bg-[url(../sheets/bridge-4400.png)]
-        bg-cover
-      "></figure>
       <p>player score: <span id="p-score" class="text-orange-600">200</span></p>
       <p>quest score: <span id="q-score" class="text-orange-600">200</span></p>
     </section>
     <section id="desk" class="
-      w-[100vw] h-[56vw]
-      grid grid-cols-4 gap-x-[1rem] gap-y-[10rem]
+      absolute top-[50%] left-[50%]
+      w-[0] h-[0]
+      --grid --grid-cols-4 gap-x-[2rem] gap-y-[17rem]
       place-items-center
-      bg-black/75
+      --bg-black/75
     "
     >
-      {assetList.slice(0,8).map((_, idx) => <Card id={idx} value={idx - 11} />)}
+      {assetList.map((_, idx) => (
+        <Card id={idx} value={idx - 11} style={{transform:`
+          translateX(${idx%2==0?-13:0}rem)
+          translateY(${idx%2==0?-10:10}rem)
+          translateZ(${idx/2 + 0}rem)
+          scale(2.5)
+        `}}/>
+      ))}
     </section>
   </GalaxyRoute>
 ).then(() => {
   const [galaxy] = routeController("screen");
-  galaxy.ySpeed = (Math.random() - .5) / 3;
-  galaxy.xSpeed = (Math.random() - .5) / 3;
+  galaxy.ySpeed = (Math.random() - .5) / .3;
+  galaxy.xSpeed = (Math.random() - .5) / .3;
   useKeyboardCurse(galaxy);
 
   /** @type {HTMLElement} */ const pScore = document.querySelector('#p-score');

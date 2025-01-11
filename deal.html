@@ -7,11 +7,16 @@
   <link rel="manifest" href="manifest.json" />
   <link href="src/style.css" rel="stylesheet" />
   <style>
-    body, html { font-size: 10px; }
+    body, html {
+      font-size: 1.5vw;
+      background-color: #000;
+      margin: auto 0;
+      aspect-ratio: 16 / 9;
+    }
     #desk {
       transform-style: preserve-3d;
       transform:
-        perspective(70vh)
+        perspective(70vw)
         rotateX(20deg)
         rotateY(0deg)
         rotateZ(0deg)
