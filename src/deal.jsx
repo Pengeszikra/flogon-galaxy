@@ -3,11 +3,15 @@ import { GalaxyRoute, galaxyTextureList, routeController, useKeyboardCurse } fro
 import { assetList } from "./throw/shoot";
 import { flogons } from "./flogonsSprites";
 import { rnd, shuffle, signal, zignal } from "./utils/old-bird-soft";
-import { gameLoop, gameSetup, randomDeck, state } from "./core-game";
+import { gameLoop, gameSetup, randomDeck, freshState } from "./core-game";
+import { FortyTwo } from "./utils/UniversalHarmonyNumber";
 
-gameSetup(state, randomDeck(20), randomDeck(25));
-globalThis.st = state;
-globalThis.run = () => gameLoop(state);
+globalThis.gameTest =  (speed = FortyTwo, pAmunt = 20, qAmount = 25) => {
+  const state = freshState();
+  gameSetup(state, randomDeck(pAmunt), randomDeck(qAmount));
+  globalThis.run = () => gameLoop(state);
+  const stop = setInterval(_ => { if (state.phase == "THE_END") clearInterval(stop); run() }, speed);
+};
 
 // ------------------------- 3D ----------------------------------
 

@@ -118,8 +118,12 @@ export const gameLoop = async (st) => {
   // logger(st);
   switch (st.phase) {
     case "SETUP": {
-      st.player.deck = [...st.player.baseDeck];
-      st.quest.deck = [...st.quest.baseDeck];
+      st.player = structuredClone(player);
+      st.quest = structuredClone(quest);
+      st.player.deck = structuredClone(st.player.baseDeck);
+      st.quest.deck = structuredClone(st.quest.baseDeck);
+      console.log(JSON.stringify(st.player.deck.map(({value})=>value)))
+      console.log(JSON.stringify(st.quest.deck.map(({value})=>value)))
       return st.phase = "PLAYER_DRAW";
     }
 
@@ -258,12 +262,12 @@ const logger = (st) => {
 }
 
 
-/** @type {{phase:keyof Phases, player: Entity, quest: Entity}} */
-export const state = signal(logger)({phase, player, quest});
+/** @type {() => State} */
+export const freshState = () => signal(logger)({phase, player, quest});
 
 /** @type {(st:State, p: SingleCard[], q: SingleCard[]) => any} */
 export const gameSetup = (state, playerDeck, questDeck) => {
   state.player.baseDeck = playerDeck;
   state.quest.baseDeck = questDeck;
-  state.phase = "SETUP"
+  state.phase = "SETUP";
 }
