@@ -4,4 +4,5 @@ export const trackList = [
   ["WoraPlayOnPiano.png", "media/Tomorrow.mp3"],
   ["WoraScars.png", "media/Scars on My Stardust.mp3"],
   ["WoraConstellations.png", "media/Constellation.mp3"],
+  ["Wora42.png", "media/FortyTwo.mp3"],
 ];
