@@ -2,7 +2,7 @@ import { fencer, portal, Fragment, Sprite } from "./utils/fencer";
 import { GalaxyRoute, galaxyTextureList, routeController, useKeyboardCurse } from "./GalaxyRoute";
 import { assetList } from "./throw/shoot";
 import { flogons } from "./flogonsSprites";
-import { rnd, shuffle, signal, zignal } from "./utils/old-bird-soft";
+import { pick, rnd, shuffle, signal, zignal } from "./utils/old-bird-soft";
 import { gameLoop, gameSetup, randomDeck, freshState, logger } from "./core-game";
 import { FortyTwo } from "./utils/UniversalHarmonyNumber";
 import { transform } from "typescript";
@@ -16,19 +16,23 @@ globalThis.gameTest =  (speed = FortyTwo, pAmunt = 20, qAmount = 25) => {
 
 // ------------------------- 3D ----------------------------------
 
-/** @type {(props: { id: number, value: number, style:object }) => HTMLElement} */
+const allCard = randomDeck(FortyTwo);
+
+/** @type {(props: { id: string, value: number, style:object }) => HTMLElement} */
 const Card = ({id, value, style}) => (
   <div
     style={style}
+    id={id}
     class="
-    absolute top-0 left-0
-    scale-[3.2]
-    transition-all duration-500
-    pointer-events-auto
-    --hover:scale-[5]
-  ">
+      card
+      absolute top-0 left-0
+      scale-[3.2]
+      transition-all duration-500
+      pointer-events-auto
+      --hover:scale-[5]
+    ">
     <Sprite
-      {...assetList[id]}
+      {...pick(assetList)}
       class="rounded-xl outline outline-1 outline-zinc-900">
     </Sprite>
     <div class="
@@ -86,18 +90,18 @@ portal(
       <p>quest score: <span id="q-score" class="text-orange-600">200</span></p>
     </section>
     <section id="desk" class="
-      absolute top-[50%] left-[50%]
+      absolute top-[60%] left-[50%]
       w-[0] h-[0]
       --grid --grid-cols-4 gap-x-[2rem] gap-y-[17rem]
       place-items-center
       --bg-black/75
     "
     >
-      {assetList.map((_, idx) => (
-        <Card id={idx} value={idx - 11} style={{transform:`
+      {allCard.map(({value,id}, idx) => (
+        <Card id={id} value={value} style={{transform:`
           translateX(${idx%2==0?-13:0}rem)
           translateY(${idx%2==0?-10:10}rem)
-          translateZ(${idx/2 + 0}rem)
+          translateZ(${idx/10 + 50}rem)
           scale(2.5)
         `}}/>
       ))}
@@ -111,6 +115,7 @@ portal(
 
   /** @type {HTMLElement} */ const pScore = document.querySelector('#p-score');
   /** @type {HTMLElement} */ const qScore = document.querySelector('#q-score');
+  /** @type {HTMLElement} */ const deck = document.querySelector('#deck');
 
   /** @typedef {import('./core-game').State} State */
   /** @type {(st:State) => any} */
@@ -120,8 +125,56 @@ portal(
     logger(st);
   }
 
+  allCard.map(({id}, idx) => {
+    /** @type {HTMLElement} */ const card = document.querySelector(`#${id}`);
+    setTimeout(() => card.style.transform = `
+      translateX(${idx%2==0?-13:0}rem)
+      translateY(${idx%2==0?-10:10}rem)
+      translateZ(${idx/10 + 10}rem)
+      scale(2.5)
+    `, idx * 10 + (idx%2 * 1000));
+
+  })
+
   const state = freshState(render);
   gameSetup(state, randomDeck(12), randomDeck(21));
   const flow = () => gameLoop(state);
   const stop = setInterval(_ => { if (state.phase == "THE_END") clearInterval(stop); flow() }, FortyTwo);
 });
+
+/*
+
+--- A possible 3D position
+
+qDeck
+qHand1
+qHand2
+qHand3
+qHand4
+qDrop
+
+pToPair
+qToPair
+
+pDeck
+pHand1
+pHand2
+pHand3
+pHand4
+pDrop
+
+--- A possible moves
+
+buildDeck ( from above )
+dealCardToPlayer
+flipDealedCard
+dealCardToQuest
+selectCardOnPlayerHand
+selectCardOnQuestHand
+pairPlayerCard
+pairQuestCard
+pairGoDrop
+handGoDrop
+dropShuffleToDeck
+
+*/

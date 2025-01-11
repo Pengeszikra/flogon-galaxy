@@ -81,7 +81,7 @@ const quest = {
 export const randomDeck = (amount) => Array(amount)
   .fill()
   .map((_,idx) => ({
-      id:idx.toString(),
+      id:"crd-" + Math.random().toString(36).slice(-7),
       value: rnd(FortyTwo + 1) - (FortyTwo / 2),
       ...origo
   }));
