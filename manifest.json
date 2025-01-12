@@ -16,7 +16,7 @@
   "screenshots": [
     {
       "src": "screenshot-wide.png",
-      "sizes": "1920x1080",
+      "sizes": "1456x816",
       "type": "image/png",
       "form_factor": "wide"
     }
@@ -25,5 +25,5 @@
   "background_color": "#000000",
   "start_url": "/",
   "display": "fullscreen",
-  "orientation": "landscape-primary"
+  "orientation": "landscape"
 }
