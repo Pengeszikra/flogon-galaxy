@@ -6,6 +6,9 @@ import { delay, pick, rnd, shuffle, signal, zignal } from "./utils/old-bird-soft
 import { gameLoop, gameSetup, randomDeck, freshState, logger } from "./core-game";
 import { FortyTwo } from "./utils/UniversalHarmonyNumber";
 
+/** @typedef {import('../src/core-game').State} MissionState */
+/** @typedef {import('../src/core-game').SingleCard} SingleCard */
+
 globalThis.gameTest =  (speed = FortyTwo, pAmunt = 20, qAmount = 25) => {
   const state = freshState(logger);
   gameSetup(state, randomDeck(pAmunt), randomDeck(qAmount));
@@ -17,6 +20,10 @@ globalThis.gameTest =  (speed = FortyTwo, pAmunt = 20, qAmount = 25) => {
 
 const allCard = randomDeck(FortyTwo * 2);
 
+const SKY = 50;
+const FLOOR = 10;
+const SIZE = 2.5;
+
 /** @type {(props: { id: string, value: number, style:object }) => HTMLElement} */
 const Card = ({id, value, style}) => (
   <div
@@ -24,7 +31,7 @@ const Card = ({id, value, style}) => (
     id={id}
     class="
       card
-      absolute top-0 left-0;
+      absolute top-8 left-0;
       scale-[3.2]
       transition-all duration-500
       pointer-events-auto
@@ -100,8 +107,8 @@ portal(
         <Card id={id} value={value} style={{transform:`
           translateX(${idx%2==0?30:-30}rem)
           translateY(${idx%2==0?-10:10}rem)
-          translateZ(${idx/10 + 50}rem)
-          scale(2.5)
+          translateZ(${idx/10 + SKY}rem)
+          scale(${SIZE})
         `}}/>
       ))}
     </section>
@@ -127,8 +134,8 @@ portal(
         setTimeout(() => {
           crdState.x = -26;
           crdState.y = 10;
-          crdState.z = idx / 3 + 10;
-          crdState.zoom = 2.5;
+          crdState.z = idx / 3 + FLOOR;
+          crdState.zoom = SIZE;
         }
         , idx * 20);
       });
@@ -138,16 +145,20 @@ portal(
           setTimeout(() => {
             crdState.x = -26;
             crdState.y = -10;
-            crdState.z = idx / 3 + 10;
-            crdState.zoom = 2.5
+            crdState.z = idx / 3 + FLOOR;
+            crdState.zoom = SIZE
           }
           , idx * 20);
         });
       }, 1000);
     }
+
+    if (st.phase === "PLAYER_DRAW") dealToPlayer(st);
+
+    if (st.phase === "QUEST_DRAW_WITH_END_CHECK") dealToQuest(st);
   }
 
-  /** @typedef {import('../src/core-game').SingleCard} SingleCard *
+
   /** @type {(info:SingleCard) => any} */
   const newOrder = (info) => {
     const {id, x,y,z,rX,rY,rZ,zoom} = info;
@@ -166,15 +177,35 @@ portal(
   }
 
   const state = freshState(render);
+  globalThis.st = state; // TODO
   const movingCards = allCard.map(card => signal(newOrder)(card));
-  globalThis.mc = movingCards;
   gameSetup(state, movingCards.slice(0,12), movingCards.slice(12, 12 + 21));
   const flow = () => gameLoop(state);
 
-  const stop = setInterval(_ => { if (state.phase == "READY") clearInterval(stop); flow() }, FortyTwo);
-  // const stop = setInterval(_ => { if (state.phase == "THE_END") clearInterval(stop); flow() }, FortyTwo);
+  // const stop = setInterval(_ => { if (state.phase == "READY") clearInterval(stop); flow() }, FortyTwo);
+  const stop = setInterval(_ => { if (state.phase == "THE_END") clearInterval(stop); flow() }, FortyTwo * 10);
 
 });
+
+/** @type {(st:MissionState) => Promise<void>} */
+export const dealToPlayer = async (st) => {
+  await delay(300);
+  st.player.deck.at(-1).x = -13; st.player.deck.at(-1).z = FLOOR;
+  await delay(300);
+  st.player.deck.at(-2).x = 0; st.player.deck.at(-2).z = FLOOR;
+  await delay(300);
+  st.player.deck.at(-3).x = 13; st.player.deck.at(-3).z = FLOOR;
+  await delay(300);
+  st.player.deck.at(-4).x = 26; st.player.deck.at(-4).z = FLOOR;
+};
+
+/** @type {(st:MissionState) => Promise<void>} */
+export const dealToQuest = async (st) => {
+  await delay(300);
+  st.quest.deck.at(-1).x = 0; st.quest.deck.at(-1).z = FLOOR;
+  await delay(300);
+  st.quest.deck.at(-2).x = 13; st.quest.deck.at(-2).z = FLOOR;
+};
 
 /*
 
