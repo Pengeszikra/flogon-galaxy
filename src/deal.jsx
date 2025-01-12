@@ -5,50 +5,20 @@ import { flogons } from "./flogonsSprites";
 import { delay, pick, rnd, shuffle, signal, zignal } from "./utils/old-bird-soft";
 import { gameLoop, gameSetup, randomDeck, freshState, logger, origo } from "./core-game";
 import { FortyTwo } from "./utils/UniversalHarmonyNumber";
+import { FLOOR, move, POS, SIZE, SKY } from "./deal-animations";
 
-/** @typedef {import('../src/core-game').State} MissionState */
 /** @typedef {import('../src/core-game').SingleCard} SingleCard */
 
-globalThis.gameTest =  (speed = FortyTwo, pAmunt = 20, qAmount = 25) => {
-  const state = freshState(logger);
-  gameSetup(state, randomDeck(pAmunt), randomDeck(qAmount));
-  globalThis.run = () => gameLoop(state);
-  const stop = setInterval(_ => { if (state.phase == "THE_END") clearInterval(stop); run() }, speed);
-};
+// globalThis.gameTest =  (speed = FortyTwo, pAmunt = 20, qAmount = 25) => {
+//   const state = freshState(logger);
+//   gameSetup(state, randomDeck(pAmunt), randomDeck(qAmount));
+//   globalThis.run = () => gameLoop(state);
+//   const stop = setInterval(_ => { if (state.phase == "THE_END") clearInterval(stop); run() }, speed);
+// };
 
 // ------------------------- 3D ----------------------------------
 
 const allCard = randomDeck(FortyTwo * 2);
-
-const SKY = 50;
-const FLOOR = 10;
-const SIZE = 2.5;
-const MFRAG = 150;
-const UP = 30;
-
-// --- A possible 3D position
-export const POS = {
-  sky: { ...origo, zoom: SIZE, z: SKY },
-
-  qDeck:  { x: -26, z: FLOOR, y: -10, zoom: SIZE },
-  qHand1: { x: -13, z: FLOOR },
-  qHand2: { x:   0, z: FLOOR },
-  qHand3: { x:  13, z: FLOOR },
-  qHand4: { x:  26, z: FLOOR },
-  qDrop:  { x:  39, z: FLOOR },
-
-  pToPair: { z: FLOOR },
-  qToPair: { z: FLOOR },
-
-  pDeck:  { x: -26, z: FLOOR, y: 10, zoom: SIZE },
-  pHand1: { x: -13, z: FLOOR },
-  pHand2: { x:   0, z: FLOOR },
-  pHand3: { x:  13, z: FLOOR },
-  pHand4: { x:  26, z: FLOOR },
-  pDrop:  { x:  39, z: FLOOR },
-};
-
-export const move = Object.assign;
 
 /** @type {(props: { id: string, value: number, style:object }) => HTMLElement} */
 const Card = ({id, value, style}) => (
@@ -61,7 +31,7 @@ const Card = ({id, value, style}) => (
       scale-[3.2]
       transition-all duration-500
       pointer-events-auto
-      --hover:scale-[5]
+      hover:brightness-150
     ">
     <Sprite
       {...pick(assetList)}
@@ -106,16 +76,6 @@ portal(
       min-w-full
       absolute top-0 left-0
       --bg-[url(../sheets/bridge-4400.png)]
-      --bg-[url(https://cdn.midjourney.com/84c811c5-b956-4567-9bd2-c8cf0331accb/0_3.png)]
-      --bg-[url(https://cdn.midjourney.com/84c811c5-b956-4567-9bd2-c8cf0331accb/0_2.png)]
-      --bg-[url(https://cdn.midjourney.com/84c811c5-b956-4567-9bd2-c8cf0331accb/0_2.png)]
-      --bg-[url(https://cdn.midjourney.com/84c811c5-b956-4567-9bd2-c8cf0331accb/0_1.png)]
-      --bg-[url(https://cdn.midjourney.com/e4dd8242-0279-4433-a2c3-620de0cd9dfd/0_1.png)]
-      --bg-[url(https://cdn.midjourney.com/247d322e-2caa-4697-82cd-2276c75a1ef6/0_0.png)]
-      --bg-[url(https://cdn.midjourney.com/7a066f32-a837-4c95-b060-8b4923de3bf1/0_3.png)]
-      --bg-[url(https://cdn.midjourney.com/247d322e-2caa-4697-82cd-2276c75a1ef6/0_2.png)]
-      --bg-[url(https://cdn.midjourney.com/u/4f69d6b9-0d9c-4571-ba8f-cc4c31e82d5c/9b58158bcba7b0d8d13b98814e8beb1069e52055dd6df70b6ff494f8321407f6.png)]
-      --bg-[url(https://cdn.midjourney.com/9df64ff9-1e9c-4ac6-addd-a51f8414bb9b/0_1.png)]
       bg-[url(../ui-elements/mission-cabine.png)]
       bg-cover
     "></figure>
@@ -152,8 +112,8 @@ portal(
   </GalaxyRoute>
 ).then((page) => {
   const [galaxy] = routeController("screen");
-  // galaxy.ySpeed = (Math.random() - .5) / .3;
-  // galaxy.xSpeed = (Math.random() - .5) / .3;
+  galaxy.ySpeed = (Math.random() - .5) / .3;
+  galaxy.xSpeed = (Math.random() - .5) / .3;
   useKeyboardCurse(galaxy);
 
   /** @type {HTMLElement} */ const pScore = document.querySelector('#p-score');
@@ -183,9 +143,9 @@ portal(
         ), 1000);
     }
 
-    if (st.phase === "PLAYER_DRAW") dealToPlayer(st);
+    // if (st.phase === "PLAYER_DRAW") dealToPlayer(st);
 
-    if (st.phase === "QUEST_DRAW_WITH_END_CHECK") dealToQuest(st);
+    // if (st.phase === "QUEST_DRAW_WITH_END_CHECK") dealToQuest(st);
   }
 
   /** @type {(info:SingleCard) => any} */
@@ -202,7 +162,6 @@ portal(
       rotateZ(${rZ}deg)
       scale(${zoom})
     `;
-    // console.log(card, info);
   }
 
   const state = freshState(render);
@@ -211,51 +170,6 @@ portal(
   gameSetup(state, movingCards.slice(0,12), movingCards.slice(12, 12 + 21));
   const flow = () => gameLoop(state);
 
-  // const stop = setInterval(_ => { if (state.phase == "READY") clearInterval(stop); flow() }, FortyTwo);
   const stop = setInterval(_ => { if (state.phase == "THE_END") clearInterval(stop); flow() }, FortyTwo * 10);
 
 });
-
-/** @type {(st:MissionState) => Promise<void>} */
-export const dealToPlayer = async (st) => {
-  const { deck } = st.player;
-  await delay(MFRAG); deck.at(-1).z = UP;
-  await delay(MFRAG); move(deck.at(-1), POS.pHand1);
-
-  await delay(MFRAG); deck.at(-2).z = UP;
-  await delay(MFRAG); move(deck.at(-2), POS.pHand2);
-
-  await delay(MFRAG); deck.at(-3).z = UP;
-  await delay(MFRAG); move(deck.at(-3), POS.pHand3);
-
-  await delay(MFRAG); deck.at(-4).z = UP;
-  await delay(MFRAG); move(deck.at(-4), POS.pHand4);
-};
-
-/** @type {(st:MissionState) => Promise<void>} */
-export const dealToQuest = async (st) => {
-  const { deck } = st.quest;
-  await delay(MFRAG); deck.at(-1).z = UP;
-  await delay(MFRAG); move(deck.at(-1), POS.qHand2);
-
-  await delay(MFRAG); deck.at(-2).z = UP;
-  await delay(MFRAG); move(deck.at(-2), POS.qHand3);
-};
-
-
-/*
---- A possible moves
-
-buildDeck ( from above )
-dealCardToPlayer
-flipDealedCard
-dealCardToQuest
-selectCardOnPlayerHand
-selectCardOnQuestHand
-pairPlayerCard
-pairQuestCard
-pairGoDrop
-handGoDrop
-dropShuffleToDeck
-
-*/
