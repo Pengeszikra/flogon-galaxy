@@ -105,7 +105,18 @@ portal(
       aspect-video
       min-w-full
       absolute top-0 left-0
-      bg-[url(../sheets/bridge-4400.png)]
+      --bg-[url(../sheets/bridge-4400.png)]
+      --bg-[url(https://cdn.midjourney.com/84c811c5-b956-4567-9bd2-c8cf0331accb/0_3.png)]
+      --bg-[url(https://cdn.midjourney.com/84c811c5-b956-4567-9bd2-c8cf0331accb/0_2.png)]
+      --bg-[url(https://cdn.midjourney.com/84c811c5-b956-4567-9bd2-c8cf0331accb/0_2.png)]
+      --bg-[url(https://cdn.midjourney.com/84c811c5-b956-4567-9bd2-c8cf0331accb/0_1.png)]
+      --bg-[url(https://cdn.midjourney.com/e4dd8242-0279-4433-a2c3-620de0cd9dfd/0_1.png)]
+      --bg-[url(https://cdn.midjourney.com/247d322e-2caa-4697-82cd-2276c75a1ef6/0_0.png)]
+      --bg-[url(https://cdn.midjourney.com/7a066f32-a837-4c95-b060-8b4923de3bf1/0_3.png)]
+      --bg-[url(https://cdn.midjourney.com/247d322e-2caa-4697-82cd-2276c75a1ef6/0_2.png)]
+      --bg-[url(https://cdn.midjourney.com/u/4f69d6b9-0d9c-4571-ba8f-cc4c31e82d5c/9b58158bcba7b0d8d13b98814e8beb1069e52055dd6df70b6ff494f8321407f6.png)]
+      --bg-[url(https://cdn.midjourney.com/9df64ff9-1e9c-4ac6-addd-a51f8414bb9b/0_1.png)]
+      bg-[url(../ui-elements/mission-cabine.png)]
       bg-cover
     "></figure>
 

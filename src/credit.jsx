@@ -8,10 +8,6 @@ const [gAlfa, gBeta] = galaxyTextureList();
 portal(
   <GalaxyRoute
     front={`../sheets/texture-${gAlfa}.png`}
-    // front={`https://cdn.midjourney.com/4151a128-a790-4b9f-8586-812300685fca/0_1.png`}
-    // front={`https://cdn.midjourney.com/441bb587-4d56-4d73-a027-6d6eef418659/0_2.png`}
-    // back={`https://cdn.midjourney.com/441bb587-4d56-4d73-a027-6d6eef418659/0_2.png`} // dual
-    // front={`https://cdn.midjourney.com/2fdeae00-337a-41f4-b243-55f399e0a5b2/0_1.png`}
     back={`../ui-elements/evidence-of-history.png`}
     zoom={250}
   >
