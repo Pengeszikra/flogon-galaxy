@@ -21,7 +21,7 @@ import { FortyTwo } from "./utils/UniversalHarmonyNumber";
 
 
 /** @type {Pos3D} */
-const origo = {x:0, y:0, z:0, rX: 0, rY:0, rZ: 0, zoom: 1};
+export const origo = {x:0, y:0, z:0, rX: 0, rY:0, rZ: 0, zoom: 1};
 
 /**
   *  @typedef {{
