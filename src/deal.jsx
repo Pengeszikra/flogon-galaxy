@@ -117,8 +117,8 @@ portal(
   </GalaxyRoute>
 ).then((page) => {
   const [galaxy] = routeController("screen");
-  galaxy.ySpeed = (Math.random() - .5) / .3;
-  galaxy.xSpeed = (Math.random() - .5) / .3;
+  // galaxy.ySpeed = (Math.random() - .5) / .3;
+  // galaxy.xSpeed = (Math.random() - .5) / .3;
   useKeyboardCurse(galaxy);
 
   /** @type {HTMLElement} */ const pScore = document.querySelector('#p-score');
@@ -189,52 +189,57 @@ portal(
 
 });
 
+export const POS = {
+  qDeck:  { x: -26, z: FLOOR },
+  qHand1: { x: -13, z: FLOOR },
+  qHand2: { x:   0, z: FLOOR },
+  qHand3: { x:  13, z: FLOOR },
+  qHand4: { x:  26, z: FLOOR },
+  qDrop:  { x:  39, z: FLOOR },
+
+  pToPair: { x: -26, z: FLOOR },
+  qToPair: { x: -26, z: FLOOR },
+
+  pDeck:  { x: -26, z: FLOOR },
+  pHand1: { x: -13, z: FLOOR },
+  pHand2: { x:   0, z: FLOOR },
+  pHand3: { x:  13, z: FLOOR },
+  pHand4: { x:  26, z: FLOOR },
+  pDrop:  { x:  39, z: FLOOR },
+};
+
+export const move = Object.assign;
+
 /** @type {(st:MissionState) => Promise<void>} */
 export const dealToPlayer = async (st) => {
   const { deck } = st.player;
   await delay(MFRAG); deck.at(-1).z = UP;
-  await delay(MFRAG); deck.at(-1).x = -13; deck.at(-1).z = FLOOR;
+  await delay(MFRAG); move(deck.at(-1), POS.pHand1);
 
   await delay(MFRAG); deck.at(-2).z = UP;
-  await delay(MFRAG); deck.at(-2).x = 0; deck.at(-2).z = FLOOR;
+  await delay(MFRAG); move(deck.at(-2), POS.pHand2);
 
   await delay(MFRAG); deck.at(-3).z = UP;
-  await delay(MFRAG); deck.at(-3).x = 13; deck.at(-3).z = FLOOR;
+  await delay(MFRAG); move(deck.at(-3), POS.pHand3);
 
   await delay(MFRAG); deck.at(-4).z = UP;
-  await delay(MFRAG); deck.at(-4).x = 26; deck.at(-4).z = FLOOR;
+  await delay(MFRAG); move(deck.at(-4), POS.pHand4);
 };
 
 /** @type {(st:MissionState) => Promise<void>} */
 export const dealToQuest = async (st) => {
   const { deck } = st.quest;
   await delay(MFRAG); deck.at(-1).z = UP;
-  await delay(MFRAG); deck.at(-1).x = 0; deck.at(-1).z = FLOOR;
+  await delay(MFRAG); move(deck.at(-1), POS.qHand2);
 
   await delay(MFRAG); deck.at(-2).z = UP;
-  await delay(MFRAG); deck.at(-2).x = 13; deck.at(-2).z = FLOOR;
+  await delay(MFRAG); move(deck.at(-2), POS.qHand3);
 };
+
 
 /*
 
 --- A possible 3D position
-
-qDeck
-qHand1
-qHand2
-qHand3
-qHand4
-qDrop
-
-pToPair
-qToPair
-
-pDeck
-pHand1
-pHand2
-pHand3
-pHand4
-pDrop
 
 --- A possible moves
 
