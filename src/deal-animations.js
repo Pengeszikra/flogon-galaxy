@@ -1,5 +1,7 @@
-import { origo } from "./core-game";
 import { delay } from "./utils/old-bird-soft";
+
+/** @type {import('./core-game').Pos3D} */
+export const origo = {x:0, y:0, z:0, rX: 0, rY:0, rZ: 0, zoom: 1};
 
 /** @typedef {import('../src/core-game').State} MissionState */
 
@@ -35,6 +37,7 @@ export const move = Object.assign;
 
 /** @type {(st:MissionState) => Promise<void>} */
 export const dealToPlayer = async (st) => {
+  console.log('--- deal to player ---')
   const { deck } = st.player;
   await delay(MFRAG); deck.at(-1).z = UP;
   await delay(MFRAG); move(deck.at(-1), POS.pHand1);
@@ -51,6 +54,7 @@ export const dealToPlayer = async (st) => {
 
 /** @type {(st:MissionState) => Promise<void>} */
 export const dealToQuest = async (st) => {
+  console.log('-=- deal to quest -=-')
   const { deck } = st.quest;
   await delay(MFRAG); deck.at(-1).z = UP;
   await delay(MFRAG); move(deck.at(-1), POS.qHand2);

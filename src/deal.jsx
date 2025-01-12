@@ -3,9 +3,9 @@ import { GalaxyRoute, galaxyTextureList, routeController, useKeyboardCurse } fro
 import { assetList } from "./throw/shoot";
 import { flogons } from "./flogonsSprites";
 import { delay, pick, rnd, shuffle, signal, zignal } from "./utils/old-bird-soft";
-import { gameLoop, gameSetup, randomDeck, freshState, logger, origo } from "./core-game";
+import { gameLoop, gameSetup, randomDeck, freshState, logger } from "./core-game";
 import { FortyTwo } from "./utils/UniversalHarmonyNumber";
-import { FLOOR, move, POS, SIZE, SKY } from "./deal-animations";
+import { dealToPlayer, dealToQuest, FLOOR, move, POS, SIZE, SKY } from "./deal-animations";
 
 /** @typedef {import('../src/core-game').SingleCard} SingleCard */
 
@@ -89,8 +89,9 @@ portal(
       justify-evenly
       select-none
     ">
-      <p>player score: <span id="p-score" class="text-orange-600">200</span></p>
-      <p>quest score: <span id="q-score" class="text-orange-600">200</span></p>
+      <p>player: <span id="p-score" class="text-orange-600"></span></p>
+      <p>phase: <span id="phase" class="text-orange-600 text-2xl"></span></p>
+      <p>quest: <span id="q-score" class="text-orange-600"></span></p>
     </section>
     <section id="desk" class="
       absolute top-[60%] left-[50%]
@@ -116,16 +117,19 @@ portal(
   galaxy.xSpeed = (Math.random() - .5) / .3;
   useKeyboardCurse(galaxy);
 
-  /** @type {HTMLElement} */ const pScore = document.querySelector('#p-score');
-  /** @type {HTMLElement} */ const qScore = document.querySelector('#q-score');
-  /** @type {HTMLElement} */ const deck = document.querySelector('#deck');
+  /** @type {HTMLElement} */ const pScore = page.querySelector('#p-score');
+  /** @type {HTMLElement} */ const qScore = page.querySelector('#q-score');
+  /** @type {HTMLElement} */ const dPhase = page.querySelector('#phase');
+  /** @type {HTMLElement} */ const deck = page.querySelector('#deck');
 
   /** @typedef {import('./core-game').State} State */
   /** @type {(st:State) => any} */
   const render = (st) => {
     pScore.innerText = st?.player?.score?.toString() ?? "0";
     qScore.innerText = st?.quest?.score?.toString() ?? "0";
+    dPhase.innerText = st?.phase;
     logger(st);
+    console.log(st.phase);
     if (st.phase === "READY") {
       state.player.deck.map((crdState, idx) =>
         setTimeout(
@@ -144,7 +148,6 @@ portal(
     }
 
     // if (st.phase === "PLAYER_DRAW") dealToPlayer(st);
-
     // if (st.phase === "QUEST_DRAW_WITH_END_CHECK") dealToQuest(st);
   }
 
@@ -168,8 +171,15 @@ portal(
   globalThis.st = state; // TODO
   const movingCards = allCard.map(card => signal(newOrder)(card));
   gameSetup(state, movingCards.slice(0,12), movingCards.slice(12, 12 + 21));
-  const flow = () => gameLoop(state);
 
-  const stop = setInterval(_ => { if (state.phase == "THE_END") clearInterval(stop); flow() }, FortyTwo * 10);
+  let prevPhase = "";
+  const stop = setInterval( _ => {
+    console.log(prevPhase, state.phase);
+    if (state.phase == "THE_END") clearInterval(stop);
+    if (state.phase !== prevPhase) {
+      prevPhase = state.phase;
+      gameLoop(state);
+    }
+  }, FortyTwo * 10);
 
 });

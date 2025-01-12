@@ -1,3 +1,4 @@
+import { dealToPlayer, dealToQuest, origo } from "./deal-animations";
 import { delay, rnd, shuffle, signal } from "./utils/old-bird-soft";
 import { FortyTwo } from "./utils/UniversalHarmonyNumber";
 
@@ -18,10 +19,6 @@ import { FortyTwo } from "./utils/UniversalHarmonyNumber";
  *  zoom: number
  * }} Pos3D
  */
-
-
-/** @type {Pos3D} */
-export const origo = {x:0, y:0, z:0, rX: 0, rY:0, rZ: 0, zoom: 1};
 
 /**
   *  @typedef {{
@@ -87,8 +84,6 @@ export const randomDeck = (amount) => Array(amount)
       ...origo
   }));
 
-// quest.deck = randomDeck(20);
-// player.deck = randomDeck(20);
 /** @type {keyof Phases} */
 let phase;
 
@@ -101,8 +96,10 @@ let phase;
   * "PLAYER_DRAW" |
   * "QUEST_DRAW_WITH_END_CHECK" |
   * "START_PLAY" |
+  * "PLAY_MORE" |
   * "PROBLEM_CHECK" |
   * "REVENGE_BEGIN" |
+  * "REVENGE" |
   * "ANTY_PAIR" |
   * "THE_END" |
   * "ESCAPE_CHECK" |
@@ -113,10 +110,15 @@ let phase;
   * >} Phases
   */
 
+/** @typedef {keyof Phases} PhasesKey */
+
+/** @type {(st: State, a:PhasesKey, b:PhasesKey) => PhasesKey} */
+export const fluctual = (state, a, b) => state.phase === a ? b : a ;
+
 /** @typedef {{phase:keyof Phases, player: Entity, quest: Entity}} State */
 
 /** @type {(st:State) => Promise<keyof Phases>} */
-export const gameLoop = async (st) => {
+export const gameLoop = async (st, ...foo) => {
   switch (st.phase) {
     case "SETUP": {
       // st.player = structuredClone(player);
@@ -128,7 +130,8 @@ export const gameLoop = async (st) => {
     }
 
     case "READY": {
-      await delay(2000); // TODO
+      console.log(' -=-=- READY -=-=-');
+      await delay(2000);
       return st.phase = "PLAYER_DRAW";
     }
 
@@ -140,6 +143,8 @@ export const gameLoop = async (st) => {
       while (st.player.hand.length < 4) {
         st.player.hand.push(st.player.deck.pop());
       }
+      dealToPlayer(st);
+      await delay(1000);
       return st.phase = "QUEST_DRAW_WITH_END_CHECK"
     }
 
@@ -154,12 +159,15 @@ export const gameLoop = async (st) => {
       st.quest.hand.push(st.quest.deck.pop());
       st.quest.hand.push(st.quest.deck.pop());
 
+      dealToQuest(st);
+
       return st.phase = st.quest.hand.length >= 4
         ? "REVENGE_BEGIN"
         : "START_PLAY"
         ;
     }
 
+    case "PLAY_MORE":
     case "START_PLAY": {
       let possibleMoves = allPossibleMoves(st.player, st.quest)
         .filter(({ kind }) => kind !== "FAIL");
@@ -175,13 +183,14 @@ export const gameLoop = async (st) => {
       st.quest.drop.push(result.b);
       st.player.score += result.score;
       return st.phase = possibleMoves.length > 1
-        ? "START_PLAY"
+        ? fluctual(st, "START_PLAY", "PLAY_MORE")
         : "PLAYER_DRAW"
         ;
     }
 
     case "SHODOWN": { return st.phase = "ESCAPE_CHECK" }
 
+    case "REVENGE":
     case "REVENGE_BEGIN": {
       const possibleMoves = allPossibleMoves(st.quest, st.player)
         .filter(({kind}) => kind !== "FAIL");
@@ -192,7 +201,7 @@ export const gameLoop = async (st) => {
           st.quest.drop.push(toDrop);
         }
         return st.phase = possibleMoves.length > 1
-          ? "REVENGE_BEGIN"
+          ? fluctual(st, "REVENGE_BEGIN", "REVENGE")
           : "PLAYER_DRAW"
           ;
       }
@@ -203,7 +212,7 @@ export const gameLoop = async (st) => {
       st.quest.drop.push(result.a);
       st.player.drop.push(result.b);
       st.player.score += result.score;
-      return st.phase = "REVENGE_BEGIN";
+      return st.phase = fluctual(st, "REVENGE_BEGIN", "REVENGE")
     }
 
     case "SOLVE_QUEST": { return st.phase = "THE_END" } // ending action
