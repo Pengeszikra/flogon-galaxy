@@ -107,7 +107,7 @@ portal(
     >
       {allCard.map(({value,id}, idx) => (
         <Card id={id} value={value} style={{transform:`
-          translateX(${idx%2==0?30:-30}rem)
+          translateX(${idx%2==0?-30:10}rem)
           translateY(${idx%2==0?-10:10}rem)
           translateZ(${idx/10 + SKY}rem)
           scale(${SIZE})

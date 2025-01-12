@@ -12,7 +12,7 @@ export const origo = {
   zoom: 1, isQ: false,
 };
 
-export const SKY = 50;
+export const SKY = 30;
 export const FLOOR = 5;
 export const SIZE = 2.5;
 export const MFRAG = 150;
@@ -44,9 +44,9 @@ export const POS = {
 
 
 /** @type {Partial<Pos3D>[]} */
-export const pHand = [POS.pHand1, POS.pHand2, POS.pHand3, POS.pHand4];
+export const pHandList = [POS.pHand1, POS.pHand2, POS.pHand3, POS.pHand4];
 /** @type {Partial<Pos3D>[]} */
-export const qHand = [POS.qHand2, POS.qHand3, POS.qHand1, POS.qHand4];
+export const qHandList = [POS.qHand2, POS.qHand3, POS.qHand1, POS.qHand4];
 
 /** @type {(crd:SingleCard, pos:Partial<Pos3D>, extra?:Partial<Pos3D>) => SingleCard} */
 export const move = (crd, pos, extra = {}) => {
@@ -64,7 +64,7 @@ export const unFind = (all, exist) => all.reduce(
 /** @type {(st:MissionState, crd:SingleCard) => Promise<void>} */
 export const dealToPlayer = async (st, crd) => {
   /** @type {Partial<Pos3D>} */
-  const emptyPlace = pick(unFind(qHand, st.quest.hand.map(card => card.place)));
+  const emptyPlace = pick(unFind(qHandList, st.quest.hand.map(card => card.place)));
   await delay(MFRAG); crd.z = UP;
   await delay(MFRAG); move(crd, emptyPlace);
 };
@@ -72,7 +72,7 @@ export const dealToPlayer = async (st, crd) => {
 /** @type {(st:MissionState, crd:SingleCard) => Promise<void>} */
 export const dealToQuest = async (st, crd) => {
   /** @type {Partial<Pos3D>} */
-  const emptyPlace = pick(unFind(pHand, st.player.hand.map(card => card.place)));
+  const emptyPlace = pick(unFind(pHandList, st.player.hand.map(card => card.place)));
   await delay(MFRAG); crd.z = UP;
   await delay(MFRAG); move(crd, emptyPlace);
 };
@@ -87,6 +87,21 @@ export const moveTo = async (card, position) => {
 export const dropTo = async (card, position, drop) => {
   await delay(MFRAG); card.z = UP;
   await delay(MFRAG); move(card, position, {z: drop.length / 3 + FLOOR});
+}
+
+/** @type {(st:MissionState) => Promise<void>} */
+export const pickUpPlayerDrop = async ({player}) => {
+  for (let i = player.drop.length - 1; i >= 0; i--) {
+    await delay(MFRAG / 2); move(player.drop[i], POS.sky, {x: i % 2 ? -30 : 10});
+  }
+  await delay(MFRAG);
+}
+/** @type {(st:MissionState) => Promise<void>} */
+export const reshufflePlayerCardToDeck = async ({player}) => {
+  for (let i = 0; i < player.deck.length ; i++) {
+    await delay(MFRAG); move(player.deck[i], POS.pDeck, {z: i / 3 + FLOOR});
+  }
+  await delay(MFRAG);
 }
 
 /*

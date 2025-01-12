@@ -1,4 +1,4 @@
-import { dealToPlayer, dealToQuest, origo, POS, dropTo, move, MFRAG } from "./deal-animations";
+import { dealToPlayer, dealToQuest, origo, POS, dropTo, move, MFRAG, pickUpPlayerDrop, reshufflePlayerCardToDeck } from "./deal-animations";
 import { delay, rnd, shuffle, signal } from "./utils/old-bird-soft";
 import { FortyTwo } from "./utils/UniversalHarmonyNumber";
 
@@ -140,7 +140,9 @@ export const gameLoop = async (st, ...foo) => {
 
     case "PLAYER_DRAW": {
       if (st.player.deck.length + st.player.hand.length < 4) {
+        await pickUpPlayerDrop(st);
         st.player.deck = [...st.player.deck, ...st.player.drop].sort(shuffle);
+        await reshufflePlayerCardToDeck(st);
         st.player.drop = [];
       }
       while (st.player.hand.length < 4) {
