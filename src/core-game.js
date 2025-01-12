@@ -1,4 +1,4 @@
-import { dealToPlayer, dealToQuest, origo, POS, dropTo } from "./deal-animations";
+import { dealToPlayer, dealToQuest, origo, POS, dropTo, move, MFRAG } from "./deal-animations";
 import { delay, rnd, shuffle, signal } from "./utils/old-bird-soft";
 import { FortyTwo } from "./utils/UniversalHarmonyNumber";
 
@@ -83,7 +83,8 @@ export const randomDeck = (amount) => Array(amount)
   .map((_,idx) => ({
       id:"crd-" + Math.random().toString(36).slice(-7),
       value: rnd(FortyTwo + 1) - (FortyTwo / 2),
-      ...origo
+      ...origo,
+      ...POS.sky
   }));
 
 /** @type {keyof Phases} */
@@ -173,16 +174,24 @@ export const gameLoop = async (st, ...foo) => {
         ;
     }
 
+    case "PROBLEM_CHECK": return;
+
     case "PLAY_MORE":
     case "START_PLAY": {
       let possibleMoves = allPossibleMoves(st.player, st.quest)
         .filter(({ kind }) => kind !== "FAIL");
-      // console.log(possibleMoves);
+      // return st.phase = "PROBLEM_CHECK";
       if (possibleMoves.length < 1) {
         return st.phase = "PLAYER_DRAW";
       }
       const result = await bestScoreInteraction(possibleMoves);
       console.log(` (${result?.a?.value}) ---> (${result?.b?.value}) `);
+
+      move(result.a, POS.pToPair);
+      await delay(MFRAG * 4);
+      move(result.b, POS.qToPair);
+      await delay(MFRAG * 4);
+
       st.player.hand = st.player.hand.filter(card => card !== result.a);
       st.quest.hand = st.quest.hand.filter(card => card !== result.b);
       st.player.drop.push(result.a);

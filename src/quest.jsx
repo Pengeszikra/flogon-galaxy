@@ -17,7 +17,7 @@ portal(
     </GalaxyRoute>
   </section>
 ).then((page) => {
-  page.onclick = () => globalThis.location.replace('deal.html');
+  page.onclick = () => globalThis.location.replace('mine.html');
   const [state] = routeController("multiply");
   state.ySpeed = Math.random() - .5;
   state.xSpeed = Math.random() - .5;

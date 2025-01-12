@@ -22,24 +22,24 @@ export const UP = 20;
 /** @typedef {Record<string, Partial<Pos3D>>} Positions */
 /** @type {Positions} */
 export const POS = {
-  sky: { ...origo, zoom: SIZE, z: SKY },
+  sky: { ...origo, zoom: SIZE, z: SKY, x: Math.random() > .5 ? 30 : -30 },
 
   qDeck:  { x: -26, z: FLOOR, isQ: true, y: -10, zoom: SIZE },
   qHand1: { x: -13, z: FLOOR, isQ: true },
   qHand2: { x:   0, z: FLOOR, isQ: true },
   qHand3: { x:  13, z: FLOOR, isQ: true },
   qHand4: { x:  26, z: FLOOR, isQ: true },
-  qDrop:  { x:  39, z: FLOOR, isQ: true },
+  qDrop:  { x:  39, z: FLOOR, isQ: true, y: -10, rX: 0 },
 
-  pToPair: { z: FLOOR },
-  qToPair: { z: FLOOR },
+  pToPair: { z: FLOOR + 13, y: 3, x: -3, rX:-25 },
+  qToPair: { z: FLOOR + 13, y: 3, x: 10, rX:-25 },
 
   pDeck:  { x: -26, z: FLOOR, y: 10, zoom: SIZE },
   pHand1: { x: -13, z: FLOOR },
   pHand2: { x:   0, z: FLOOR },
   pHand3: { x:  13, z: FLOOR },
   pHand4: { x:  26, z: FLOOR },
-  pDrop:  { x:  39, z: FLOOR },
+  pDrop:  { x:  39, z: FLOOR, y: 10, rX: 0 },
 };
 
 

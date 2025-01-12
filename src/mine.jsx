@@ -11,6 +11,7 @@ portal(
   >
     <Sprite {...desertShip[9]} class="
       ship
+      pointer-events-auto
       rotate-[90deg]
       --hover:scale-[1.5]
       --transition-all
@@ -28,6 +29,7 @@ portal(
   const debug = document.querySelector('pre');
   /** @type{HTMLElement} */
   const ship = document.querySelector('.ship')
+  ship.onclick = () => globalThis.location.replace('deal.html');
   setTimeout(() => ship.style.transitionDuration = "500ms", 300);
   const showState = st => {
     /** @type {{xSpeed:number, ySpeed:number}} */
@@ -47,7 +49,6 @@ portal(
   const instruments = new Audio('media/Ethernal Wood.mp3');
   // instruments.play();
 });
-
 
 // "difference" --> inversit
 // "multiply" --> darkest space

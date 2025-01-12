@@ -20,6 +20,8 @@ import { dealToPlayer, dealToQuest, FLOOR, move, POS, SIZE, SKY } from "./deal-a
 
 const allCard = randomDeck(FortyTwo * 2);
 
+console.log(allCard);
+
 /** @type {(props: { id: string, value: number, style:object }) => HTMLElement} */
 const Card = ({id, value, style}) => (
   <div
@@ -115,8 +117,8 @@ portal(
   </GalaxyRoute>
 ).then((page) => {
   const [galaxy] = routeController("screen");
-  galaxy.ySpeed = (Math.random() - .5) / .3;
-  galaxy.xSpeed = (Math.random() - .5) / .3;
+  galaxy.ySpeed = (Math.random() - .5) / .7;
+  galaxy.xSpeed = (Math.random() - .5) / .7;
   useKeyboardCurse(galaxy);
 
   /** @type {HTMLElement} */ const pScore = page.querySelector('#p-score');
@@ -148,9 +150,6 @@ portal(
           )
         ), 1000);
     }
-
-    // if (st.phase === "PLAYER_DRAW") dealToPlayer(st);
-    // if (st.phase === "QUEST_DRAW_WITH_END_CHECK") dealToQuest(st);
   }
 
   /** @type {(info:SingleCard) => any} */
@@ -176,12 +175,12 @@ portal(
 
   let prevPhase = "";
   const stop = setInterval( _ => {
-    console.log(prevPhase, state.phase);
+    state.phase !== "PROBLEM_CHECK" && console.log(prevPhase, state.phase);
     if (state.phase == "THE_END") clearInterval(stop);
     if (state.phase !== prevPhase) {
       prevPhase = state.phase;
       gameLoop(state);
     }
-  }, FortyTwo * 10);
+  }, FortyTwo * 4);
 
 });
