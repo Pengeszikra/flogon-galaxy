@@ -31,6 +31,15 @@ markdownEditor.addEventListener("keydown",
   }
 );
 
+markdownEditor.addEventListener("ondragover", 
+  (event) => event.preventDefault()
+);
+
+markdownEditor.addEventListener("ondrop",
+  /** @type {(event:DragEvent) => any} */
+  (event) => handleImageDrop(event)
+);
+
 const API = 'http://localhost:3000'; //  `${process.env.API}:${process.env.api.PORT}`   ///
 const method = "POST";
 const headers = {'Content-Type': 'application/json'};
@@ -98,7 +107,6 @@ cli.addEventListener("keydown",
     }
   }
 );
-
 
 /** @type {(event:DragEvent) => any} */
 const handleImageDrop = (event) => {

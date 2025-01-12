@@ -8,10 +8,5 @@ export default {
   theme: {
     extend: {},
   },
-  plugins: [],
-  safelist: [
-    {
-      pattern: /bg-\[url\(.*?\)\]/, // Whitelist dynamic bg-[url(...)] classes
-    }
-  ],
+  plugins: []
 }
