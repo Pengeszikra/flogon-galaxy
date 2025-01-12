@@ -99,7 +99,7 @@ portal(
     >
       {allCard.map(({value,id}, idx) => (
         <Card id={id} value={value} style={{transform:`
-          translateX(${idx%2==0?-13:0}rem)
+          translateX(${idx%2==0?30:-30}rem)
           translateY(${idx%2==0?-10:10}rem)
           translateZ(${idx/10 + 50}rem)
           scale(2.5)
@@ -109,8 +109,8 @@ portal(
   </GalaxyRoute>
 ).then(() => {
   const [galaxy] = routeController("screen");
-  galaxy.ySpeed = (Math.random() - .5) / .3;
-  galaxy.xSpeed = (Math.random() - .5) / .3;
+  // galaxy.ySpeed = (Math.random() - .5) / .3;
+  // galaxy.xSpeed = (Math.random() - .5) / .3;
   useKeyboardCurse(galaxy);
 
   /** @type {HTMLElement} */ const pScore = document.querySelector('#p-score');
@@ -123,23 +123,38 @@ portal(
     pScore.innerText = st?.player?.score?.toString() ?? "0";
     qScore.innerText = st?.quest?.score?.toString() ?? "0";
     logger(st);
+    if (st.phase === "READY") {
+      state.player.deck.map(({ id }, idx) => {
+        /** @type {HTMLElement} */ const card = document.querySelector(`#${id}`);
+        setTimeout(() => card.style.transform = `
+          translateX(-26rem)
+          translateY(10rem)
+          translateZ(${idx/3 + 10}rem)
+          scale(2.5)
+        `, idx * 20);
+      });
+
+      setTimeout(() => {
+        state.quest.deck.map(({ id }, idx) => {
+          /** @type {HTMLElement} */ const card = document.querySelector(`#${id}`);
+          setTimeout(() => card.style.transform = `
+            translateX(-26rem)
+            translateY(-10rem)
+            translateZ(${idx/3 + 10}rem)
+            scale(2.5)
+          `, idx * 20);
+        });
+      }, 1000);
+    }
   }
 
-  allCard.map(({id}, idx) => {
-    /** @type {HTMLElement} */ const card = document.querySelector(`#${id}`);
-    setTimeout(() => card.style.transform = `
-      translateX(${idx%2==0?-13:0}rem)
-      translateY(${idx%2==0?-10:10}rem)
-      translateZ(${idx/10 + 10}rem)
-      scale(2.5)
-    `, idx * 10 + (idx%2 * 1000));
-
-  })
-
   const state = freshState(render);
-  gameSetup(state, randomDeck(12), randomDeck(21));
+  gameSetup(state, allCard.slice(0,12), allCard.slice(12, 12 + 21));
   const flow = () => gameLoop(state);
   const stop = setInterval(_ => { if (state.phase == "THE_END") clearInterval(stop); flow() }, FortyTwo);
+
+
+
 });
 
 /*

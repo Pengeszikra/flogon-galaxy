@@ -1,4 +1,4 @@
-import { rnd, shuffle, signal } from "./utils/old-bird-soft";
+import { delay, rnd, shuffle, signal } from "./utils/old-bird-soft";
 import { FortyTwo } from "./utils/UniversalHarmonyNumber";
 
 /**
@@ -96,6 +96,7 @@ let phase;
 /**
   * @typedef { Label<
   * "SETUP" |
+  * "READY" |
   * "PLAYER_DRAW" |
   * "QUEST_DRAW_WITH_END_CHECK" |
   * "START_PLAY" |
@@ -124,6 +125,11 @@ export const gameLoop = async (st) => {
       st.quest.deck = structuredClone(st.quest.baseDeck);
       console.log(JSON.stringify(st.player.deck.map(({value})=>value)))
       console.log(JSON.stringify(st.quest.deck.map(({value})=>value)))
+      return st.phase = "READY";
+    }
+
+    case "READY": {
+      await delay(2000);
       return st.phase = "PLAYER_DRAW";
     }
 
