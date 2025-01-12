@@ -2,7 +2,7 @@ import { fencer, portal, Fragment, Sprite } from "./utils/fencer";
 import { GalaxyRoute, galaxyTextureList, routeController, useKeyboardCurse } from "./GalaxyRoute";
 import { assetList } from "./throw/shoot";
 import { flogons } from "./flogonsSprites";
-import { pick, rnd, shuffle, signal, zignal } from "./utils/old-bird-soft";
+import { delay, pick, rnd, shuffle, signal, zignal } from "./utils/old-bird-soft";
 import { gameLoop, gameSetup, randomDeck, freshState, logger } from "./core-game";
 import { FortyTwo } from "./utils/UniversalHarmonyNumber";
 
@@ -15,7 +15,7 @@ globalThis.gameTest =  (speed = FortyTwo, pAmunt = 20, qAmount = 25) => {
 
 // ------------------------- 3D ----------------------------------
 
-const allCard = randomDeck(FortyTwo);
+const allCard = randomDeck(FortyTwo * 2);
 
 /** @type {(props: { id: string, value: number, style:object }) => HTMLElement} */
 const Card = ({id, value, style}) => (
@@ -106,7 +106,7 @@ portal(
       ))}
     </section>
   </GalaxyRoute>
-).then(() => {
+).then((page) => {
   const [galaxy] = routeController("screen");
   // galaxy.ySpeed = (Math.random() - .5) / .3;
   // galaxy.xSpeed = (Math.random() - .5) / .3;
@@ -123,36 +123,56 @@ portal(
     qScore.innerText = st?.quest?.score?.toString() ?? "0";
     logger(st);
     if (st.phase === "READY") {
-      state.player.deck.map(({ id }, idx) => {
-        /** @type {HTMLElement} */ const card = document.querySelector(`#${id}`);
-        setTimeout(() => card.style.transform = `
-          translateX(-26rem)
-          translateY(10rem)
-          translateZ(${idx/3 + 10}rem)
-          scale(2.5)
-        `, idx * 20);
+      state.player.deck.map((crdState, idx) => {
+        setTimeout(() => {
+          crdState.x = -26;
+          crdState.y = 10;
+          crdState.z = idx / 3 + 10;
+          crdState.zoom = 2.5;
+        }
+        , idx * 20);
       });
 
       setTimeout(() => {
-        state.quest.deck.map(({ id }, idx) => {
-          /** @type {HTMLElement} */ const card = document.querySelector(`#${id}`);
-          setTimeout(() => card.style.transform = `
-            translateX(-26rem)
-            translateY(-10rem)
-            translateZ(${idx/3 + 10}rem)
-            scale(2.5)
-          `, idx * 20);
+        state.quest.deck.map((crdState, idx) => {
+          setTimeout(() => {
+            crdState.x = -26;
+            crdState.y = -10;
+            crdState.z = idx / 3 + 10;
+            crdState.zoom = 2.5
+          }
+          , idx * 20);
         });
       }, 1000);
     }
   }
 
+  /** @typedef {import('../src/core-game').SingleCard} SingleCard *
+  /** @type {(info:SingleCard) => any} */
+  const newOrder = (info) => {
+    const {id, x,y,z,rX,rY,rZ,zoom} = info;
+    /** @type {HTMLElement} */ const card = page.querySelector(`#${id}`);
+    card.style.transition = `transform 300ms linear`;
+    card.style.transform = `
+      translateX(${x}rem)
+      translateY(${y}rem)
+      translateZ(${z}rem)
+      rotateX(${rX}deg)
+      rotateY(${rY}deg)
+      rotateZ(${rZ}deg)
+      scale(${zoom})
+    `;
+    // console.log(card, info);
+  }
+
   const state = freshState(render);
-  gameSetup(state, allCard.slice(0,12), allCard.slice(12, 12 + 21));
+  const movingCards = allCard.map(card => signal(newOrder)(card));
+  globalThis.mc = movingCards;
+  gameSetup(state, movingCards.slice(0,12), movingCards.slice(12, 12 + 21));
   const flow = () => gameLoop(state);
-  const stop = setInterval(_ => { if (state.phase == "THE_END") clearInterval(stop); flow() }, FortyTwo);
 
-
+  const stop = setInterval(_ => { if (state.phase == "READY") clearInterval(stop); flow() }, FortyTwo);
+  // const stop = setInterval(_ => { if (state.phase == "THE_END") clearInterval(stop); flow() }, FortyTwo);
 
 });
 

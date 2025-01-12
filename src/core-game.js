@@ -15,12 +15,13 @@ import { FortyTwo } from "./utils/UniversalHarmonyNumber";
  *  rX: number
  *  rY: number
  *  rZ: number
+ *  zoom: number
  * }} Pos3D
  */
 
 
 /** @type {Pos3D} */
-const origo = {x:0, y:0, z:0, rX: 0, rY:0, rZ: 0};
+const origo = {x:0, y:0, z:0, rX: 0, rY:0, rZ: 0, zoom: 1};
 
 /**
   *  @typedef {{
@@ -116,20 +117,18 @@ let phase;
 
 /** @type {(st:State) => Promise<keyof Phases>} */
 export const gameLoop = async (st) => {
-  // logger(st);
   switch (st.phase) {
     case "SETUP": {
-      st.player = structuredClone(player);
-      st.quest = structuredClone(quest);
-      st.player.deck = structuredClone(st.player.baseDeck);
-      st.quest.deck = structuredClone(st.quest.baseDeck);
+      // st.player = structuredClone(player);
+      st.player.deck = st.player.baseDeck;
+      st.quest.deck = st.quest.baseDeck;
       console.log(JSON.stringify(st.player.deck.map(({value})=>value)))
       console.log(JSON.stringify(st.quest.deck.map(({value})=>value)))
       return st.phase = "READY";
     }
 
     case "READY": {
-      await delay(2000);
+      await delay(2000); // TODO
       return st.phase = "PLAYER_DRAW";
     }
 
