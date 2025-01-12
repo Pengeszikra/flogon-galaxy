@@ -90,8 +90,10 @@ portal(
       select-none
     ">
       <p>player: <span id="p-score" class="text-orange-600"></span></p>
-      <p>phase: <span id="phase" class="text-orange-600 text-2xl"></span></p>
       <p>quest: <span id="q-score" class="text-orange-600"></span></p>
+      <div class="fixed bottom-4 left-0 text-lg p-2 grid place-items-center min-w-full bg-black/50">
+        <p>phase: <span id="phase" class="text-orange-600"></span></p>
+      </div>
     </section>
     <section id="desk" class="
       absolute top-[60%] left-[50%]

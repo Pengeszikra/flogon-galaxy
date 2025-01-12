@@ -4,12 +4,13 @@ import { delay } from "./utils/old-bird-soft";
 export const origo = {x:0, y:0, z:0, rX: 0, rY:0, rZ: 0, zoom: 1};
 
 /** @typedef {import('../src/core-game').State} MissionState */
+/** @typedef {import("./core-game").SingleCard} SingleCard */
 
 export const SKY = 50;
 export const FLOOR = 10;
 export const SIZE = 2.5;
 export const MFRAG = 150;
-export const UP = 30;
+export const UP = 20;
 
 // --- A possible 3D position
 export const POS = {
@@ -35,37 +36,44 @@ export const POS = {
 
 export const move = Object.assign;
 
-/** @type {(st:MissionState) => Promise<void>} */
-export const dealToPlayer = async (st) => {
-  console.log('--- deal to player ---')
-  const { deck } = st.player;
-  await delay(MFRAG); deck.at(-1).z = UP;
-  await delay(MFRAG); move(deck.at(-1), POS.pHand1);
+/** @type {(st:MissionState, crd:SingleCard) => Promise<void>} */
+export const dealToPlayer = async (st, crd) => {
+  const { hand } = st.player;
 
-  await delay(MFRAG); deck.at(-2).z = UP;
-  await delay(MFRAG); move(deck.at(-2), POS.pHand2);
+  await delay(MFRAG); crd.z = UP;
+  // const { deck } = st.player;
+  // await delay(MFRAG); deck.at(-1).z = UP;
+  // await delay(MFRAG); move(deck.at(-1), POS.pHand1);
 
-  await delay(MFRAG); deck.at(-3).z = UP;
-  await delay(MFRAG); move(deck.at(-3), POS.pHand3);
+  // await delay(MFRAG); deck.at(-2).z = UP;
+  // await delay(MFRAG); move(deck.at(-2), POS.pHand2);
 
-  await delay(MFRAG); deck.at(-4).z = UP;
-  await delay(MFRAG); move(deck.at(-4), POS.pHand4);
+  // await delay(MFRAG); deck.at(-3).z = UP;
+  // await delay(MFRAG); move(deck.at(-3), POS.pHand3);
+
+  // await delay(MFRAG); deck.at(-4).z = UP;
+  // await delay(MFRAG); move(deck.at(-4), POS.pHand4);
 };
 
-/** @type {(st:MissionState) => Promise<void>} */
-export const dealToQuest = async (st) => {
-  console.log('-=- deal to quest -=-')
-  const { deck } = st.quest;
-  await delay(MFRAG); deck.at(-1).z = UP;
-  await delay(MFRAG); move(deck.at(-1), POS.qHand2);
+/** @type {(st:MissionState, crd:SingleCard) => Promise<void>} */
+export const dealToQuest = async (st, crd) => {
+  const { hand } = st.quest;
+  await delay(MFRAG); crd.z = UP;
+  // const { deck } = st.quest;
+  // await delay(MFRAG); deck.at(-1).z = UP;
+  // await delay(MFRAG); move(deck.at(-1), POS.qHand2);
 
-  await delay(MFRAG); deck.at(-2).z = UP;
-  await delay(MFRAG); move(deck.at(-2), POS.qHand3);
+  // await delay(MFRAG); deck.at(-2).z = UP;
+  // await delay(MFRAG); move(deck.at(-2), POS.qHand3);
 };
+
+/** @type {(st:MissionState, card:SingleCard, position: POS) => Promise<void>} */
+export const moveTo = async (st, card, position) => {
+  move(card, position);
+}
 
 /*
 --- A possible moves
-
 buildDeck ( from above )
 dealCardToPlayer
 flipDealedCard
@@ -77,5 +85,4 @@ pairQuestCard
 pairGoDrop
 handGoDrop
 dropShuffleToDeck
-
 */

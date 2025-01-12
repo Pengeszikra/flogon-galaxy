@@ -141,10 +141,10 @@ export const gameLoop = async (st, ...foo) => {
         st.player.drop = [];
       }
       while (st.player.hand.length < 4) {
-        st.player.hand.push(st.player.deck.pop());
+        const crd = st.player.deck.pop();
+        await dealToPlayer(st, crd);
+        st.player.hand.push(crd);
       }
-      dealToPlayer(st);
-      await delay(1000);
       return st.phase = "QUEST_DRAW_WITH_END_CHECK"
     }
 
@@ -155,11 +155,15 @@ export const gameLoop = async (st, ...foo) => {
           : "FAIL_QUEST"
           ;
       }
+      const crd1 = st.quest.deck.pop()
+      await dealToQuest(st, crd1);
+      st.quest.hand.push(crd1);
 
-      st.quest.hand.push(st.quest.deck.pop());
-      st.quest.hand.push(st.quest.deck.pop());
-
-      dealToQuest(st);
+      if (st.quest.deck.length > 0) {
+        const crd2 = st.quest.deck.pop()
+        await dealToQuest(st, crd2);
+        st.quest.hand.push(crd2);
+      }
 
       return st.phase = st.quest.hand.length >= 4
         ? "REVENGE_BEGIN"
