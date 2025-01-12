@@ -1,4 +1,4 @@
-import { dealToPlayer, dealToQuest, origo } from "./deal-animations";
+import { dealToPlayer, dealToQuest, origo, POS, dropTo } from "./deal-animations";
 import { delay, rnd, shuffle, signal } from "./utils/old-bird-soft";
 import { FortyTwo } from "./utils/UniversalHarmonyNumber";
 
@@ -17,6 +17,7 @@ import { FortyTwo } from "./utils/UniversalHarmonyNumber";
  *  rY: number
  *  rZ: number
  *  zoom: number
+ *  isQ: boolean
  * }} Pos3D
  */
 
@@ -27,6 +28,7 @@ import { FortyTwo } from "./utils/UniversalHarmonyNumber";
   *   name?: string
   *   description?: string
   *   skill?: string
+  *   place?: Partial<Pos3D>
   * }} CardInfo
   */
 
@@ -184,7 +186,9 @@ export const gameLoop = async (st, ...foo) => {
       st.player.hand = st.player.hand.filter(card => card !== result.a);
       st.quest.hand = st.quest.hand.filter(card => card !== result.b);
       st.player.drop.push(result.a);
+      await dropTo(result.a, POS.pDrop, st.player.drop);
       st.quest.drop.push(result.b);
+      await dropTo(result.b, POS.qDrop, st.quest.drop);
       st.player.score += result.score;
       return st.phase = possibleMoves.length > 1
         ? fluctual(st, "START_PLAY", "PLAY_MORE")
@@ -202,6 +206,7 @@ export const gameLoop = async (st, ...foo) => {
         while (st.quest.hand.length) {
           const toDrop = st.quest.hand.shift();
           st.quest.score += Math.abs(toDrop.value);
+          await dropTo(toDrop, POS.qDrop, st.quest.drop);
           st.quest.drop.push(toDrop);
         }
         return st.phase = possibleMoves.length > 1
@@ -213,7 +218,9 @@ export const gameLoop = async (st, ...foo) => {
       console.log(` <${result?.a?.value}> ---> <${result?.b?.value}> `);
       st.quest.hand = st.quest.hand.filter(card => card !== result.a);
       st.player.hand = st.player.hand.filter(card => card !== result.b);
+      await dropTo(result.a, POS.qDrop, st.quest.drop);
       st.quest.drop.push(result.a);
+      await dropTo(result.b, POS.pDrop, st.player.drop);
       st.player.drop.push(result.b);
       st.player.score += result.score;
       return st.phase = fluctual(st, "REVENGE_BEGIN", "REVENGE")
