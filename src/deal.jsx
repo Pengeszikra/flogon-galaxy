@@ -23,6 +23,8 @@ const allCard = randomDeck(FortyTwo * 2);
 const SKY = 50;
 const FLOOR = 10;
 const SIZE = 2.5;
+const MFRAG = 150;
+const UP = 30;
 
 /** @type {(props: { id: string, value: number, style:object }) => HTMLElement} */
 const Card = ({id, value, style}) => (
@@ -115,8 +117,8 @@ portal(
   </GalaxyRoute>
 ).then((page) => {
   const [galaxy] = routeController("screen");
-  // galaxy.ySpeed = (Math.random() - .5) / .3;
-  // galaxy.xSpeed = (Math.random() - .5) / .3;
+  galaxy.ySpeed = (Math.random() - .5) / .3;
+  galaxy.xSpeed = (Math.random() - .5) / .3;
   useKeyboardCurse(galaxy);
 
   /** @type {HTMLElement} */ const pScore = document.querySelector('#p-score');
@@ -189,22 +191,28 @@ portal(
 
 /** @type {(st:MissionState) => Promise<void>} */
 export const dealToPlayer = async (st) => {
-  await delay(300);
-  st.player.deck.at(-1).x = -13; st.player.deck.at(-1).z = FLOOR;
-  await delay(300);
-  st.player.deck.at(-2).x = 0; st.player.deck.at(-2).z = FLOOR;
-  await delay(300);
-  st.player.deck.at(-3).x = 13; st.player.deck.at(-3).z = FLOOR;
-  await delay(300);
-  st.player.deck.at(-4).x = 26; st.player.deck.at(-4).z = FLOOR;
+  const { deck } = st.player;
+  await delay(MFRAG); deck.at(-1).z = UP;
+  await delay(MFRAG); deck.at(-1).x = -13; deck.at(-1).z = FLOOR;
+
+  await delay(MFRAG); deck.at(-2).z = UP;
+  await delay(MFRAG); deck.at(-2).x = 0; deck.at(-2).z = FLOOR;
+
+  await delay(MFRAG); deck.at(-3).z = UP;
+  await delay(MFRAG); deck.at(-3).x = 13; deck.at(-3).z = FLOOR;
+
+  await delay(MFRAG); deck.at(-4).z = UP;
+  await delay(MFRAG); deck.at(-4).x = 26; deck.at(-4).z = FLOOR;
 };
 
 /** @type {(st:MissionState) => Promise<void>} */
 export const dealToQuest = async (st) => {
-  await delay(300);
-  st.quest.deck.at(-1).x = 0; st.quest.deck.at(-1).z = FLOOR;
-  await delay(300);
-  st.quest.deck.at(-2).x = 13; st.quest.deck.at(-2).z = FLOOR;
+  const { deck } = st.quest;
+  await delay(MFRAG); deck.at(-1).z = UP;
+  await delay(MFRAG); deck.at(-1).x = 0; deck.at(-1).z = FLOOR;
+
+  await delay(MFRAG); deck.at(-2).z = UP;
+  await delay(MFRAG); deck.at(-2).x = 13; deck.at(-2).z = FLOOR;
 };
 
 /*
