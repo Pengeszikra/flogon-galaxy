@@ -26,6 +26,7 @@ const SIZE = 2.5;
 const MFRAG = 150;
 const UP = 30;
 
+// --- A possible 3D position
 export const POS = {
   sky: { ...origo, zoom: SIZE, z: SKY },
 
@@ -36,8 +37,8 @@ export const POS = {
   qHand4: { x:  26, z: FLOOR },
   qDrop:  { x:  39, z: FLOOR },
 
-  pToPair: { x: -26, z: FLOOR },
-  qToPair: { x: -26, z: FLOOR },
+  pToPair: { z: FLOOR },
+  qToPair: { z: FLOOR },
 
   pDeck:  { x: -26, z: FLOOR, y: 10, zoom: SIZE },
   pHand1: { x: -13, z: FLOOR },
@@ -232,9 +233,6 @@ export const dealToQuest = async (st) => {
 
 
 /*
-
---- A possible 3D position
-
 --- A possible moves
 
 buildDeck ( from above )
