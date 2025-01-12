@@ -5,7 +5,6 @@ import { flogons } from "./flogonsSprites";
 import { pick, rnd, shuffle, signal, zignal } from "./utils/old-bird-soft";
 import { gameLoop, gameSetup, randomDeck, freshState, logger } from "./core-game";
 import { FortyTwo } from "./utils/UniversalHarmonyNumber";
-import { transform } from "typescript";
 
 globalThis.gameTest =  (speed = FortyTwo, pAmunt = 20, qAmount = 25) => {
   const state = freshState(logger);
@@ -25,7 +24,7 @@ const Card = ({id, value, style}) => (
     id={id}
     class="
       card
-      absolute top-0 left-0
+      absolute top-0 left-0;
       scale-[3.2]
       transition-all duration-500
       pointer-events-auto
