@@ -10,7 +10,7 @@ portal(
       back={`../sheets/texture-${gBeta}.png`}
       zoom={250}
     >
-      <section class="grid place-items-center w-[100vw] h-[100vh]">
+      <section class="grid place-items-center w-[100vw] aspect-video">
         <figure class="
           pointer-events-auto
           aspect-video

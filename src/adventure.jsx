@@ -9,9 +9,10 @@ export const WoraShard = ({pngImageUrl}) => (
   <figure class="
       WoraShardOnGalaxy
       bg-cover min-w-[100vw] aspect-video
-      pointer-events-none
+      pointer-events-auto
     "
     style={{backgroundImage:`url(${pngImageUrl})`}}
+    onClick={() => globalThis.location.replace('ship.html')}
   ></figure>
 );
 
