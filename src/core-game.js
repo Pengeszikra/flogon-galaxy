@@ -49,6 +49,8 @@ import { FortyTwo } from "./utils/UniversalHarmonyNumber";
   * }} Entity
   */
 
+  /** @typedef {{click:null | string, action:Function}} InteractionClick */
+
 
 /** @type {Entity} */
 const player = {
@@ -118,10 +120,18 @@ let phase;
 /** @type {(st: State, a:PhasesKey, b:PhasesKey) => PhasesKey} */
 export const fluctual = (state, a, b) => state.phase === a ? b : a ;
 
-/** @typedef {{phase:keyof Phases, player: Entity, quest: Entity}} State */
+/**
+  * @typedef {{
+  *  phase:keyof Phases,
+  *  player: Entity,
+  *  quest: Entity,
+  *  click: string,
+  *  clickTime: number,
+  * }} State
+  */
 
 /** @type {(st:State) => Promise<keyof Phases>} */
-export const gameLoop = async (st, ...foo) => {
+export const gameLoop = async (st) => {
   switch (st.phase) {
     case "SETUP": {
       st.player.deck = st.player.baseDeck;
@@ -185,7 +195,7 @@ export const gameLoop = async (st, ...foo) => {
         return st.phase = "PLAYER_DRAW";
       }
 
-      const result = await playerInteraction(possibleMoves, st);
+      const result = await playerInteraction(st);
       console.log(` (${result?.a?.value}) ---> (${result?.b?.value}) `);
 
       move(result.a, POS.pToPair);
@@ -238,7 +248,7 @@ export const gameLoop = async (st, ...foo) => {
       st.quest.drop.push(result.a);
       await dropTo(result.b, POS.pDrop, st.player.drop);
       st.player.drop.push(result.b);
-      st.player.score += result.score;
+      st.quest.score += result.score;
       return st.phase = fluctual(st, "REVENGE_BEGIN", "REVENGE")
     }
 
@@ -255,10 +265,18 @@ export const bestScoreInteraction = async (matchResults) =>
   ;
 
 /** @type {(matchResults: MatchResult[], st:State) => Promise<MatchResult>} */
-export const playerInteraction = async (matchResults, st) => {
-  const { player: { hand: ph }, quest: { hand: qh }} = st;
+/** @type {(st:State) => Promise<MatchResult>} */
+export const playerInteraction = async (st) => {
+  const possibleMoves = allPossibleMoves(st.player, st.quest)
+  const { player: { hand: ph }, quest: { hand: qh } } = st;
+
+  // eCard.onclick = () => ph[0].rX -= 20;
+  // document.querySelector('#desk').addEventListener('click', (event) => {
+  //     console.log(event);
+  // });
+
   // await delay(Infinity);
-  return matchResults.shift();
+  return possibleMoves.shift();
 }
 
 /** @typedef {Label<"POSITIVE" | "NEGATIVE" | "ZERO" | "INVERZIT" | "FAIL">} MatchKind */

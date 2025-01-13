@@ -6,6 +6,9 @@ This game about your adventures in the galaxy.
 
 ## Installation
 ```bash
-nvm use 18
 pnpm install
 ```
+
+## Play
+[FLOGON-GALAXY](https://flogon-galaxy.vercel.app/)
+> on mobile for the best experience install as PWA

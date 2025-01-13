@@ -8,14 +8,16 @@ import { FortyTwo } from "./utils/UniversalHarmonyNumber";
 import { dealToPlayer, dealToQuest, FLOOR, move, POS, SIZE, SKY, tr3D } from "./deal-animations";
 
 /** @typedef {import('../src/core-game').SingleCard} SingleCard */
+/** @typedef {import('../src/core-game').InteractionClick} InteractionClick */
 
 // ------------------------- 3D ----------------------------------
 
 const allCard = randomDeck(FortyTwo * 2);
 
-/** @type {(props: { id: string, value: number, style:object }) => HTMLElement} */
-const Card = ({id, value, style}) => (
+/** @type {(props: { id: string, value: number, style:object, onClick:Function }) => HTMLElement} */
+const Card = ({id, value, style, onClick}) => (
   <div
+    onClick={onClick}
     style={style}
     id={id}
     class="
@@ -99,13 +101,18 @@ portal(
         onClick={() => globalThis.location.replace('ship.html')}
       ></div>
 
-      {allCard.map(({value,id}, idx) => (
+      {allCard.map(({ value, id }, idx) => (
         <Card id={id} value={value} style={tr3D({
           x: idx % 2 == 0 ? -30 : 10,
           y: idx % 2 == 0 ? -10 : 10,
           z: idx / 10 + SKY,
           zoom: SIZE
-        })}/>
+        })}
+          onClick={() => {
+            bindState.click = id;
+            bindState.clickTime = performance.now();
+          }}
+        />
       ))}
     </section>
   </GalaxyRoute>
@@ -118,11 +125,17 @@ portal(
   /** @type {HTMLElement} */ const pScore = page.querySelector('#p-score');
   /** @type {HTMLElement} */ const qScore = page.querySelector('#q-score');
   /** @type {HTMLElement} */ const dPhase = page.querySelector('#phase');
-  /** @type {HTMLElement} */ const deck = page.querySelector('#deck');
+  // /** @type {HTMLElement} */ const deck = page.querySelector('#deck');
+
+  let prevClickHapend = 0;
 
   /** @typedef {import('./core-game').State} State */
   /** @type {(st:State) => any} */
   const render = (st) => {
+    if (st.clickTime !== prevClickHapend) {
+      console.log(`click the: ${st.click} phase: ${st.phase}`);
+    }
+
     pScore.innerText = st?.player?.score?.toString() ?? "0";
     qScore.innerText = st?.quest?.score?.toString() ?? "0";
     dPhase.innerText = st?.phase;
@@ -164,6 +177,7 @@ portal(
 
   const state = freshState(render);
   globalThis.st = state; // TODO
+  bindState = state;
   const movingCards = allCard.map(card => signal(newOrder)(card));
   gameSetup(state, movingCards.slice(0,12), movingCards.slice(12, 12 + 21));
 
@@ -178,3 +192,5 @@ portal(
   }, FortyTwo * 4);
 
 });
+
+var bindState;
