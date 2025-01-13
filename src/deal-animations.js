@@ -104,6 +104,19 @@ export const reshufflePlayerCardToDeck = async ({player}) => {
   await delay(MFRAG);
 }
 
+/** @type {(extra:Partial<Pos3D>, pos?:Pos3D) => object} */
+export const tr3D = (extra, pos = {...origo, ...extra}) => ({
+  transform:`
+    translateX(${pos.x}rem)
+    translateY(${pos.y}rem)
+    translateZ(${pos.z}rem)
+    rotateX(${pos.rX}deg)
+    rotateY(${pos.rY}deg)
+    rotateZ(${pos.rZ}deg)
+    scale(${pos.zoom})
+  `}
+);
+
 /*
 --- A possible moves
 buildDeck ( from above )

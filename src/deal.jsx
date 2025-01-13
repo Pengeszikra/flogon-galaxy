@@ -5,7 +5,7 @@ import { flogons } from "./flogonsSprites";
 import { delay, pick, rnd, shuffle, signal, zignal } from "./utils/old-bird-soft";
 import { gameLoop, gameSetup, randomDeck, freshState, logger } from "./core-game";
 import { FortyTwo } from "./utils/UniversalHarmonyNumber";
-import { dealToPlayer, dealToQuest, FLOOR, move, POS, SIZE, SKY } from "./deal-animations";
+import { dealToPlayer, dealToQuest, FLOOR, move, POS, SIZE, SKY, tr3D } from "./deal-animations";
 
 /** @typedef {import('../src/core-game').SingleCard} SingleCard */
 
@@ -82,21 +82,6 @@ portal(
       bg-cover
     "></figure>
 
-    <section id="score-board" class="
-      absolute top-0 left-0
-      min-w-full
-      bg-black/45 text-orange-300
-      flex gap-2 p-4
-      text-3xl
-      justify-evenly
-      select-none
-    ">
-      <p>player: <span id="p-score" class="text-orange-600"></span></p>
-      <p>quest: <span id="q-score" class="text-orange-600"></span></p>
-      <div class="fixed bottom-4 left-0 text-lg p-2 grid place-items-center min-w-full bg-black/50">
-        <p>phase: <span id="phase" class="text-orange-600"></span></p>
-      </div>
-    </section>
     <section id="desk" class="
       absolute top-[60%] left-[50%]
       w-[0] h-[0]
@@ -105,13 +90,29 @@ portal(
       --bg-black/75
     "
     >
+      <div class="
+        p-2 grid place-items-center min-w-[30rem] bg-sky-900/50
+        outline outline-1 outline-sky-300 rounded text-sky-200"
+        style={tr3D({ x: 10, y: 20, z: -3, rX: -30, zoom: 2 })}
+      >
+        <p>phase: <span id="phase" class="text-emerald-300"></span></p>
+      </div>
+      <div id="p-score" class="absolute top-0 left-0 text-sky-300 py-1 w-[3rem]
+        outline outline-1 outline-sky-300 rounded bg-sky-900/50 text-center"
+        style={tr3D({ x: -36, y: -22, z: 10, rX: -30, rY:-4, zoom: 3 })}
+      ></div>
+      <div id="q-score" class="absolute top-0 left-0 text-amber-300 py-1 w-[3rem]
+        outline outline-1 outline-amber-300 rounded bg-amber-900/50 text-center"
+        style={tr3D({ x: 47, y: -22, z: 10, rX: -30, rY:3, zoom: 3 })}
+      ></div>
+
       {allCard.map(({value,id}, idx) => (
-        <Card id={id} value={value} style={{transform:`
-          translateX(${idx%2==0?-30:10}rem)
-          translateY(${idx%2==0?-10:10}rem)
-          translateZ(${idx/10 + SKY}rem)
-          scale(${SIZE})
-        `}}/>
+        <Card id={id} value={value} style={tr3D({
+          x: idx % 2 == 0 ? -30 : 10,
+          y: idx % 2 == 0 ? -10 : 10,
+          z: idx / 10 + SKY,
+          zoom: SIZE
+        })}/>
       ))}
     </section>
   </GalaxyRoute>
