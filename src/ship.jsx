@@ -1,5 +1,6 @@
 import { fencer, portal, Fragment } from "./utils/fencer";
 import { GalaxyRoute, galaxyTextureList, routeController, useKeyboardCurse } from "./GalaxyRoute";
+import { PointAndClick } from "./PointAndClick";
 
 const [gAlfa, gBeta] = galaxyTextureList();
 
@@ -12,21 +13,15 @@ portal(
     >
       <section class="grid place-items-center w-[100vw] aspect-video">
         <figure class="
-          pointer-events-auto
           aspect-video
           w-[80%]
           bg-[url(../ui-elements/ship-no-bg.png)]
           bg-cover
           relative
         ">
-          <button id="hangar"
-            class="bg-emerald-700/40 absolute w-[9rem] h-[5rem] top-[7rem] left-[5rem]"
-            onClick={() => globalThis.location.replace('mine.html')}
-          ></button>
-          <button id="capatain"
-            class="bg-sky-700/40 absolute w-[7rem] h-[5rem] top-[7.5rem] left-[22rem]"
-            onClick={() => globalThis.location.replace('adventure.html')}
-          ></button>
+          <PointAndClick id="captain" bg="bg-emerald-700/50" w={9} h={5} top={7} left={5} nextUrl="mine.html" />
+          <PointAndClick id="captain" bg="bg-orange-700/50" w={7} h={5} top={7.5} left={22} nextUrl="adventure.html" />
+          <PointAndClick id="captain" bg="bg-sky-700/50" w={9} h={6} top={18} left={26} nextUrl="library.html" />
           <button id="bridge"></button>
           <button id="cantine"></button>
           <button id="storage"></button>

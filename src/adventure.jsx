@@ -9,6 +9,7 @@ export const WoraShard = ({pngImageUrl}) => (
   <figure class="
       WoraShardOnGalaxy
       bg-cover min-w-[100vw] aspect-video
+      pointer-events-auto
     "
     style={{backgroundImage:`url(${pngImageUrl})`}}
   ></figure>
@@ -29,20 +30,16 @@ portal(
     ></button>
 
   </GalaxyRoute>
-).then(() => {
+).then((page) => {
   const [state] = routeController("color-dodge");
   state.ySpeed = Math.random() - .5;
   state.xSpeed = Math.random() - .5;
   useKeyboardCurse(state);
-  // useStarshipNavigation(state);
   let isPlay = false;
-
-  document.querySelector('body').onclick = () => {
+  page.onclick = () => {
     if (isPlay) {
-      // window.location = 'mine.html';
       return;
     }
-    // const WoraShardSinging = new Audio('media/Tomorrow.mp3');
     const WoraShardSinging = new Audio(song);
     WoraShardSinging.play();
     isPlay = true;
