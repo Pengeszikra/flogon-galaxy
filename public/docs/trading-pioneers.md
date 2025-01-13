@@ -1,4 +1,6 @@
-# Trading Pioneers
+# The Beginning
+
+## Trading Pioneers
 A first impression of `devvit` is really worst, maybe I spend too much time to use a `pure HTML` development before, and that is really don't fit to there. Or just need to figure out how can I compile my code to this system.
 
 Then the next question is a  `APP` tabletop idea how can work. So I too few times, a too many question left, but I feel the `flow` at least.
@@ -24,7 +26,7 @@ Maybe on the github I can found a working example.
 _lets make the coding great again !_
 
 # Flogon Quest
-_Trading Pioneers_ 
+_Trading Pioneers_
 
 With my small editor called Mark I can create a very fast way to ID board for my game because I am able to just copy image link to my page even I can improve that a bit but doesn't have a time to do this now because I need to be learn h web or working that sucks.
 

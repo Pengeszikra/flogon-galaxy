@@ -1,5 +1,6 @@
 import { fencer, portal, Fragment } from "./utils/fencer";
 import { setupMarkerViews } from "./marker";
+import { DebugFrame } from "./DebugFrame";
 
 export const Marker = ({markdown}) => (
   <article class="
@@ -15,10 +16,15 @@ export const Marker = ({markdown}) => (
 )
 
 portal(
-  <main class="w-[70vw] aspect-video bg-zinc-950 text-zinc-400">
-    <Marker markdown="../docs/demo.md" />
-    <Marker markdown="../docs/hackhaton.md" />
-  </main>
+  <section>
+    <DebugFrame />
+    <video class="w-[30rem] aspect-video" controls>
+      <source src="media/race-start.mp4" type="video/mp4" />
+    </video>
+    <main class="ml-[2rem] w-[70vw] aspect-video bg-zinc-950 text-zinc-400">
+      <Marker markdown="../docs/trading-pioneers.md" />
+    </main>
+  </section>
 ).then((page) => {
   setupMarkerViews();
 });
