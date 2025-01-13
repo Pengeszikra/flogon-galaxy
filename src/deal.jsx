@@ -92,18 +92,20 @@ portal(
     >
       <div class="
         p-2 grid place-items-center min-w-[30rem] bg-sky-900/50
-        outline outline-1 outline-sky-300 rounded text-sky-200"
+        outline outline-1 outline-sky-300 rounded text-sky-200 select-none"
         style={tr3D({ x: 10, y: 20, z: -3, rX: -30, zoom: 2 })}
       >
         <p>phase: <span id="phase" class="text-emerald-300"></span></p>
       </div>
       <div id="p-score" class="absolute top-0 left-0 text-sky-300 py-1 w-[3rem]
-        outline outline-1 outline-sky-300 rounded bg-sky-900/50 text-center"
+        outline outline-1 outline-sky-300 rounded bg-sky-900/50 text-center select-none"
         style={tr3D({ x: -36, y: -22, z: 10, rX: -30, rY:-4, zoom: 3 })}
       ></div>
       <div id="q-score" class="absolute top-0 left-0 text-amber-300 py-1 w-[3rem]
-        outline outline-1 outline-amber-300 rounded bg-amber-900/50 text-center"
+        outline outline-1 outline-amber-300 rounded bg-amber-900/50 text-center
+        pointer-events-auto select-none"
         style={tr3D({ x: 47, y: -22, z: 10, rX: -30, rY:3, zoom: 3 })}
+        onClick={() => globalThis.location.replace('ship.html')}
       ></div>
 
       {allCard.map(({value,id}, idx) => (
