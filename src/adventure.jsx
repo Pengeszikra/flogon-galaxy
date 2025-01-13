@@ -9,10 +9,8 @@ export const WoraShard = ({pngImageUrl}) => (
   <figure class="
       WoraShardOnGalaxy
       bg-cover min-w-[100vw] aspect-video
-      pointer-events-auto
     "
     style={{backgroundImage:`url(${pngImageUrl})`}}
-    onClick={() => globalThis.location.replace('ship.html')}
   ></figure>
 );
 
@@ -25,6 +23,11 @@ portal(
   >
     {/* <WoraShard pngImageUrl="WoraPlayOnPiano.png" /> */}
     <WoraShard pngImageUrl={cover} />
+    <button id="hangar"
+      class="bg-emerald-700/0 absolute w-[6rem] h-[6rem] top-0 right-0 pointer-events-auto"
+      onClick={() => globalThis.location.replace('ship.html')}
+    ></button>
+
   </GalaxyRoute>
 ).then(() => {
   const [state] = routeController("color-dodge");
