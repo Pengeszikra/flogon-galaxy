@@ -124,7 +124,6 @@ export const fluctual = (state, a, b) => state.phase === a ? b : a ;
 export const gameLoop = async (st, ...foo) => {
   switch (st.phase) {
     case "SETUP": {
-      // st.player = structuredClone(player);
       st.player.deck = st.player.baseDeck;
       st.quest.deck = st.quest.baseDeck;
       console.log(JSON.stringify(st.player.deck.map(({value})=>value)))
@@ -133,7 +132,6 @@ export const gameLoop = async (st, ...foo) => {
     }
 
     case "READY": {
-      console.log(' -=-=- READY -=-=-');
       await delay(2000);
       return st.phase = "PLAYER_DRAW";
     }
@@ -260,7 +258,7 @@ export const cardMatcher = (a, b) => {
   const av = a?.value ?? FortyTwo;
   const bv = b?.value ?? FortyTwo;
   switch (true) {
-    case av > 0 && bv > 0 && av % 2 !== b % 2:
+    case av > 0 && bv > 0 && av % 2 !== bv % 2:
       return { kind: "POSITIVE", score: av + bv, a, b };
     case av < 0 && bv < 0 && av % 2 === bv % 2:
       return { kind: "NEGATIVE", score: Math.abs(av) + Math.abs(bv), a, b };

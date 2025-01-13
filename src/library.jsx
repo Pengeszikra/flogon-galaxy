@@ -18,9 +18,9 @@ export const Marker = ({markdown}) => (
 portal(
   <section>
     <DebugFrame />
-    <video class="w-[30rem] aspect-video" controls>
+    {/* <video class="w-[30rem] aspect-video" controls>
       <source src="media/race-start.mp4" type="video/mp4" />
-    </video>
+    </video> */}
     <main class="ml-[2rem] w-[70vw] aspect-video bg-zinc-950 text-zinc-400">
       <Marker markdown="../docs/trading-pioneers.md" />
     </main>
