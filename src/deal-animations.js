@@ -1,6 +1,5 @@
 import { delay, pick } from "./utils/old-bird-soft";
 
-
 /** @typedef {import('./core-game').Pos3D} Pos3D */
 /** @typedef {import('../src/core-game').State} MissionState */
 /** @typedef {import("./core-game").SingleCard} SingleCard */
@@ -42,11 +41,26 @@ export const POS = {
   pDrop:  { x:  39, z: FLOOR, y: 10, rX: 0 },
 };
 
-
 /** @type {Partial<Pos3D>[]} */
 export const pHandList = [POS.pHand1, POS.pHand2, POS.pHand3, POS.pHand4];
 /** @type {Partial<Pos3D>[]} */
 export const qHandList = [POS.qHand2, POS.qHand3, POS.qHand1, POS.qHand4];
+
+/** @type {number[]} */
+const pHandX = [
+  POS.pHand1.x,
+  POS.pHand2.x,
+  POS.pHand3.x,
+  POS.pHand4.x,
+];
+
+/** @type {number[]} */
+const qHandX = [
+  POS.qHand1.x,
+  POS.qHand2.x,
+  POS.qHand3.x,
+  POS.qHand4.x,
+];
 
 /** @type {(crd:SingleCard, pos:Partial<Pos3D>, extra?:Partial<Pos3D>) => SingleCard} */
 export const move = (crd, pos, extra = {}) => {
@@ -55,7 +69,7 @@ export const move = (crd, pos, extra = {}) => {
   return crd;
 };
 
-/** @template {Array} T @type {(all:T[], exist:T[]) => T[]} */
+/** @type {<T>(all:T[], exist:T[]) => T[]} */
 export const unFind = (all, exist) => all.reduce(
   (co, itm) => exist.includes(itm) ? co : [...co, itm]
   , []
@@ -63,16 +77,22 @@ export const unFind = (all, exist) => all.reduce(
 
 /** @type {(st:MissionState, crd:SingleCard) => Promise<void>} */
 export const dealToPlayer = async (st, crd) => {
+  /** @type {number[]} */
+  const emptyXpos = unFind(pHandX, st.player.hand.map(card => card.place.x));
   /** @type {Partial<Pos3D>} */
-  const emptyPlace = pick(unFind(qHandList, st.quest.hand.map(card => card.place)));
+  const emptyPlace = pick(pHandList.filter(({x}) => emptyXpos.includes(x)));
+
   await delay(MFRAG); crd.z = UP;
   await delay(MFRAG); move(crd, emptyPlace);
 };
 
 /** @type {(st:MissionState, crd:SingleCard) => Promise<void>} */
 export const dealToQuest = async (st, crd) => {
+  /** @type {number[]} */
+  const emptyXpos = unFind(qHandX, st.quest.hand.map(card => card.place.x));
   /** @type {Partial<Pos3D>} */
-  const emptyPlace = pick(unFind(pHandList, st.player.hand.map(card => card.place)));
+  const emptyPlace = pick(qHandList.filter(({x}) => emptyXpos.includes(x)));
+
   await delay(MFRAG); crd.z = UP;
   await delay(MFRAG); move(crd, emptyPlace);
 };

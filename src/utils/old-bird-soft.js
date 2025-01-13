@@ -118,7 +118,7 @@ export const shuffle = () => Math.random() - 0.5;
 
 /** @template {string} T @typedef {{ [K in T]: K }} Label */
 
-/** @template T @typedef {(list:T[]) => T} ListFunction */
+/** @typedef {<T>(list:T[]) => T} ListFunction */
 
 /** @type {ListFunction} */
 export const pick = (list) => list[rnd(list.length)];

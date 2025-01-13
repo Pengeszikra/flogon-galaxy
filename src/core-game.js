@@ -1,5 +1,5 @@
 import { dealToPlayer, dealToQuest, origo, POS, dropTo, move, MFRAG, pickUpPlayerDrop, reshufflePlayerCardToDeck } from "./deal-animations";
-import { delay, rnd, shuffle, signal } from "./utils/old-bird-soft";
+import { delay, rnd, shuffle, signal, zignal } from "./utils/old-bird-soft";
 import { FortyTwo } from "./utils/UniversalHarmonyNumber";
 
 /**
@@ -184,11 +184,12 @@ export const gameLoop = async (st, ...foo) => {
       if (possibleMoves.length < 1) {
         return st.phase = "PLAYER_DRAW";
       }
-      const result = await bestScoreInteraction(possibleMoves);
+
+      const result = await playerInteraction(possibleMoves, st);
       console.log(` (${result?.a?.value}) ---> (${result?.b?.value}) `);
 
       move(result.a, POS.pToPair);
-      await delay(MFRAG * 4);
+      await delay(MFRAG * 2);
       move(result.b, POS.qToPair);
       await delay(MFRAG * 4);
 
@@ -225,6 +226,12 @@ export const gameLoop = async (st, ...foo) => {
       }
       const result = await bestScoreInteraction(possibleMoves);
       console.log(` <${result?.a?.value}> ---> <${result?.b?.value}> `);
+
+      move(result.a, POS.qToPair);
+      await delay(MFRAG * 2);
+      move(result.b, POS.pToPair);
+      await delay(MFRAG * 4);
+
       st.quest.hand = st.quest.hand.filter(card => card !== result.a);
       st.player.hand = st.player.hand.filter(card => card !== result.b);
       await dropTo(result.a, POS.qDrop, st.quest.drop);
@@ -246,6 +253,13 @@ export const bestScoreInteraction = async (matchResults) =>
     .sort((alfa, beta) => alfa.score - beta.score)
     .pop()
   ;
+
+/** @type {(matchResults: MatchResult[], st:State) => Promise<MatchResult>} */
+export const playerInteraction = async (matchResults, st) => {
+  const { player: { hand: ph }, quest: { hand: qh }} = st;
+  // await delay(Infinity);
+  return matchResults.shift();
+}
 
 /** @typedef {Label<"POSITIVE" | "NEGATIVE" | "ZERO" | "INVERZIT" | "FAIL">} MatchKind */
 
@@ -296,7 +310,13 @@ export const logger = (st) => {
 }
 
 /** @type {(render:(state:State)=>any) => State} */
-export const freshState = (render) => signal(render)({phase, player, quest});
+export const freshState = (render) => {
+  const stTarget = { phase, player, quest };
+  globalThis.stt = stTarget;
+  const st = signal(render)(stTarget);
+  // signal(render)({ph:st.player.hand, qh:st.quest.hand})
+  return st;
+}
 
 /** @type {(st:State, p: SingleCard[], q: SingleCard[]) => any} */
 export const gameSetup = (state, playerDeck, questDeck) => {

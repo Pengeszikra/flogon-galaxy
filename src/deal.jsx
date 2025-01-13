@@ -9,18 +9,9 @@ import { dealToPlayer, dealToQuest, FLOOR, move, POS, SIZE, SKY, tr3D } from "./
 
 /** @typedef {import('../src/core-game').SingleCard} SingleCard */
 
-// globalThis.gameTest =  (speed = FortyTwo, pAmunt = 20, qAmount = 25) => {
-//   const state = freshState(logger);
-//   gameSetup(state, randomDeck(pAmunt), randomDeck(qAmount));
-//   globalThis.run = () => gameLoop(state);
-//   const stop = setInterval(_ => { if (state.phase == "THE_END") clearInterval(stop); run() }, speed);
-// };
-
 // ------------------------- 3D ----------------------------------
 
 const allCard = randomDeck(FortyTwo * 2);
-
-console.log(allCard);
 
 /** @type {(props: { id: string, value: number, style:object }) => HTMLElement} */
 const Card = ({id, value, style}) => (

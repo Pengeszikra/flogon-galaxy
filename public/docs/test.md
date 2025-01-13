@@ -9,3 +9,14 @@
 
 ## Test engingen
 Crazy but the `Marker` also perfect for a E2E testing surface
+
+```
+// deal.jsx - game test
+
+globalThis.gameTest =  (speed = FortyTwo, pAmunt = 20, qAmount = 25) => {
+  const state = freshState(logger);
+  gameSetup(state, randomDeck(pAmunt), randomDeck(qAmount));
+  globalThis.run = () => gameLoop(state);
+  const stop = setInterval(_ => { if (state.phase == "THE_END") clearInterval(stop); run() }, speed);
+};
+```
