@@ -20,11 +20,11 @@ portal(
           relative
         ">
           <button id="hangar"
-            class="bg-emerald-700/40 absolute w-[5rem] h-[3rem] top-[4rem] left-[2.5rem]"
+            class="bg-emerald-700/40 absolute w-[9rem] h-[5rem] top-[7rem] left-[5rem]"
             onClick={() => globalThis.location.replace('mine.html')}
           ></button>
           <button id="capatain"
-            class="bg-sky-700/40 absolute w-[4rem] h-[3rem] top-[4rem] left-[11.5rem]"
+            class="bg-sky-700/40 absolute w-[7rem] h-[5rem] top-[7.5rem] left-[22rem]"
             onClick={() => globalThis.location.replace('adventure.html')}
           ></button>
           <button id="bridge"></button>
