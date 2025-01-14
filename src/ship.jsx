@@ -1,8 +1,10 @@
 import { fencer, portal, Fragment } from "./utils/fencer";
 import { GalaxyRoute, galaxyTextureList, routeController, useKeyboardCurse } from "./GalaxyRoute";
-import { PointAndClick } from "./PointAndClick";
+import { PointAndClick, PointClickPercent } from "./PointAndClick";
 
 const [gAlfa, gBeta] = galaxyTextureList();
+
+const room = "rounded-2xl hover:outline-1 hover:outline-dashed hover:outline-emerald-500 hover:bg-black/0";
 
 portal(
   <GalaxyRoute
@@ -16,11 +18,13 @@ portal(
         bg-[url(../ui-elements/ship-no-bg.png)]
         bg-cover
         relative
-      ">
 
-        <PointAndClick id="captain" bg="bg-emerald-700/50" w={16} h={9} top={12} left={8} nextUrl="mine.html" />
-        <PointAndClick id="captain" bg="bg-orange-700/50" w={13} h={9} top={12} left={50} nextUrl="adventure.html" />
-        <PointAndClick id="captain" bg="bg-sky-700/50" w={16} h={8} top={22} left={59} nextUrl="library.html" />
+      ">
+        <PointClickPercent id="captain" bg={`bg-emerald-700/50 ${room}`} w={17} h={18} top={24} left={9} nextUrl="mine.html" />
+        <PointClickPercent id="captain" bg={`bg-orange-700/50 ${room}`}  w={16} h={18} top={24} left={55} nextUrl="adventure.html" />
+        <PointClickPercent id="captain" bg={`bg-sky-700/50 ${room}`} w={16} h={16} top={43} left={65} nextUrl="library.html" />
+        <PointClickPercent id="captain" bg={`bg-rose-700/50 ${room}`} w={31} h={16} top={43} left={34} nextUrl="deal.html" />
+        <PointClickPercent id="captain" bg={`bg-yellow-700/50 ${room}`} w={17} h={16} top={43} left={9} nextUrl="credit.html" />
         <button id="bridge"></button>
         <button id="cantine"></button>
         <button id="storage"></button>

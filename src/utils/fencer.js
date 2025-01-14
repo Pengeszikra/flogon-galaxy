@@ -108,7 +108,7 @@ const spriteSheetList = Array(37).fill('../sheets/sprite-')
 /** @type {(index:number) => string} */
 const spriteBgImg = index => `url(${spriteSheetList[index]})`;
 
-/** 
+/**
   * @typedef {{
   * x: number,
   * y: number,
@@ -118,15 +118,16 @@ const spriteBgImg = index => `url(${spriteSheetList[index]})`;
   * }} SpriteProps
   */
 
-/** 
+/**
   * @typedef {SpriteProps & {
   * class?: string,
   * style?: Record<string, string | number>
+  * onClick?: Function
   * }} ExtendedSpriteProps
   */
 
-/** 
-  * @type {(props:SpriteProps, m?:number, n?:number) 
+/**
+  * @type {(props:SpriteProps, m?:number, n?:number)
   *   => (frg: HTMLElement ) => void}
   */
 const drawSprite = ({
@@ -145,10 +146,11 @@ const drawSprite = ({
 };
 
 /** @type {(props: ExtendedSpriteProps) => HTMLElement } */
-export const Sprite = ({ x, y, w, h, sheetIndex=0, class:className = '', style = {} }) => {
+export const Sprite = ({ x, y, w, h, sheetIndex = 0, class: className = '', style = {}, onClick = () => { } }) => {
   const spriteElement = fencer('div', {
     class: className,
     style: {...style},
+    onClick
   });
   drawSprite({ x, y, w, h, sheetIndex })(spriteElement);
   return spriteElement;

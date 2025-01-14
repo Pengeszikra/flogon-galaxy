@@ -19,3 +19,21 @@ export const PointAndClick = ({
     onClick={() => globalThis.location.replace(nextUrl)}
   ></button>
 );
+
+/** @type {(props:RouteButton) => HTMLElement} */
+export const PointClickPercent = ({
+  id, w=5, h=5, top=0, left=0,
+  nextUrl = "", bg ="",
+  bgDyn = `pointer-events-auto absolute ${bg}`
+}) => (
+  <button id={id}
+    class={bgDyn}
+    style={{
+        top: `${top}%`,
+        left: `${left}%`,
+        width: `${w}%`,
+        height: `${h}%`,
+    }}
+    onClick={() => globalThis.location.replace(nextUrl)}
+  ></button>
+);
