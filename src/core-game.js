@@ -202,26 +202,9 @@ export const gameLoop = async (st) => {
     }
 
     case "DID_IT": {
-      let possibleMoves = allPossibleMoves(st.player, st.quest)
+      // let possibleMoves = allPossibleMoves(st.player, st.quest)
       const result = await playerInteraction(st);
-      console.log(` (${result?.a?.value}) ---> (${result?.b?.value}) `);
-
-      move(result.a, POS.pToPair);
-      await delay(MFRAG * 2);
-      move(result.b, POS.qToPair);
-      await delay(MFRAG * 4);
-
-      st.player.hand = st.player.hand.filter(card => card !== result.a);
-      st.quest.hand = st.quest.hand.filter(card => card !== result.b);
-      st.player.drop.push(result.a);
-      await dropTo(result.a, POS.pDrop, st.player.drop);
-      st.quest.drop.push(result.b);
-      await dropTo(result.b, POS.qDrop, st.quest.drop);
-      st.player.score += result.score;
-      return st.phase = possibleMoves.length > 1
-        ? fluctual(st, "START_PLAY", "PLAY_MORE")
-        : "PLAYER_DRAW"
-        ;
+      return await didIt(st, result);
     }
 
     case "SHODOWN": { return st.phase = "ESCAPE_CHECK" }
@@ -346,4 +329,27 @@ export const gameSetup = (state, playerDeck, questDeck) => {
   state.player.baseDeck = playerDeck;
   state.quest.baseDeck = questDeck;
   state.phase = "SETUP";
+}
+
+/** @type {(st:State, result:MatchResult) => Promise<keyof Phases>} */
+export const didIt = async (st, result) => {
+  let possibleMoves = allPossibleMoves(st.player, st.quest)
+  console.log(` (${result?.a?.value}) ---> (${result?.b?.value}) `);
+
+  move(result.a, POS.pToPair);
+  await delay(MFRAG * 2);
+  move(result.b, POS.qToPair);
+  await delay(MFRAG * 4);
+
+  st.player.hand = st.player.hand.filter(card => card !== result.a);
+  st.quest.hand = st.quest.hand.filter(card => card !== result.b);
+  st.player.drop.push(result.a);
+  await dropTo(result.a, POS.pDrop, st.player.drop);
+  st.quest.drop.push(result.b);
+  await dropTo(result.b, POS.qDrop, st.quest.drop);
+  st.player.score += result.score;
+  return st.phase = possibleMoves.length > 1
+    ? fluctual(st, "START_PLAY", "PLAY_MORE")
+    : "PLAYER_DRAW"
+    ;
 }
