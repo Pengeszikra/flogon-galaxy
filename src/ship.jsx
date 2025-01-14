@@ -10,18 +10,17 @@ portal(
     back={`../sheets/texture-${gBeta}.png`}
     zoom={250}
   >
-  <section class="grid place-items-center" />
-    <section class="grid place-items-center w-[100vw] aspect-video">
+    <section class="grid place-items-center">
       <figure class="
-        aspect-video
-        w-[80%]
+        w-[90rem] portrait:w-[60rem] aspect-video
         bg-[url(../ui-elements/ship-no-bg.png)]
         bg-cover
         relative
       ">
-        <PointAndClick id="captain" bg="bg-emerald-700/50" w={9} h={5} top={7} left={5} nextUrl="mine.html" />
-        <PointAndClick id="captain" bg="bg-orange-700/50" w={7} h={5} top={7.5} left={22} nextUrl="adventure.html" />
-        <PointAndClick id="captain" bg="bg-sky-700/50" w={9} h={6} top={18} left={26} nextUrl="library.html" />
+
+        <PointAndClick id="captain" bg="bg-emerald-700/50" w={16} h={9} top={12} left={8} nextUrl="mine.html" />
+        <PointAndClick id="captain" bg="bg-orange-700/50" w={13} h={9} top={12} left={50} nextUrl="adventure.html" />
+        <PointAndClick id="captain" bg="bg-sky-700/50" w={16} h={8} top={22} left={59} nextUrl="library.html" />
         <button id="bridge"></button>
         <button id="cantine"></button>
         <button id="storage"></button>

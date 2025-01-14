@@ -70,10 +70,10 @@ portal(
     back={`../sheets/texture-${gBeta}.png`}
   >
     <figure class="
-      --hidden
       aspect-video
-      min-w-full
       absolute top-0 left-0
+      portrait:w-full
+      landscape:h-full
       --bg-[url(../sheets/bridge-4400.png)]
       bg-[url(../ui-elements/mission-cabine.png)]
       bg-cover
@@ -83,8 +83,8 @@ portal(
       absolute top-[60%] left-[50%]
       w-[0] h-[0]
       place-items-center
-    "
-    >
+
+    ">
       <div class="
         p-2 grid place-items-center min-w-[30rem] bg-sky-900/50
         outline outline-1 outline-sky-300 rounded text-sky-200 select-none"

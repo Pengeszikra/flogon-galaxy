@@ -6,18 +6,30 @@
   <title>Flogon Galaxy</title>
   <link rel="manifest" href="manifest.json" />
   <link href="src/style.css" rel="stylesheet" />
-  <style>body, html{ font-size: 1.5vmin;}</style>
+  <style>
+    body, html{ font-size: 1.5vmin; }
+    @media (orientation: portrait) { body, html { font-size: 1.3vw; }}
+  </style>
 </head>
 <body class="bg-sky-900 text-zinc-400 relative grid place-items-center overflow-hidden">
-  <section class="bg-zinc-900
-    aspect-video
-    portrait:w-screen
-    landscape:min-h-screen
-    mx-auto
+  <section class="
+    bg-zinc-900
+    relative
+    --bg-rose-700/40
+
     max-w-[100vw]
-    max-h-[56.25vh]
+    max-h-[56.25vw]
+
+    portrait:w-[100vw]
+    portrait:h-[56.25vw]
+
+    landscape:mx-auto
+    landscape:w-[178vh]
+    landscape:h-[100vh]
+
     overflow-hidden
     grid place-items-center
+    --pointer-events-auto
   ">
     <div class="bg-neutral-700 w-[50rem] h-[30rem] grid place-items-center">
       <p class="text-[3rem]">F L O G O N - G A L A X Y</p>

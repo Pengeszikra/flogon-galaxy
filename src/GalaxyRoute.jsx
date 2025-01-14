@@ -15,27 +15,35 @@ import { shuffle, signal } from "./utils/old-bird-soft";
 export const GalaxyRoute = ({front, back, children, zoom=150}) => (
     <main
       class="
-        bg-zinc-900 w-[100vw] h-[56.25vw] overflow-hidden
-        relative grid place-items-center
+        relative
+        bg-zinc-900 w-[100vw]
+        overflow-hidden
+        grid place-items-center
       "
       style={{
         backgroundImage:`url(${front}),url(${back})`,
         backgroundSize: `${zoom}vw`
       }}
     >
-      <section id="video-aspect" class="
-        aspect-video
-        portrait:w-screen
-        landscape:min-h-screen
-        mx-auto
+      <section class="
+        relative
+        --bg-rose-700/40
+
         max-w-[100vw]
         max-h-[56.25vw]
 
-        grid place-items-center
-        pointer-events-none
+        portrait:w-[100vw]
+        portrait:h-[56.25vw]
 
-        bg-rose-700/40
+        landscape:mx-auto
+        landscape:w-[178vh]
+        landscape:h-[100vh]
+
+        overflow-hidden
+        grid place-items-center
+        --pointer-events-auto
       ">
+
         {children}
       </section>
     </main>
@@ -98,8 +106,8 @@ export const useStarshipNavigation = (state, line) => {
     line.x2.baseVal.value = clientX;
     line.y2.baseVal.value = clientY;
 
-      state.xSpeed = (line.x2.baseVal.value - line.x1.baseVal.value) / 50;
-      state.ySpeed = (line.y2.baseVal.value - line.y1.baseVal.value) / 50;
+      state.xSpeed = (line.x2.baseVal.value - line.x1.baseVal.value) / 100;
+      state.ySpeed = (line.y2.baseVal.value - line.y1.baseVal.value) / 100;
   };
 
   /** @type {(e:MouseEvent) => void} */

@@ -10,16 +10,15 @@ portal(
     front={`../sheets/texture-${gAlfa}.png`}
     back={`../sheets/texture-${gBeta}.png`}
   >
-
     <Sprite {...desertShip[9]} class="
       ship
       pointer-events-auto
       rotate-[90deg]
+      scale-[2]
     "></Sprite>
     <svg class="absolute top-0 left-0 w-[100vw] aspect-video pointer-events-none z-50">
       <line x1="0" y1="80" x2="100" y2="20" stroke="blue" />
     </svg>
-    {/* <DebugFrame /> */}
   </GalaxyRoute>
 ).then(() => {
   /** @type {HTMLDivElement} */
