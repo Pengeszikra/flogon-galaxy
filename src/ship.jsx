@@ -5,13 +5,14 @@ import { PointAndClick } from "./PointAndClick";
 const [gAlfa, gBeta] = galaxyTextureList();
 
 portal(
-  <section>
+  <section class="min-h-screen min-w-screen bg-white">
     <GalaxyRoute
       front={`../sheets/texture-${gAlfa}.png`}
       back={`../sheets/texture-${gBeta}.png`}
       zoom={250}
     >
-      <section class="grid place-items-center w-[100vw] aspect-video">
+    <section class="grid place-items-center min-h-screen mx-auto my-0 aspect-video bg-rose-700/40 overflow-hidden" />
+      {/* <section class="grid place-items-center w-[100vw] aspect-video">
         <figure class="
           aspect-video
           w-[80%]
@@ -28,7 +29,7 @@ portal(
           <button id="meeting-hall"></button>
           <button id="relax"></button>
         </figure>
-      </section>
+      </section> */}
     </GalaxyRoute>
   </section>
 ).then((page) => {

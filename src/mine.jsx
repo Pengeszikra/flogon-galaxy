@@ -1,6 +1,7 @@
 import { fencer, portal, Fragment, Sprite } from "./utils/fencer";
 import { calculateShipRotation, GalaxyRoute, galaxyTextureList, routeController, useKeyboardCurse, useStarshipNavigation } from "./GalaxyRoute";
 import { desertShip } from "./desertShip";
+import { DebugFrame } from "./DebugFrame";
 
 const [gAlfa, gBeta] = galaxyTextureList();
 
@@ -18,6 +19,7 @@ portal(
     <svg class="absolute top-0 left-0 w-[100vw] aspect-video pointer-events-none z-50">
       <line x1="0" y1="80" x2="100" y2="20" stroke="blue" />
     </svg>
+    {/* <DebugFrame /> */}
   </GalaxyRoute>
 ).then(() => {
   /** @type {HTMLDivElement} */
