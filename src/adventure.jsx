@@ -2,6 +2,7 @@ import { fencer, portal, Fragment, Sprite } from "./utils/fencer";
 import { GalaxyRoute, galaxyTextureList, routeController, useKeyboardCurse, useStarshipNavigation } from "./GalaxyRoute";
 import { shuffle } from "./utils/old-bird-soft";
 import { trackList } from "./media-assets";
+import { targetSystem } from "./throw/targetSystem";
 
 const [gAlfa, gBeta] = galaxyTextureList();
 
@@ -24,10 +25,15 @@ portal(
   >
     {/* <WoraShard pngImageUrl="WoraPlayOnPiano.png" /> */}
     <WoraShard pngImageUrl={cover} />
-    <button id="hangar"
-      class="bg-emerald-700/0 absolute w-[6rem] h-[6rem] top-0 right-0 pointer-events-auto"
-      onClick={() => globalThis.location.replace('ship.html')}
-    ></button>
+    <Sprite {...targetSystem[6]} class="
+      absolute top-[1rem] right-[1rem]
+      mix-blend-lighten
+      transition-all
+      duration-300
+      hover:brightness-200
+    "
+    onClick={() => globalThis.location.replace('ship.html')}
+    />
 
   </GalaxyRoute>
 ).then((page) => {

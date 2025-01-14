@@ -1,7 +1,8 @@
-import { fencer, portal, Fragment } from "./utils/fencer";
+import { fencer, portal, Fragment, Sprite } from "./utils/fencer";
 import { setupMarkerViews } from "./marker";
 import { DebugFrame } from "./DebugFrame";
 import { PointAndClick } from "./PointAndClick";
+import { targetSystem } from "./throw/targetSystem";
 
 export const changeMd = (name, idx) => name;
 
@@ -27,7 +28,6 @@ export const Marker = ({markdown}) => (
       relative
     ">
     <markdown-view class="p-[1rem]" source={markdown}></markdown-view>
-    <PointAndClick id="foo" nextUrl="ship.html" bg="bg-emerald-300/45" top={0} left={45}></PointAndClick>
   </article>
 )
 
@@ -48,6 +48,18 @@ portal(
       ))}
     </section>
     {/* <DebugFrame /> */}
+    <Sprite {...targetSystem[3]} class="
+      fixed top-[1rem] right-[14rem]
+      scale-[1.2]
+      mix-blend-lighten
+      transition-all
+      duration-300
+      hover:brightness-200
+      z-50
+    "
+      onClick={() => globalThis.location.replace('ship.html')}
+    />
+
   </section>
 ).then((page) => {
   setupMarkerViews();

@@ -1,11 +1,13 @@
 import { fencer, portal, Fragment, Sprite } from "./utils/fencer";
 import { calculateShipRotation, GalaxyRoute, galaxyTextureList, routeController, useKeyboardCurse, useStarshipNavigation } from "./GalaxyRoute";
 import { desertShip } from "./desertShip";
-import { planets } from "./planets";
 import { flogons } from "./flogonsSprites";
-import { spicies } from "./spicies";
 import {assets} from './throw/asset';
 import { rnd } from "./utils/old-bird-soft";
+import { spicies } from "./throw/spicies";
+import { planets } from "./throw/planets";
+import { scifiUI } from "./throw/ui-elements";
+import { targetSystem } from "./throw/targetSystem";
 
 const [gAlfa, gBeta] = galaxyTextureList();
 let [spaceX, spaceY] = [0, 0];
@@ -17,9 +19,19 @@ portal(
     front={`../sheets/texture-${gAlfa}.png`}
     back={`../sheets/texture-${gBeta}.png`}
   >
-    <div class="fixed top-0 left-[40%] z-50 text-[2rem] p-4 text-orange-400">score: <span id="score"></span></div>
+    <Sprite {...targetSystem[13]} class="
+      absolute top-[4rem] right-[4rem]
+      scale-[2]
+      mix-blend-lighten
+      transition-all
+      duration-300
+      hover:brightness-200
+    "
+    onClick={() => globalThis.location.replace('ship.html')}
+    />
+    <div class="select-none fixed top-0 left-[40%] z-50 text-[2rem] p-4 text-orange-400">score: <span id="score"></span></div>
     <section id="origo" class="absolute top-[50%] left-[50%]">
-      {[...assets, ...planets, ...desertShip].map((object, idx) => (
+      {[...scifiUI,...scifiUI,...scifiUI,...targetSystem, ...targetSystem, ...targetSystem].map((object, idx) => (
         <Sprite {...object} class="
           absolute top-[50%] left-[50%]
           planet
@@ -28,7 +40,8 @@ portal(
           hover:brightness-150
           hover:scale-[4]
           transition-all
-          duration-200
+          duration-300
+          mix-blend-lighten
         "
           style={{ top: `${rnd(1000) - 500}rem`, left: `${rnd(1000) - 500}rem` }}
           onClick={({target}) => {

@@ -6,6 +6,7 @@ import { delay, pick, rnd, shuffle, signal, zignal } from "./utils/old-bird-soft
 import { gameLoop, gameSetup, randomDeck, freshState, logger, allPossibleMoves, cardMatcher, didIt } from "./core-game";
 import { FortyTwo } from "./utils/UniversalHarmonyNumber";
 import { dealToPlayer, dealToQuest, FLOOR, move, POS, SIZE, SKY, tr3D } from "./deal-animations";
+import { targetSystem } from "./throw/targetSystem";
 
 /** @typedef {import('../src/core-game').State} State */
 /** @typedef {import('../src/core-game').SingleCard} SingleCard */
@@ -101,7 +102,6 @@ portal(
         outline outline-1 outline-amber-300 rounded bg-amber-900/50 text-center
         pointer-events-auto select-none"
         style={tr3D({ x: 47, y: -22, z: 10, rX: -30, rY:3, zoom: 3 })}
-        onClick={() => globalThis.location.replace('ship.html')}
       ></div>
       <button id="auto-on-off" class = "absolute top-0 left-0 bg-yellow-300 rounded-full w-[1rem] h-[1rem] pointer-events-auto"
         style={tr3D({ x: -48, y: -25, z: 11, rX: -30, rY: -4, zoom: 3 })}
@@ -122,6 +122,17 @@ portal(
         />
       ))}
     </section>
+    <Sprite {...targetSystem[5]} class="
+      absolute top-[2rem] right-[2rem]
+      scale-[1.5]
+      mix-blend-lighten
+      transition-all
+      duration-300
+      hover:brightness-200
+    "
+    onClick={() => globalThis.location.replace('ship.html')}
+    />
+
   </GalaxyRoute>
 ).then((page) => {
   const [galaxy] = routeController("screen");
