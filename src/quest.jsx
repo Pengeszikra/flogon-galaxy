@@ -11,8 +11,8 @@ portal(
       zoom={250}
     >
       <section class="grid select-none">
-        <h1 class="text-emerald-200 text-[5vw]">F L O G O N - G A L A X Y</h1>
-        <p class="text-orange-300 text-[3vw] text-right min-w-max">first contact</p>
+        <h1 class="text-emerald-200 text-[6rem] ">F L O G O N - G A L A X Y</h1>
+        <p class="text-orange-300 text-[5rem] text-right min-w-max">first contact</p>
       </section>
     </GalaxyRoute>
   </section>

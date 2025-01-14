@@ -82,9 +82,7 @@ portal(
     <section id="desk" class="
       absolute top-[60%] left-[50%]
       w-[0] h-[0]
-      --grid --grid-cols-4 gap-x-[2rem] gap-y-[17rem]
       place-items-center
-      --bg-black/75
     "
     >
       <div class="

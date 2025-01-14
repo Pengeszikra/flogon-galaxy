@@ -13,17 +13,31 @@ import { shuffle, signal } from "./utils/old-bird-soft";
 
 /** @type {(props: { front:string, back:string, zoom?:number, children?:any }) => HTMLElement} */
 export const GalaxyRoute = ({front, back, children, zoom=150}) => (
-    <main class="
-        bg-zinc-900
-        min-w-full
-        aspect-video
-        grid
-        place-items-center
-        pointer-events-none
+    <main
+      class="
+        bg-zinc-900 w-[100vw] h-[56.25vw] overflow-hidden
+        relative grid place-items-center
       "
-      style={{backgroundImage:`url(${front}),url(${back})`, backgroundSize: `${zoom}vw`}}
+      style={{
+        backgroundImage:`url(${front}),url(${back})`,
+        backgroundSize: `${zoom}vw`
+      }}
     >
-      {children}
+      <section id="video-aspect" class="
+        aspect-video
+        portrait:w-screen
+        landscape:min-h-screen
+        mx-auto
+        max-w-[100vw]
+        max-h-[56.25vw]
+
+        grid place-items-center
+        pointer-events-none
+
+        bg-rose-700/40
+      ">
+        {children}
+      </section>
     </main>
   );
 
