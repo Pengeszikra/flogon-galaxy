@@ -1,6 +1,7 @@
 import { fencer, portal, Fragment } from "./utils/fencer";
 import { setupMarkerViews } from "./marker";
 import { DebugFrame } from "./DebugFrame";
+import { PointAndClick } from "./PointAndClick";
 
 export const Marker = ({markdown}) => (
   <article class="
@@ -12,6 +13,7 @@ export const Marker = ({markdown}) => (
       relative
     ">
     <markdown-view class="p-[1rem]" source={markdown}></markdown-view>
+    <PointAndClick id="foo" nextUrl="ship.html" bg="bg-emerald-300/45" top={0} left={45}></PointAndClick>
   </article>
 )
 

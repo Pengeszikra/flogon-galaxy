@@ -74,47 +74,48 @@ export const useKeyboardCurse = (state) => {
   );
 }
 
-/** @type {(state: MoveIn3D) => void} */
-export const useStarshipNavigation = (state) => {
-  // Middle-bottom origin
+/** @type {(state: MoveIn3D, line:SVGLineElement) => void} */
+export const useStarshipNavigation = (state, line) => {
+  // Center of the screen as the origin
   const origin = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
 
-  /** @type {(x:number, y:number) => void} */
+  /** @type {(clientX: number, clientY: number) => void} */
   const updateSpeed = (clientX, clientY) => {
-    const dx = clientX - origin.x;
-    const dy = clientY - origin.y;
+    line.x2.baseVal.value = clientX;
+    line.y2.baseVal.value = clientY;
 
-    state.xSpeed = dx / origin.x * 7;
-    state.ySpeed = dy / origin.y * 7;
+      state.xSpeed = (line.x2.baseVal.value - line.x1.baseVal.value) / 50;
+      state.ySpeed = (line.y2.baseVal.value - line.y1.baseVal.value) / 50;
   };
 
-  // Handle mouse movement
-  const handleMouseMove = (event) => {
-    updateSpeed(event.clientX, event.clientY);
-  };
-
-  // Handle touch movement
+  /** @type {(e:MouseEvent) => void} */
+  const handleMouseMove = (event) => updateSpeed(event.clientX, event.clientY);
+  /** @type {(e:TouchEvent) => void} */
   const handleTouchMove = (event) => {
-    const touch = event.touches[0]; // Use the first touch point
-    if (touch) {
-      updateSpeed(touch.clientX, touch.clientY);
-    }
+    const touch = event.touches[0];
+    if (touch) updateSpeed(touch.clientX, touch.clientY);
   };
 
-  // Add event listeners
   document.addEventListener('mousemove', handleMouseMove);
   document.addEventListener('touchmove', handleTouchMove);
-
-  // Cleanup function
-  return () => {
-    document.removeEventListener('mousemove', handleMouseMove);
-    document.removeEventListener('touchmove', handleTouchMove);
-  };
 };
+
 
 /** @type {(xSpeed:number, ySpeed:number) => number} */
 export const calculateShipRotation = (xSpeed, ySpeed) => {
   const angleRadians = Math.atan2(ySpeed, xSpeed);
-  const angleDegrees = (angleRadians * 180) / Math.PI - 90;
+  return angleRadians;
+  // const angleDegrees = (angleRadians * 180) / Math.PI - 90;
+  // return (angleDegrees + 360) % 360;
+};
+
+
+/** @type {(x1: number, y1: number, x2: number, y2: number) => number} */
+export const shipRotation = (x1, y1, x2, y2) => {
+  // Számítsuk ki a két pont közötti vektor szögét radiánban
+  const angleRadians = Math.atan2(y2 - y1, x2 - x1);
+
+  // Alakítsuk át fokokká, és normalizáljuk 0-360 fokra
+  const angleDegrees = (angleRadians * 180) / Math.PI;
   return (angleDegrees + 360) % 360;
 };

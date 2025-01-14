@@ -9,9 +9,9 @@ I saw I run out of time again, but `hackhaton` is this type of business.
 
 ## Final `TODO` list
 ```
--[ ] Implement Card Game Interaction
--[ ] Obsolate all previous TODO list
--[ ] Implement Spaceship Interaction
+-[+] Implement Card Game Interaction
+-[+] Implement Spaceship Interaction
+-[ ] Make something target to spaceship which can collect.
 -[ ] Figure out some multiplayer possibilities at least a score board
 -[ ] Setup the story to a game
 -[ ] Polish the starship
@@ -22,6 +22,7 @@ I saw I run out of time again, but `hackhaton` is this type of business.
 -[ ] Do not put any out of scope ingredient to a content
 -[ ] Dynamo DB + S3.Bucket Medi Chanell option
 -[ ] Pich Video
+-[ ] Fill the Pitch form
 -[ ] Quest system
 -[ ] Config page
 -[ ] Solve Safari layout error
@@ -29,4 +30,5 @@ I saw I run out of time again, but `hackhaton` is this type of business.
 -[ ] Backface of card
 -[ ] Collection of cards
 -[ ] Background info of development process
+-[ ] Obsolate all previous TODO list
 ```

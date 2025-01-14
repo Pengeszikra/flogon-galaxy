@@ -9,42 +9,37 @@ portal(
     front={`../sheets/texture-${gAlfa}.png`}
     back={`../sheets/texture-${gBeta}.png`}
   >
+
     <Sprite {...desertShip[9]} class="
       ship
       pointer-events-auto
       rotate-[90deg]
-      --hover:scale-[1.5]
-      --transition-all
-      duration-0
     "></Sprite>
-    <pre class="
-      hidden
-      text-sm
-      p-2
-      absolute top-0 left-0
-      text-emerald-400
-    ">{}</pre>
+    <svg class="absolute top-0 left-0 w-[100vw] aspect-video pointer-events-none z-50">
+      <line x1="0" y1="80" x2="100" y2="20" stroke="blue" />
+    </svg>
   </GalaxyRoute>
 ).then(() => {
-  const debug = document.querySelector('pre');
-  /** @type{HTMLElement} */
-  const ship = document.querySelector('.ship')
+  /** @type {HTMLDivElement} */
+  const ship = document.querySelector('.ship');
+  const line = document.querySelector('line');
+  ship.style.transitionDuration = "0";
   ship.onclick = () => globalThis.location.replace('deal.html');
-  setTimeout(() => ship.style.transitionDuration = "500ms", 300);
+  //   setTimeout(() => ship.style.transitionDuration = "500ms", 300);
   const showState = st => {
     /** @type {{xSpeed:number, ySpeed:number}} */
     const { xSpeed, ySpeed } = st;
 
     const rotation = calculateShipRotation(st.xSpeed, st.ySpeed);
 
-    ship.style.rotate = `${rotation + 90}deg`;
-    debug.innerText = JSON.stringify({ xs:+xSpeed.toFixed(2), ys:+ySpeed.toFixed(2), r:+rotation.toFixed(2)});
+    ship.style.rotate = `${rotation}rad`;
+    // JSON.stringify({ xs:+xSpeed.toFixed(2), ys:+ySpeed.toFixed(2), r:+rotation.toFixed(2)});
   }
   const [state] = routeController("soft-light", showState); // "hard-light"
   state.ySpeed = Math.random() - .5;
   state.xSpeed = Math.random() - .5;
   useKeyboardCurse(state);
-  // useStarshipNavigation(state);
+  useStarshipNavigation(state, line);
 
   const instruments = new Audio('media/Ethernal Wood.mp3');
   // instruments.play();
