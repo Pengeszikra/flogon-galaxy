@@ -1,7 +1,10 @@
 import { fencer, portal, Fragment, Sprite } from "./utils/fencer";
 import { calculateShipRotation, GalaxyRoute, galaxyTextureList, routeController, useKeyboardCurse, useStarshipNavigation } from "./GalaxyRoute";
 import { desertShip } from "./desertShip";
-import { DebugFrame } from "./DebugFrame";
+import { planets } from "./planets";
+import { flogons } from "./flogonsSprites";
+import { spicies } from "./spicies";
+import {assets} from './throw/asset';
 
 const [gAlfa, gBeta] = galaxyTextureList();
 
@@ -15,6 +18,14 @@ portal(
       pointer-events-auto
       rotate-[90deg]
       scale-[2]
+    "></Sprite>
+
+    <Sprite {...assets[4]} class="
+      fixed top-0 left-0
+      planet
+      pointer-events-auto
+      scale-[2]
+      z-50
     "></Sprite>
     <svg class="absolute top-0 left-0 w-[100vw] aspect-video pointer-events-none z-50">
       <line x1="0" y1="80" x2="100" y2="20" stroke="blue" />

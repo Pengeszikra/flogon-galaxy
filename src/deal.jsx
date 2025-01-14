@@ -7,6 +7,7 @@ import { gameLoop, gameSetup, randomDeck, freshState, logger, allPossibleMoves, 
 import { FortyTwo } from "./utils/UniversalHarmonyNumber";
 import { dealToPlayer, dealToQuest, FLOOR, move, POS, SIZE, SKY, tr3D } from "./deal-animations";
 
+/** @typedef {import('../src/core-game').State} State */
 /** @typedef {import('../src/core-game').SingleCard} SingleCard */
 /** @typedef {import('../src/core-game').InteractionClick} InteractionClick */
 /** @typedef {import('../src/core-game').PhasesKey} PhasesKey */
@@ -102,6 +103,10 @@ portal(
         style={tr3D({ x: 47, y: -22, z: 10, rX: -30, rY:3, zoom: 3 })}
         onClick={() => globalThis.location.replace('ship.html')}
       ></div>
+      <button id="auto-on-off" class = "absolute top-0 left-0 bg-yellow-300 rounded-full w-[1rem] h-[1rem] pointer-events-auto"
+        style={tr3D({ x: -48, y: -25, z: 11, rX: -30, rY: -4, zoom: 3 })}
+        onClick={() => bindState.autoMode = !bindState.autoMode}
+      ></button>
 
       {allCard.map(({ value, id }, idx) => (
         <Card id={id} value={value} style={tr3D({
@@ -127,6 +132,7 @@ portal(
   /** @type {HTMLElement} */ const pScore = page.querySelector('#p-score');
   /** @type {HTMLElement} */ const qScore = page.querySelector('#q-score');
   /** @type {HTMLElement} */ const dPhase = page.querySelector('#phase');
+  /** @type {HTMLElement} */ const onOff = page.querySelector('#auto-on-off');
 
   /** @type {SingleCard | null} */
   let prevSelect = null;
@@ -162,6 +168,8 @@ portal(
         };
       }
     }
+
+    onOff.style.backgroundColor = st.autoMode ? "red" : "#fde047";
 
     if (st.phase !== prevPhase) {
       console.log(`chage from ${prevPhase} -> ${st.phase}`)
@@ -207,16 +215,20 @@ portal(
     `;
   }
 
-  const state = freshState(render);
+  const state = freshState(render, false);
   globalThis.st = state; // TODO
   bindState = state;
   const movingCards = allCard.map(card => signal(newOrder)(card));
   gameSetup(state, movingCards.slice(0,12), movingCards.slice(12, 12 + 21));
 
   const stop = setInterval(() => {
-    if (state.phase == "THE_END") clearInterval(stop);
+    if (state.phase == "THE_END") {
+      clearInterval(stop);
+
+    };
     state.beat = performance.now()
   },FortyTwo * 4);
 });
 
+/** @type {State} */
 var bindState;

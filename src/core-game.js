@@ -130,6 +130,8 @@ export const fluctual = (state, a, b) => state.phase === a ? b : a ;
   *  click: string,
   *  clickTime: number,
   *  beat: number,
+  *  autoMode: boolean,
+  *  traps: string[],
   * }} State
   */
 
@@ -193,16 +195,21 @@ export const gameLoop = async (st) => {
     case "START_PLAY": {
       let possibleMoves = allPossibleMoves(st.player, st.quest)
         .filter(({ kind }) => kind !== "FAIL");
-      // return st.phase = "PROBLEM_CHECK";
       if (possibleMoves.length < 1) {
         return st.phase = "PLAYER_DRAW";
       }
-      // return st.phase = "DID_IT"; // cause wait
-      return
+      if (st.autoMode) return st.phase = "DID_IT";
+      return;
     }
 
     case "DID_IT": {
-      // let possibleMoves = allPossibleMoves(st.player, st.quest)
+      if (st.autoMode) {
+        let possibleMoves = allPossibleMoves(st.player, st.quest);
+        const result = await bestScoreInteraction(possibleMoves);
+        console.log(` {${result?.a?.value}} ---> {${result?.b?.value}} `);
+        return await didIt(st, result);
+      }
+
       const result = await playerInteraction(st);
       return await didIt(st, result);
     }
@@ -284,7 +291,7 @@ export const cardMatcher = (a, b) => {
       return { kind: "NEGATIVE", score: Math.abs(av) + Math.abs(bv), a, b };
     case av === 0 || bv === 0 && av + bv !== 0:
     return { kind: "ZERO", score: Math.abs(av + bv) * 3, a, b };
-    case av === Math.abs(bv):
+    case av === -bv:
       return { kind: "INVERZIT", score: Math.abs(av) * 4, a, b };
     default:
       return { kind: "FAIL", score: 0, a, b };
@@ -315,9 +322,19 @@ export const logger = (st) => {
   } catch (err) { console.warn(st) }
 }
 
-/** @type {(render:(state:State)=>any) => State} */
-export const freshState = (render) => {
-  const stTarget = { phase, player, quest, clickTime: 0, beat:0 };
+/** @type {(render:(state:State)=>any, autoMode?:boolean) => State} */
+export const freshState = (render, autoMode = false) => {
+  /** @type {State} */
+  const stTarget = {
+    phase,
+    player,
+    quest,
+    clickTime: 0,
+    beat: 0,
+    click: "",
+    autoMode,
+    traps: [],
+  };
   globalThis.stt = stTarget;
   const st = signal(render)(stTarget);
   // signal(render)({ph:st.player.hand, qh:st.quest.hand})

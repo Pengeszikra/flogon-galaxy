@@ -11,26 +11,37 @@ I saw I run out of time again, but `hackhaton` is this type of business.
 ```
 -[+] Implement Card Game Interaction
 -[+] Implement Spaceship Interaction
+
 -[ ] Make something target to spaceship which can collect.
+-[ ] Quest system
+-[ ] Collection of cards
+-[ ] Game Rule by text
+-[ ] Game Rule as video
+-[ ] Trading system ?
+-[ ] IDE playmode
+
 -[ ] Figure out some multiplayer possibilities at least a score board
--[ ] Setup the story to a game
+-[ ] Dynamo DB + S3.Bucket Medi Chanell option
+
 -[ ] Polish the starship
+-[ ] Setup the story to a game
 -[ ] Make Captain `Yogdar` as playfull character
 -[ ] Implement Dream Travel!
 -[ ] Flogon knowledge, Inversit, Wora Shard must implement
 -[ ] Make a Credit page
 -[ ] Do not put any out of scope ingredient to a content
--[ ] Dynamo DB + S3.Bucket Medi Chanell option
+
+-[ ] Readme
 -[ ] Pich Video
 -[ ] Fill the Pitch form
--[ ] Quest system
+
 -[ ] Config page
--[ ] Solve Safari layout error
--[ ] Fix Responsivity
+
+-[+] Solve Safari layout error
+-[+] Fix Responsivity
+
 -[ ] Backface of card
--[ ] Collection of cards
 -[ ] Background info of development process
--[ ] Obsolate all previous TODO list
 ```
 
 ## The Big Responsivity topic

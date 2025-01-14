@@ -107,7 +107,7 @@ const questImageList = Array(295).fill('../mid/flogon')
   .map((fn, idx) => fn + (4000 + idx) + '.jpeg')
   .sort(_ => Math.random() - 0.5);
 
-const spriteSheetList = Array(37).fill('../sheets/sprite-')
+const spriteSheetList = Array(55).fill('../sheets/sprite-')
   .map((fn, idx) => fn + (7000 + idx) + '.png')
 
 let counter = 0;
