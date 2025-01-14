@@ -3,7 +3,7 @@ import { GalaxyRoute, galaxyTextureList, routeController, useKeyboardCurse } fro
 import { assetList } from "./throw/shoot";
 import { flogons } from "./flogonsSprites";
 import { delay, pick, rnd, shuffle, signal, zignal } from "./utils/old-bird-soft";
-import { gameLoop, gameSetup, randomDeck, freshState, logger } from "./core-game";
+import { gameLoop, gameSetup, randomDeck, freshState, logger, allPossibleMoves, cardMatcher } from "./core-game";
 import { FortyTwo } from "./utils/UniversalHarmonyNumber";
 import { dealToPlayer, dealToQuest, FLOOR, move, POS, SIZE, SKY, tr3D } from "./deal-animations";
 
@@ -129,8 +129,9 @@ portal(
   /** @type {HTMLElement} */ const pScore = page.querySelector('#p-score');
   /** @type {HTMLElement} */ const qScore = page.querySelector('#q-score');
   /** @type {HTMLElement} */ const dPhase = page.querySelector('#phase');
-  // /** @type {HTMLElement} */ const deck = page.querySelector('#deck');
 
+  /** @type {SingleCard | null} */
+  let prevSelect = null;
   let prevClickHapend = 0;
   /** @type {PhasesKey} */
   let prevPhase = "THE_FIRST_DAY";
@@ -140,6 +141,26 @@ portal(
     if (st.clickTime !== prevClickHapend) {
       prevClickHapend = st.clickTime;
       console.log(`click the: ${st.click} phase: ${st.phase}`);
+
+      if (["START_PLAY", "PLAY_MORE"].includes(st.phase)) {
+        // const possibleMoves = allPossibleMoves(st.player, st.quest);
+        /** @type {SingleCard} */
+        const inHand = st.player.hand.find(card => card.id === st.click);
+        /** @type {SingleCard} */
+        const asEnemy = st.quest.hand.find(card => card.id === st.click);
+        if (prevSelect && asEnemy) {
+          const result = cardMatcher(prevSelect, asEnemy);
+          if (result.kind !== "FAIL") {
+            asEnemy.rX = -20;
+            return;
+          }
+        }
+        if (prevSelect) prevSelect.rX = 0;
+        if (inHand) {
+          inHand.rX = -20;
+          prevSelect = inHand;
+        };
+      }
     }
 
     if (st.phase !== prevPhase) {

@@ -197,7 +197,8 @@ export const gameLoop = async (st) => {
       if (possibleMoves.length < 1) {
         return st.phase = "PLAYER_DRAW";
       }
-      return st.phase = "DID_IT"; // cause wait
+      // return st.phase = "DID_IT"; // cause wait
+      return
     }
 
     case "DID_IT": {
