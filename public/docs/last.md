@@ -16,7 +16,9 @@ I saw I run out of time again, but `hackhaton` is this type of business.
 -[ ] Setup the story to a game
 -[ ] Polish the starship
 -[ ] Make Captain `Yogdar` as playfull character
--[ ] Make a Credit page 
+-[ ] Implement Dream Travel!
+-[ ] Flogon knowledge, Inversit, Wora Shard must implement
+-[ ] Make a Credit page
 -[ ] Do not put any out of scope ingredient to a content
 -[ ] Dynamo DB + S3.Bucket Medi Chanell option
 -[ ] Pich Video

@@ -96,12 +96,14 @@ let phase;
 
 /**
   * @typedef { Label<
+  * "THE_FIRST_DAY" |
   * "SETUP" |
   * "READY" |
   * "PLAYER_DRAW" |
   * "QUEST_DRAW_WITH_END_CHECK" |
   * "START_PLAY" |
   * "PLAY_MORE" |
+  * "DID_IT" |
   * "PROBLEM_CHECK" |
   * "REVENGE_BEGIN" |
   * "REVENGE" |
@@ -127,6 +129,7 @@ export const fluctual = (state, a, b) => state.phase === a ? b : a ;
   *  quest: Entity,
   *  click: string,
   *  clickTime: number,
+  *  beat: number,
   * }} State
   */
 
@@ -194,7 +197,11 @@ export const gameLoop = async (st) => {
       if (possibleMoves.length < 1) {
         return st.phase = "PLAYER_DRAW";
       }
+      return st.phase = "DID_IT"; // cause wait
+    }
 
+    case "DID_IT": {
+      let possibleMoves = allPossibleMoves(st.player, st.quest)
       const result = await playerInteraction(st);
       console.log(` (${result?.a?.value}) ---> (${result?.b?.value}) `);
 
@@ -269,11 +276,8 @@ export const bestScoreInteraction = async (matchResults) =>
 export const playerInteraction = async (st) => {
   const possibleMoves = allPossibleMoves(st.player, st.quest)
   const { player: { hand: ph }, quest: { hand: qh } } = st;
-
   // eCard.onclick = () => ph[0].rX -= 20;
-  // document.querySelector('#desk').addEventListener('click', (event) => {
-  //     console.log(event);
-  // });
+
 
   // await delay(Infinity);
   return possibleMoves.shift();
@@ -329,7 +333,7 @@ export const logger = (st) => {
 
 /** @type {(render:(state:State)=>any) => State} */
 export const freshState = (render) => {
-  const stTarget = { phase, player, quest };
+  const stTarget = { phase, player, quest, clickTime: 0, beat:0 };
   globalThis.stt = stTarget;
   const st = signal(render)(stTarget);
   // signal(render)({ph:st.player.hand, qh:st.quest.hand})

@@ -9,6 +9,7 @@ import { dealToPlayer, dealToQuest, FLOOR, move, POS, SIZE, SKY, tr3D } from "./
 
 /** @typedef {import('../src/core-game').SingleCard} SingleCard */
 /** @typedef {import('../src/core-game').InteractionClick} InteractionClick */
+/** @typedef {import('../src/core-game').PhasesKey} PhasesKey */
 
 // ------------------------- 3D ----------------------------------
 
@@ -26,7 +27,10 @@ const Card = ({id, value, style, onClick}) => (
       scale-[3.2]
       transition-all duration-500
       pointer-events-auto
-      hover:brightness-150
+      hover:outline-2
+      hover:outline-dashed
+      hover:outline-sky-300
+      rounded-lg
     ">
     <Sprite
       {...pick(assetList)}
@@ -128,19 +132,26 @@ portal(
   // /** @type {HTMLElement} */ const deck = page.querySelector('#deck');
 
   let prevClickHapend = 0;
-
+  /** @type {PhasesKey} */
+  let prevPhase = "THE_FIRST_DAY";
   /** @typedef {import('./core-game').State} State */
   /** @type {(st:State) => any} */
   const render = (st) => {
     if (st.clickTime !== prevClickHapend) {
+      prevClickHapend = st.clickTime;
       console.log(`click the: ${st.click} phase: ${st.phase}`);
+    }
+
+    if (st.phase !== prevPhase) {
+      console.log(`chage from ${prevPhase} -> ${st.phase}`)
+      prevPhase = st.phase;
+      gameLoop(st);
     }
 
     pScore.innerText = st?.player?.score?.toString() ?? "0";
     qScore.innerText = st?.quest?.score?.toString() ?? "0";
     dPhase.innerText = st?.phase;
     logger(st);
-    console.log(st.phase);
     if (st.phase === "READY") {
       state.player.deck.map((crdState, idx) =>
         setTimeout(
@@ -181,16 +192,10 @@ portal(
   const movingCards = allCard.map(card => signal(newOrder)(card));
   gameSetup(state, movingCards.slice(0,12), movingCards.slice(12, 12 + 21));
 
-  let prevPhase = "";
-  const stop = setInterval( _ => {
-    state.phase !== "PROBLEM_CHECK" && console.log(prevPhase, state.phase);
+  const stop = setInterval(() => {
     if (state.phase == "THE_END") clearInterval(stop);
-    if (state.phase !== prevPhase) {
-      prevPhase = state.phase;
-      gameLoop(state);
-    }
-  }, FortyTwo * 4);
-
+    state.beat = performance.now()
+  },FortyTwo * 4);
 });
 
 var bindState;
