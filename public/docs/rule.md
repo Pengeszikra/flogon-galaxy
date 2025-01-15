@@ -1,6 +1,8 @@
-/*
+# Rule of `Quest of the best`
 
-This is a semi solitare game rule is:
+{%deal%16/9}
+
+## This is a semi solitare game rule is:
 
 Each card have 1 important value which is a number between -21 -> 22
 
@@ -14,7 +16,7 @@ each player hand is open
 - player draw a 4 cards
 - quest draw a 2 cards ( END-RULE ) ( QUEST-REVENGE )
 
----- play phase ---
+## PLAY PHASE
 
   player may play card from hand according following pairing rules:
 
@@ -41,11 +43,10 @@ each player hand is open
 
   this process can repeat until player can pair card.
 
----- end play phase ----
+## END-RULE:
+if quest don't have deck game is end with a collected score - quest score
 
-- END-RULE: if quest don't have deck game is end with a collected score - quest score
-
-QUEST-REVENGE
+## QUEST-REVENGE
 - quest draw 2 cards up to 4
 - if quest reach 4 hand then quest on action
 - player drop their hand
@@ -55,99 +56,3 @@ QUEST-REVENGE
 - if quest cannot able to play any card, then drop their hand abs sum scored by player
 - quest draw 2 cards up to four ( game end rule are active )
 - if end of that phase quest hand goes below four then play right back to the player
-
-
-*/
-
-
-const rnd = (n) => Math.random() * n | 0;
-
-/**
- * @typedef {{
- *  x: number
- *  y: number
- *  z: number
- *  rX: number
- *  rY: number
- *  rZ: number
- * }} Pos3D
- */
-
-
-/** @type {Pos3D} */
-const origo = {x:0, y:0, z:0, rX: 0, rY:0, rZ: 0};
-
-/**
-  *  @typedef {{
-  *   id: string
-  *   value: number
-  *   name?: string
-  *   description?: string
-  *   skill?: string
-  *   order: number
-  * }} CardInfo
-  */
-
-/** @typedef {CardInfo & Pos3D} SingleCard */
-
-/**
-  * @typedef {{
-  *  whoyou: string
-  *  description?: string
-  *  score: number
-  *  deck: SingleCard[]
-  *  hand: SingleCard[]
-  *  drop: SingleCard[]
-  *  select: SingleCard | null
-  *  play: SingleCard | null
-  *  target: SingleCard | null
-  * }} Entity
-  */
-
-export const gameMechanism = async () => {
-  /** @type {Entity} */
-  const player = {
-    whoyou: "player",
-    score: 0,
-    deck: [],
-    hand: [],
-    drop: [],
-    select: null,
-    play: null,
-    target: null,
-  };
-
-  /** @type {Entity} */
-  const quest = {
-    whoyou: "quest",
-    score: 0,
-    description: "save the word",
-    deck: [], // Array(20).fill().map((_,idx) => ({id:idx, value:rnd(41) - 21}, order:0, ...origo})),
-    hand: [],
-    drop: [],
-    select: null,
-    play: null,
-    target: null,
-  };
-
-  player.deck = Array(20)
-    .fill()
-    .map((_,idx) => ({
-        id:idx.toString(),
-        value: rnd(41) - 21,
-        order:0,
-        ...origo
-    }));
-
-  quest.deck = Array(20)
-    .fill()
-    .map((_,idx) => ({
-        id:idx.toString(),
-        value: rnd(41) - 21,
-        order:0,
-        ...origo
-    }));
-
-
-
-  };

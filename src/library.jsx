@@ -37,7 +37,7 @@ portal(
       <source src="media/race-start.mp4" type="video/mp4" />
     </video> */}
     <main class="ml-[2rem] w-[70vw] aspect-video bg-zinc-950 text-zinc-400">
-      <Marker markdown="../docs/trading-pioneers.md" />
+      <Marker markdown="../docs/rule.md" />
     </main>
 
     <section class="fixed top-2 right-[-6rem] w-[20rem] grid gap-2 z-50">
@@ -47,7 +47,6 @@ portal(
         </button>
       ))}
     </section>
-    {/* <DebugFrame /> */}
     <Sprite {...targetSystem[3]} class="
       fixed top-[1rem] right-[14rem]
       scale-[1.2]

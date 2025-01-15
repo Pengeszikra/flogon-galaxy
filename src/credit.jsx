@@ -1,7 +1,8 @@
-import { fencer, portal, Fragment } from "./utils/fencer";
+import { fencer, portal, Fragment, Sprite } from "./utils/fencer";
 import { GalaxyRoute, galaxyTextureList, routeController, useKeyboardCurse } from "./GalaxyRoute";
 import { pick, rnd } from "./utils/old-bird-soft";
 import { trackList } from "./media-assets";
+import { targetSystem } from "./throw/targetSystem";
 
 const [gAlfa, gBeta] = galaxyTextureList();
 
@@ -15,6 +16,15 @@ portal(
       <h1 class="text-emerald-200 text-[5vw]">C R E D I T</h1>
       <p class="text-orange-300 text-[3vw] text-right min-w-max">... a long list comming</p>
     </section>
+    <Sprite {...targetSystem[1]} class="
+      absolute top-[1rem] right-[1rem]
+      mix-blend-lighten
+      transition-all
+      duration-300
+      hover:brightness-200
+    "
+    onClick={() => globalThis.location.replace('ship.html')}
+    />
   </GalaxyRoute>
 ).then((page) => {
   const [state] = routeController("multiply");
