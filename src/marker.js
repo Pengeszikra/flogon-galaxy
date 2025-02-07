@@ -25,6 +25,7 @@
   /** @type {(safeCode:string) => string} */
   const syntaxHighlight = safeCode => {
     return encodCodeBlockToSafeHtml(safeCode)
+      .replaceAll(/(\=&gt;|\=|\||:-{2,}:|-{2,}:|:-{2,}|-{3,}|::)/g, "<uw>$1</uw>")
       .replaceAll(/("[^&]*"|`[^&]*`|&apos;[^&]*&apos;)/g, "<st>$1</st>")
       .replaceAll(/(&lt;[^\s|^&]*&gt;)/g, "<wt>$1</wt>")
       .replaceAll(/(&lt;[^\s|^&|^\!]*)(\s+)/g, "<wt>$1</wt>$2")
@@ -32,7 +33,6 @@
       .replaceAll(/(\{|\}|\(|\)|\[|\])/g, "<sw>$1</sw>")
       .replaceAll(/(\s*|\n*)(const|let|return|function|var|for|if|while|\?|\:)(\s+|\n+)/g, "$1<rw>$2</rw>$3")
       .replaceAll(/(\s*|\n*)(className|class|onClick|onInput|export|import|@type|@typedef|string|number|object|false|true)(\s+|\n+|\=)/g, "$1<ew>$2</ew>$3")
-      .replaceAll(/(\=&gt;|\=|\|)/g, "<uw>$1</uw>")
       .replaceAll(/(\/\/(.*)$)/g, "<rm>$1</rm>") // .replaceAll(/(\<([^\>|^rm]*)\>)/g,"")
       .replaceAll(/(\/\*\*[^\*|.]*\*\/)/g, "<jd>$1</jd>")
       .replaceAll(/(&lt;\!--[.|^&]*--&gt;)/g, "<rm>$1</rm>")

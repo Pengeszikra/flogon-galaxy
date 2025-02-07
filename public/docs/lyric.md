@@ -127,3 +127,51 @@ Virgágok tócsák és kacsák
 kicsik szétszórt a gondolat talán!
 Értetlenül nézem a tükröt
 segítségül kicsit még pörgök.
+
+# Rémálom
+Ez egy rémálom
+és én már nem látom
+ki vagyok és mit tettem
+félek elvesztem.
+
+# Zaj
+Száll  egy imám az ég felé,
+hogy jó legyek és az élet szép.
+Az legyen amit az Úr akar,
+mert túl nagy itt a Zaj!
+
+Zajosak vagyunk és hangosok,
+előre ellopjuk a holnapot.
+Aki ebben a legnagyobb,
+az kitüntetést kapott.
+
+Gondolj és ne rombolj!
+Törődj és ne félj!
+A válasz az egyszerű:
+nyisd ki a szemed és nézz!
+
+Üvöltünk a sötétben!
+Éjjel lemegyünk a közértbe.
+Csörög a zseton a zsebünkben.
+Valamit betömünk a fejünkbe.
+
+Nem izgat a holnap se.
+Talán megúszom, talán nem.
+Szeretlek Édes, ezt jegyezd meg!
+
+Gondolj és ne rombolj!
+Törődj és ne félj!
+A válasz az egyszerű:
+nyisd ki a szemed és nézz!
+
+Nem izgat a holnap se.
+Talán megúszom, talán nem.
+Már rég elloptuk a holnapot.
+Köszönöm, hogy kérdezed:
+jól vagyok!
+
+Mit is kivántam a legelején?
+
+Mit is kivántam a legelején?
+
+Mit is kivántam a legelején?
