@@ -8,7 +8,7 @@ _`game-engine` edition_
 ## `<\>` Board Editor 
 Let's moving forward to `board editor` which is a online 3D tabletop game editor, capable to handle a different `spritesheets` setup the whole environmet, handle cards, syntax highlight the generated code. Store asset valuse in JS object.
 
-{% .. %}
+{% . % 16/9}
 
 ```
 "Due date is Jan 15 :: left --> " +
@@ -141,9 +141,6 @@ document.querySelector('.card-front').style.transform=`
 - pub manager
 - spaceship survive on lost spaceship
 - cookie merger
-
-{% 3match.html %}
-
 
 ## Live preview is awesome
 

@@ -146,19 +146,20 @@
     // debugMs.innerHTML = `run: ${performance.now() - start} ms`;
     return colorCode;
   }
-
+  
 export const setupMarkerViews = () => {
-  const marker = customElements.define('markdown-view', class extends HTMLElement {
+  class MarkdownView extends HTMLElement {
     constructor() {
       super();
-      const source = this.getAttribute('source');
-      if (source) {
+      this.source = this.getAttribute('source');
+      if (this.source) {
         // console.log('markdown ::', source);
-        this.loadMarkdown(source);
+        this.loadMarkdown(this.source);
       }
     }
 
     loadMarkdown (file) {
+      console.log(file)
       fetch(file)
         .then(r => r.text())
         .then(md => this.changeContent(md))
@@ -167,7 +168,7 @@ export const setupMarkerViews = () => {
     changeContent(source) {
       this.innerHTML = markdownParser(source);
     }
-  });
+  }
 
-  return marker;
+  const markerEl = customElements.define('markdown-view', MarkdownView);
 };

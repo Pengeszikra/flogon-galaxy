@@ -1,16 +1,10 @@
-# Rule of `Quest of the best`
-
-{%deal%16/9}
+# Rule of `Math Match` Card Game
 
 ## This is a semi solitare game rule is:
-
-Each card have 1 important value which is a number between -21 -> 22
-
-player have deck of 20 -> 25 cards of a random values
-
-quest have a deck of 30 cards of a random values
-
-each player hand is open
+- Each card have 1 important value which is a number between -21 -> 22
+- player have deck of 20 -> 25 cards of a random values
+- quest have a deck of 30 cards of a random values
+- each player hand is open
 
 - if player deck are less than a 4 card then shuffle their drop to deck
 - player draw a 4 cards
@@ -56,3 +50,9 @@ if quest don't have deck game is end with a collected score - quest score
 - if quest cannot able to play any card, then drop their hand abs sum scored by player
 - quest draw 2 cards up to four ( game end rule are active )
 - if end of that phase quest hand goes below four then play right back to the player
+
+
+
+
+
+

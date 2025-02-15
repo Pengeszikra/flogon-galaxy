@@ -1,4 +1,4 @@
-# Let's mOving _forward_
+# Stuck on previous development
 ## The real problem is:
 I cannot able to moving forward my next gama and I was stack to a
 `laderboard` problem on Reddis
@@ -14,13 +14,13 @@ with the fancy Flogon Galaxy ?
 Even I can use it for a `blogpost dev environment`
 That is the question.
 
-{% https://www.youtube.com/embed/rcauLdXxni8?si=5Qq8BQe9zQ3B4gp6 %}
+{% https://www.youtube.com/embed/rcauLdXxni8?si=5Qq8BQe9zQ3B4gp6 %16/9}
 
-{% https://www.youtube.com/embed/FomfRl4V3Eo?si=LkcxfLb9P6B1p4pK %}
+{% https://www.youtube.com/embed/FomfRl4V3Eo?si=LkcxfLb9P6B1p4pK %16/9}
 
-{% https://www.youtube.com/embed/kjbByy670CE?si=RMevFYZ4v_BWhYk9 %}
+{% https://www.youtube.com/embed/kjbByy670CE?si=RMevFYZ4v_BWhYk9 %16/9}
 
-{% https://www.youtube.com/embed/DpiOSJe_N30?si=YE9mQegUGsB0dt23 %}
+{% https://www.youtube.com/embed/DpiOSJe_N30?si=YE9mQegUGsB0dt23 %16/9}
 
 ## MARKER as my `hyperspeed` game development
 Because it is capable to combine a different HTML program
@@ -38,3 +38,5 @@ Good question. The VIM motions seems working, but at this moment I don't ready f
 that.
 
 I was remember ZED is fast but don't have a nice auto save option.
+
+
